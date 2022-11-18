@@ -7,3 +7,12 @@
     padding-right: 20px;
 }
 
+.favorites{
+    display: flex;
+    flex-direction: column;
+    height: calc(100hv - 100px);
+    align-items: center;
+    justify-content: flex-start;
+    align-self: center;
+}
+
