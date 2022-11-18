@@ -25,7 +25,6 @@ class MyDocument extends Document {
     return (
       <Html lang="es">
         <Head>{CssBaseline.flush()}</Head>
-        <title>Advanced</title>
         <body>
           <Main />
           <NextScript />

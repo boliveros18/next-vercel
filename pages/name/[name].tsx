@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Grid, Card, Text, Button, Container, Image } from "@nextui-org/react";
 import { GetStaticProps, NextPage, GetStaticPaths } from "next";
 
-import { Pokemon } from "../../interfaces";
+import { Pokemon, PokemonList } from "../../interfaces";
 import pokemonApi from "../../api/pokemonApi";
 import { Layout } from "../../components/layouts";
 import { localFavorites } from "../../utils";
@@ -95,18 +95,20 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
-  const pokemons151 = [...Array(151)].map((value, index) => `${index + 1}`);
+
+  const { data } = await pokemonApi.get<PokemonList>('/pokemon?limit=151')
+  const pokemonNames: string [] = data.results.map( pokemon => pokemon.name)
 
   return {
-    paths: pokemons151.map((id) => ({ params: { id: id } })),
+    paths: pokemonNames.map((name) => ({ params: { name: name } })),
     fallback: false,
   };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { id } = params as { id: string };
+  const { name } = params as { name: string };
 
-  const { data } = await pokemonApi.get<Pokemon>(`/pokemon/${id}`);
+  const { data } = await pokemonApi.get<Pokemon>(`/pokemon/${name}`);
 
   const pokemon = {
     id: data.id, 
