@@ -14,12 +14,11 @@ const origin = (typeof window === 'undefined') ? '' : window.location.origin
 export const Layout: FC<Props> = ({ children, title }) => {
 
 
-
   return (
     <div>
       <Head>
         <title>
-          {HOME_TITLE} - {title}
+         {HOME_TITLE + ' - ' + title}
         </title>
         <meta name="author" content="Bresneth Oliveros" />
         <meta name="description" content="Pokemons page information xxxxx" />
