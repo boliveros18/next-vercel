@@ -29,6 +29,7 @@ const HomePage: NextPage<Props> = ({}) => {
           display="flex"
           justifyContent="center"
           alignItems="center"
+          sx={{ paddingLeft:'-5'}}
         >
           <BodyCard loading={false} />
         </Grid>

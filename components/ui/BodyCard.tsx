@@ -25,10 +25,8 @@ export const BodyCard: FC<Props> = ({ loading }) => {
   return (
     <Card
       sx={{
-        width: "80%",
-        minWidth: 300,
+        width: "100%",
         height: '85vh',
-        m: 2,
       }}
     >
       <Accordion
