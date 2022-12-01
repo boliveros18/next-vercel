@@ -7,7 +7,7 @@ import Document, {
   DocumentContext,
   DocumentInitialProps,
 } from "next/document";
-import { CssBaseline } from "@nextui-org/react";
+import { HOME_TITLE } from '../constans/home';
 
 class MyDocument extends Document {
   static async getInitialProps(
@@ -24,7 +24,15 @@ class MyDocument extends Document {
   render() {
     return (
       <Html lang="es">
-        <Head>{CssBaseline.flush()}</Head>
+         <title>{HOME_TITLE}</title>
+        <Head>
+       
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          />
+          <link rel="shorcut icon" href="/favicon.svg"></link>
+        </Head>
         <body>
           <Main />
           <NextScript />

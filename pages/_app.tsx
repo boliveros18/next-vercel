@@ -1,13 +1,19 @@
+import { useState, useEffect } from "react";
 import type { AppProps } from "next/app";
-import { NextUIProvider } from '@nextui-org/react';
-import { customizeTheme } from "../themes";
-import '../styles/globals.css'
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import "../styles/globals.css";
+import { lightTheme } from "../themes";
 
+interface Props extends AppProps {
+  theme: string;
+}
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps}: Props) {
+
   return (
-     <NextUIProvider theme={customizeTheme}>
-     <Component {...pageProps} />
-     </NextUIProvider>
+    <ThemeProvider theme={lightTheme}>
+      <CssBaseline />
+      <Component {...pageProps} />
+    </ThemeProvider>
   );
 }

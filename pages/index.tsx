@@ -1,42 +1,59 @@
 import { GetStaticProps, NextPage } from "next";
-import { Grid } from "@nextui-org/react";
-
 import { Layout } from "../components/layouts";
-import { pokemonApi } from "../api";
-import { PokemonList, SmallPokemon } from "../interfaces/pokemon-list";
-import { PokemonCard } from "../components/pokemon";
+import { BodyCard } from "../components/ui";
+import { Grid } from "@mui/material";
+import { SideBar, RightBar } from "../components/ui";
+import { ChatMessages } from "../components/chat";
 
-interface Props {
-  pokemons: SmallPokemon[];
-}
+interface Props {}
 
-const HomePage: NextPage<Props> = ({ pokemons }) => {
+const HomePage: NextPage<Props> = ({}) => {
   return (
-    <Layout title="Pokemon list">
-      <Grid.Container gap={2} justify="flex-start">
-        {pokemons.map((pokemon) => (
-          <PokemonCard key={pokemon.id} pokemon={pokemon}></PokemonCard>
-        ))}
-      </Grid.Container>
+    <Layout>
+      <Grid container spacing={0} rowSpacing={2}>
+        <Grid
+          item
+          xs={8}
+          sm={4}
+          md={3}
+          sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+          justifyContent="flex-start"
+        >
+          <SideBar />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={5}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <BodyCard loading={false} />
+        </Grid>
+        <Grid
+          item
+          xs={4}
+          sm={6}
+          md={4}
+          sx={{
+            display: { xs: "none", sm: "block", md: "block" },
+          }}
+          justifyContent="flex-end"
+        >
+          <RightBar>
+            <ChatMessages />
+          </RightBar>
+        </Grid>
+      </Grid>
     </Layout>
   );
 };
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
-  const { data } = await pokemonApi.get<PokemonList>("/pokemon?limit=151");
-
-  const pokemons: SmallPokemon[] = data.results.map((pokemon, i) => ({
-    ...pokemon,
-    id: i + 1,
-    img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${
-      i + 1
-    }.svg`,
-  }));
-
   return {
-    props: {
-      pokemons,
-    },
+    props: {},
   };
 };
 

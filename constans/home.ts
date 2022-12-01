@@ -1,1 +1,1 @@
-export const HOME_TITLE = 'App name'
+export const HOME_TITLE = 'iMedical'

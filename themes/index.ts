@@ -1,1 +1,1 @@
-export * from './customizeTheme'
+export * from './light-theme'
