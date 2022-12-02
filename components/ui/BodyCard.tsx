@@ -24,7 +24,7 @@ export const BodyCard: FC<Props> = ({ loading }) => {
     <Card
       sx={{
         width: "100%",
-        height: '77vh',
+        height: screen.height,
       }}
       elevation={0}
     >
@@ -94,7 +94,7 @@ export const BodyCard: FC<Props> = ({ loading }) => {
       ) : (
         <CardMedia
           component="img"
-          height="200"
+          height={screen.height*0.3}
           image="https://clinicajaca.com/wp-content/uploads/2020/08/clinicajaca-22-scaled.jpg"
           alt="Nicola Sturgeon on a TED talk stage"
         />
