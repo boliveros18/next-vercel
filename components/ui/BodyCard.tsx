@@ -94,7 +94,7 @@ export const BodyCard: FC<Props> = ({ loading }) => {
       ) : (
         <CardMedia
           component="img"
-          height={screen.height*0.3}
+          height={screen.height*0.2}
           image="https://clinicajaca.com/wp-content/uploads/2020/08/clinicajaca-22-scaled.jpg"
           alt="Nicola Sturgeon on a TED talk stage"
         />
