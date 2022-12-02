@@ -1,6 +1,5 @@
 import { FC, ReactNode } from "react";
 import * as React from "react";
-import { MenuItem } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
@@ -10,7 +9,6 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Skeleton from "@mui/material/Skeleton";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -26,8 +24,9 @@ export const BodyCard: FC<Props> = ({ loading }) => {
     <Card
       sx={{
         width: "100%",
-        height: '85vh',
+        height: '82vh',
       }}
+      elevation={0}
     >
       <Accordion
         elevation={0}

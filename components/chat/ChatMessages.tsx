@@ -1,6 +1,5 @@
 import { FC, ReactNode } from "react";
 import * as React from "react";
-import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
@@ -16,8 +15,8 @@ interface Props {
 
 export const ChatMessages: FC<Props> = ({}) => {
   return (
-    <List sx={{ width: "100%", minWidth: 300, bgcolor: "background.paper" }}>
-        <Typography align="center">Chats</Typography>
+    <List sx={{ width: "100%", minWidth: 300, bgcolor: "background.paper"}}>
+      <Typography align="center">Chats</Typography>
       <ListItem>
         <ListItemText
           primary={
@@ -35,6 +34,7 @@ export const ChatMessages: FC<Props> = ({}) => {
           }
         />
       </ListItem>
+      <div style={{ overflow: 'auto', maxHeight: 415 }}>
       <ListItem button alignItems="flex-start">
         <ListItemAvatar>
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
@@ -98,6 +98,28 @@ export const ChatMessages: FC<Props> = ({}) => {
           }
         />
       </ListItem>
+      <ListItem button alignItems="flex-start">
+        <ListItemAvatar>
+          <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
+        </ListItemAvatar>
+        <ListItemText
+          primary="Summer BBQ"
+          secondary={
+            <React.Fragment>
+              <Typography
+                sx={{ display: "inline" }}
+                component="span"
+                variant="body2"
+                color="text.primary"
+              >
+                to Scott, Alex, Jennifer
+              </Typography>
+              {" — Wish I could come, but I'm out of town this…"}
+            </React.Fragment>
+          }
+        />
+      </ListItem>
+      </div>
     </List>
   );
 };
