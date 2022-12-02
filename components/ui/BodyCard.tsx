@@ -26,7 +26,7 @@ export const BodyCard: FC<Props> = ({ loading }) => {
     <Card
       sx={{
         width: "100%",
-        height: height,
+        height: "78hv",
       }}
       elevation={0}
     >
