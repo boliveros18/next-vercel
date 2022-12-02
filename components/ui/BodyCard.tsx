@@ -13,7 +13,6 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import useWindowDimensions from '../../utils/useWindowDimensions';
 
 interface Props {
   children?: ReactNode;
@@ -21,12 +20,11 @@ interface Props {
 }
 
 export const BodyCard: FC<Props> = ({ loading }) => {
-  const { height, width } = useWindowDimensions()
   return (
     <Card
       sx={{
         width: "100%",
-        height: "77hv",
+        height: '75vh',
       }}
       elevation={0}
     >
@@ -96,7 +94,7 @@ export const BodyCard: FC<Props> = ({ loading }) => {
       ) : (
         <CardMedia
           component="img"
-          height="200"
+          height="230"
           image="https://clinicajaca.com/wp-content/uploads/2020/08/clinicajaca-22-scaled.jpg"
           alt="Nicola Sturgeon on a TED talk stage"
         />
