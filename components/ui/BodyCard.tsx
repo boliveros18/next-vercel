@@ -13,6 +13,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import useWindowDimensions from '../../utils/useWindowDimensions';
 
 interface Props {
   children?: ReactNode;
@@ -20,11 +21,12 @@ interface Props {
 }
 
 export const BodyCard: FC<Props> = ({ loading }) => {
+  const { height, width } = useWindowDimensions()
   return (
     <Card
       sx={{
         width: "100%",
-        height: '77hv',
+        height: height,
       }}
       elevation={0}
     >
