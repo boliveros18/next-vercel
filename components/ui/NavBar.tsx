@@ -11,6 +11,7 @@ import {
   MenuItem,
   Divider,
   ListItemIcon,
+  Button
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
@@ -254,7 +255,7 @@ export const NavBar: FC<Props> = ({}) => {
             <AccountCircle fontSize="medium" />
           </IconButton>
         </Box>
-        <Box sx={{ display: { xs: "flex", md: "none" }, color: "black" }}>
+        <Box  sx={{ display: { xs: "flex", md: "none" }, color: "black" }}>
           <IconButton
             size="large"
             aria-label="show more"
@@ -265,7 +266,9 @@ export const NavBar: FC<Props> = ({}) => {
           >
             <MoreIcon />
           </IconButton>
+   
         </Box>
+        <Button variant="outlined" size="small">Sign.in</Button>
       </Toolbar>
       {renderMobileMenu}
       {renderMenu}

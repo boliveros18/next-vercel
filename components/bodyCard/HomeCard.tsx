@@ -28,12 +28,15 @@ export const HomeCard: FC<Props> = ({}) => {
       sx={{
         width: "100%",
         height: "75vh",
-        overflow:'auto'
+        overflow: "auto",
       }}
       elevation={0}
     >
       <GuideBar />
       <CardHeader
+        sx={{
+          marginTop: 1,
+        }}
         avatar={
           <Avatar
             alt="Avatar"
@@ -65,15 +68,32 @@ export const HomeCard: FC<Props> = ({}) => {
           marginBottom: -3,
         }}
       >
-        <IconButton aria-label="like">
-          <StarBorderIcon fontSize="medium" />
-        </IconButton>
-        <IconButton aria-label="comment">
-          <CommentIcon fontSize="small" />
-        </IconButton>
-        <IconButton aria-label="instagram">
-          <InstagramIcon fontSize="small" />
-        </IconButton>
+        <div>
+          <IconButton
+            aria-label="like"
+            style={{
+              color: "black",
+            }}
+          >
+            <StarBorderIcon fontSize="large" />
+          </IconButton>
+          <IconButton
+            aria-label="comment"
+            style={{
+              color: "black",
+            }}
+          >
+            <CommentIcon fontSize="large" />
+          </IconButton>
+          <IconButton
+            aria-label="instagram"
+            style={{
+              color: "black",
+            }}
+          >
+            <InstagramIcon fontSize="large" />
+          </IconButton>
+        </div>
       </CardActions>
       <CardContent>
         <CommentUi autor="Finantial" comment="8 million US in 2021"></CommentUi>
@@ -82,11 +102,13 @@ export const HomeCard: FC<Props> = ({}) => {
           comment="Plastic and Reconstruction"
         ></CommentUi>
         <CommentUi
-          autor="Detail"
+          autor="Technology"
           comment={
-            <ReadMore text="Why First Miniserteretrtrtr ssdfsd dfgdgdfgdfg dfgdfgdgdfg" />
+            <ReadMore text="Surgical robotics, minimally invasive surgery, board certified plastic procedure" />
           }
         ></CommentUi>
+
+
       </CardContent>
     </Card>
   );
