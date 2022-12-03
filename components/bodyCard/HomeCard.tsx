@@ -29,7 +29,7 @@ export const HomeCard: FC<Props> = ({}) => {
     <Card
       sx={{
         width: "100%",
-        height: "81vh",
+        height: "78vh",
         // overflow: "auto"
       }}
       elevation={0}
@@ -125,12 +125,23 @@ export const HomeCard: FC<Props> = ({}) => {
       <Stack
         spacing={0}
         direction="column"
+        justifyContent="center"
+        alignItems="center"
         sx={{ marginTop: 2, marginBottom: 2 }}
       >
-        <Button variant="outlined" size="medium">
+        <Button
+          variant="outlined"
+          size="medium"
+          sx={{
+            width: "80%",
+          }}
+        >
           Sign in securely button
         </Button>
-        <Button variant="text" sx={{ color: "green", fontSize: 13 }}>
+        <Button
+          variant="text"
+          sx={{ color: "green", fontSize: 13, width: "80%" }}
+        >
           Create an account
         </Button>
       </Stack>
