@@ -9,18 +9,18 @@ import {
   Badge,
   Menu,
   MenuItem,
+  Divider,
+  ListItemIcon,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/PersonOutline";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import ContentCopy from "@mui/icons-material/ContentCopy";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import Logout from '@mui/icons-material/Logout';
-import Divider from "@mui/material/Divider";
+import Logout from "@mui/icons-material/Logout";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Search, SearchIconWrapper, StyledInputBase } from "./Search";
 
@@ -93,11 +93,11 @@ export const NavBar: FC<Props> = ({}) => {
       </MenuItem>
       <Divider />
       <MenuItem>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
+        <ListItemIcon>
+          <Logout fontSize="small" />
+        </ListItemIcon>
+        Logout
+      </MenuItem>
     </Menu>
   );
 
@@ -118,9 +118,11 @@ export const NavBar: FC<Props> = ({}) => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem   sx={{
-        width: 300,
-      }}>
+      <MenuItem
+        sx={{
+          width: 300,
+        }}
+      >
         <IconButton
           size="large"
           aria-label="show 2 new articles"
@@ -162,7 +164,7 @@ export const NavBar: FC<Props> = ({}) => {
         >
           <AccountCircle />
         </IconButton>
-        <p style={{ paddingRight: 145}}>Profile</p>
+        <p style={{ paddingRight: 145 }}>Profile</p>
         <ExpandMoreIcon />
       </MenuItem>
     </Menu>

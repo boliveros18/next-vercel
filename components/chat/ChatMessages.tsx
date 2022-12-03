@@ -1,11 +1,6 @@
 import { FC, ReactNode } from "react";
 import * as React from "react";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
-import ListItemText from "@mui/material/ListItemText";
+import {List, ListItem, ListItemAvatar, Avatar, Typography, ListItemText} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { Search, SearchIconWrapper, StyledInputBase } from "../ui";
 

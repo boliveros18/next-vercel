@@ -1,17 +1,15 @@
 import * as React from "react";
+import {Paper, BottomNavigation, BottomNavigationAction} from "@mui/material";
+import AirplanemodeActiveOutlinedIcon from "@mui/icons-material/AirplanemodeActiveOutlined";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import AccessibilityNewOutlinedIcon from "@mui/icons-material/AccessibilityNewOutlined";
+import RoomServiceOutlinedIcon from "@mui/icons-material/RoomServiceOutlined";
 import { GetStaticProps, NextPage } from "next";
 import { Layout } from "../components/layouts";
-import { BodyCard } from "../components/ui";
+import { HomeCard } from "../components/bodyCard";
 import { Grid } from "@mui/material";
 import { SideBar, RightBar } from "../components/ui";
 import { ChatMessages } from "../components/chat";
-import Paper from "@mui/material/Paper";
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
 interface Props {}
 
@@ -44,7 +42,7 @@ const HomePage: NextPage<Props> = ({}) => {
           justifyContent="center"
           alignItems="center"
         >
-          <BodyCard loading={false} />
+          <HomeCard  />
         </Grid>
         <Grid
           item
@@ -62,43 +60,49 @@ const HomePage: NextPage<Props> = ({}) => {
         </Grid>
       </Grid>
       <Grid
-          item
-          xs={12}
-          sm={6}
-          md={5}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          sx={{
-            display: { xs: "block", sm: "none", md: "none" },
-          }}
-        >
-               <Paper
-        elevation={0}
+        item
+        xs={12}
+        sm={6}
+        md={5}
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
         sx={{
-          width: "100%",
+          display: { xs: "block", sm: "none", md: "none" },
         }}
       >
-        <BottomNavigation
-          showLabels
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
+        <Paper
+          elevation={0}
+          sx={{
+            width: "100%",
           }}
         >
-          <BottomNavigationAction label="Cart" icon={<AddShoppingCartIcon />} />
-          <BottomNavigationAction
-            label="Chats"
-            icon={<ChatBubbleOutlineIcon />}
-          />
-          <BottomNavigationAction label="People" icon={<PeopleAltIcon />} />
-          <BottomNavigationAction
-            label="Notifications"
-            icon={<NotificationsNoneIcon />}
-          />
-        </BottomNavigation>
-      </Paper>
-        </Grid>
+          <BottomNavigation
+            showLabels
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          >
+            <BottomNavigationAction
+              label="Home"
+              icon={<HomeOutlinedIcon fontSize="medium" />}
+            />
+            <BottomNavigationAction
+              label="Procedures"
+              icon={<AccessibilityNewOutlinedIcon fontSize="medium" />}
+            />
+            <BottomNavigationAction
+              label="Tickets"
+              icon={<AirplanemodeActiveOutlinedIcon fontSize="medium" />}
+            />
+            <BottomNavigationAction
+              label="Hotels"
+              icon={<RoomServiceOutlinedIcon fontSize="medium" />}
+            />
+          </BottomNavigation>
+        </Paper>
+      </Grid>
     </Layout>
   );
 };

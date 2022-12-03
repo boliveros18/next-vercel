@@ -1,8 +1,6 @@
 import { FC, ReactNode } from "react";
 import * as React from "react";
-import Paper from "@mui/material/Paper";
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import {Paper, BottomNavigation, BottomNavigationAction} from "@mui/material";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
