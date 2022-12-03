@@ -15,17 +15,17 @@ interface Props {
 
 export const GuideBar: FC<Props> = ({}) => {
   return (
-    <Accordion elevation={0} sx={{  }}>
+    <Accordion elevation={0}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
         id="panel1a-header"
-        sx={{ backgroundColor: "lightyellow", marginBottom: -1 }}
+        sx={{ backgroundColor: "lightyellow" }}
       >
         <Typography sx={{ fontSize: 15 }}>{GUIDE_TITLE}</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography sx={{ fontSize: 15, marginTop: 1, marginBottom: -4 }}>
+        <Typography sx={{ fontSize: 15}}>
           {GUIDE_DETAIL}
         </Typography>
       </AccordionDetails>

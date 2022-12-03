@@ -29,16 +29,12 @@ export const HomeCard: FC<Props> = ({}) => {
     <Card
       sx={{
         width: "100%",
-        height: "78vh",
-        // overflow: "auto"
+        height: "84vh",
       }}
       elevation={0}
     >
       <GuideBar />
       <CardHeader
-        sx={{
-          marginBottom: -1,
-        }}
         avatar={
           <Avatar
             alt="Avatar"
@@ -74,7 +70,6 @@ export const HomeCard: FC<Props> = ({}) => {
       <CardActions
         disableSpacing
         sx={{
-          marginTop: -1,
           marginBottom: -3,
         }}
       >
@@ -127,7 +122,7 @@ export const HomeCard: FC<Props> = ({}) => {
         direction="column"
         justifyContent="center"
         alignItems="center"
-        sx={{ marginTop: 2, marginBottom: 2 }}
+        sx={{ marginTop: 2}}
       >
         <Button
           variant="outlined"
