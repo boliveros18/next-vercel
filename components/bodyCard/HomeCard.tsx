@@ -9,14 +9,16 @@ import {
   Typography,
   IconButton,
   CardActions,
-  Grid,
+  Button,
+  Stack,
 } from "@mui/material";
 import ShareIcon from "@mui/icons-material/Share";
-import StarBorderIcon from "@mui/icons-material/StarBorderPurple500Outlined";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CommentIcon from "@mui/icons-material/ChatBubbleOutline";
 import InstagramIcon from "@mui/icons-material/Instagram";
 
-import { CommentUi, GuideBar, ReadMore } from "../ui";
+import { CardDetailUi, GuideBar, ReadMore, SeeComments } from "../ui";
 
 interface Props {
   children?: ReactNode;
@@ -27,15 +29,15 @@ export const HomeCard: FC<Props> = ({}) => {
     <Card
       sx={{
         width: "100%",
-        height: "75vh",
-        overflow: "auto",
+        height: "81vh",
+        // overflow: "auto"
       }}
       elevation={0}
     >
       <GuideBar />
       <CardHeader
         sx={{
-          marginTop: 1,
+          marginBottom: -1,
         }}
         avatar={
           <Avatar
@@ -44,12 +46,20 @@ export const HomeCard: FC<Props> = ({}) => {
           />
         }
         action={
-          <IconButton aria-label="settings">
+          <IconButton
+            aria-label="settings"
+            style={{
+              color: "black",
+            }}
+          >
             <ShareIcon />
           </IconButton>
         }
         title={
-          <Typography sx={{ fontSize: 16 }} variant="subtitle2">
+          <Typography
+            sx={{ fontSize: 14, textTransform: "uppercase" }}
+            variant="subtitle2"
+          >
             Clinica porto azul
           </Typography>
         }
@@ -57,7 +67,7 @@ export const HomeCard: FC<Props> = ({}) => {
       />
       <CardMedia
         component="img"
-        height="230"
+        height="160"
         image="https://clinicajaca.com/wp-content/uploads/2020/08/clinicajaca-22-scaled.jpg"
         alt="Clinic"
       />
@@ -75,7 +85,7 @@ export const HomeCard: FC<Props> = ({}) => {
               color: "black",
             }}
           >
-            <StarBorderIcon fontSize="large" />
+            <CheckCircleOutlineIcon fontSize="medium" />
           </IconButton>
           <IconButton
             aria-label="comment"
@@ -83,7 +93,7 @@ export const HomeCard: FC<Props> = ({}) => {
               color: "black",
             }}
           >
-            <CommentIcon fontSize="large" />
+            <CommentIcon fontSize="medium" />
           </IconButton>
           <IconButton
             aria-label="instagram"
@@ -91,25 +101,39 @@ export const HomeCard: FC<Props> = ({}) => {
               color: "black",
             }}
           >
-            <InstagramIcon fontSize="large" />
+            <InstagramIcon fontSize="medium" />
           </IconButton>
         </div>
       </CardActions>
       <CardContent>
-        <CommentUi autor="Finantial" comment="8 million US in 2021"></CommentUi>
-        <CommentUi
-          autor="Speciality"
+        <CardDetailUi
+          author="Finantial"
+          comment="8 million US in 2021"
+        ></CardDetailUi>
+        <CardDetailUi
+          author="Speciality"
           comment="Plastic and Reconstruction"
-        ></CommentUi>
-        <CommentUi
-          autor="Technology"
+        ></CardDetailUi>
+        <CardDetailUi
+          author="Technology"
           comment={
             <ReadMore text="Surgical robotics, minimally invasive surgery, board certified plastic procedure" />
           }
-        ></CommentUi>
-
-
+        ></CardDetailUi>
       </CardContent>
+      <SeeComments />
+      <Stack
+        spacing={0}
+        direction="column"
+        sx={{ marginTop: 2, marginBottom: 2 }}
+      >
+        <Button variant="outlined" size="medium">
+          Sign in securely button
+        </Button>
+        <Button variant="text" sx={{ color: "green", fontSize: 13 }}>
+          Create an account
+        </Button>
+      </Stack>
     </Card>
   );
 };

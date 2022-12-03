@@ -40,7 +40,6 @@ const HomePage: NextPage<Props> = ({}) => {
           md={5}
           display="flex"
           justifyContent="center"
-          alignItems="center"
         >
           <HomeCard  />
         </Grid>
@@ -62,8 +61,6 @@ const HomePage: NextPage<Props> = ({}) => {
       <Grid
         item
         xs={12}
-        sm={6}
-        md={5}
         display="flex"
         justifyContent="center"
         alignItems="center"
