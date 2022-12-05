@@ -1,24 +1,18 @@
 import * as React from "react";
-import {Paper, BottomNavigation, BottomNavigationAction} from "@mui/material";
-import AirplanemodeActiveOutlinedIcon from "@mui/icons-material/AirplanemodeActiveOutlined";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import AccessibilityNewOutlinedIcon from "@mui/icons-material/AccessibilityNewOutlined";
-import RoomServiceOutlinedIcon from "@mui/icons-material/RoomServiceOutlined";
-import { GetStaticProps, NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
+import { dbEntries } from "../database";
 import { Layout } from "../components/layouts";
 import { HomeCard } from "../components/bodyCard";
 import { Grid } from "@mui/material";
 import { SideBar, RightBar } from "../components/ui";
 import { ChatMessages } from "../components/chat";
+import { Clinic } from "../interfaces";
 
-interface Props {}
+interface Props {
+  clinic: Clinic;
+}
 
-const HomePage: NextPage<Props> = ({}) => {
-  const [value, setValue] = React.useState("recents");
-
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
-  };
+const HomePage: NextPage<Props> = ({clinic}) => {
 
   return (
     <Layout>
@@ -41,7 +35,7 @@ const HomePage: NextPage<Props> = ({}) => {
           display="flex"
           justifyContent="center"
         >
-          <HomeCard  />
+          <HomeCard clinic={clinic} />
         </Grid>
         <Grid
           item
@@ -58,56 +52,29 @@ const HomePage: NextPage<Props> = ({}) => {
           </RightBar>
         </Grid>
       </Grid>
-      <Grid
-        item
-        xs={12}
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        sx={{
-          display: { xs: "block", sm: "none", md: "none" },
-        }}
-      >
-        <Paper
-          elevation={0}
-          sx={{
-            width: "100%",
-          }}
-        >
-          <BottomNavigation
-            showLabels
-            value={value}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
-          >
-            <BottomNavigationAction
-              label="Home"
-              icon={<HomeOutlinedIcon fontSize="medium" />}
-            />
-            <BottomNavigationAction
-              label="Procedures"
-              icon={<AccessibilityNewOutlinedIcon fontSize="medium" />}
-            />
-            <BottomNavigationAction
-              label="Tickets"
-              icon={<AirplanemodeActiveOutlinedIcon fontSize="medium" />}
-            />
-            <BottomNavigationAction
-              label="Hotels"
-              icon={<RoomServiceOutlinedIcon fontSize="medium" />}
-            />
-          </BottomNavigation>
-        </Paper>
-      </Grid>
     </Layout>
   );
 };
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  //const { id } = params as { id: string };
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+  const clinic = await dbEntries.getClinicById("638d7d5914d979d16abd777a");
+
+  if (!clinic) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
   return {
-    props: {},
+    props: {
+      clinic: clinic,
+    },
   };
 };
+
 
 export default HomePage;

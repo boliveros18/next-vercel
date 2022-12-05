@@ -20,12 +20,12 @@ export const GuideBar: FC<Props> = ({}) => {
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
         id="panel1a-header"
-        sx={{ backgroundColor: "lightyellow" }}
+        sx={{ backgroundColor: "#E0E6FF" }}
       >
         <Typography sx={{ fontSize: 15 }}>{GUIDE_TITLE}</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography sx={{ fontSize: 15}}>
+        <Typography sx={{ fontSize: 14}}>
           {GUIDE_DETAIL}
         </Typography>
       </AccordionDetails>

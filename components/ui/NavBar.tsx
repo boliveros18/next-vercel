@@ -267,8 +267,8 @@ export const NavBar: FC<Props> = ({}) => {
             <MoreIcon />
           </IconButton>
         </Box>
-        <Button variant="outlined" size="medium">
-          Sign.in
+        <Button variant="contained" color="secondary" size="medium">
+          Sign
         </Button>
       </Toolbar>
       {renderMobileMenu}

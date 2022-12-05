@@ -8,4 +8,5 @@ export * from './CardDetailUi'
 export * from './SeeComments'
 export * from './CommentUi'
 export * from './CommentInteractions'
+export * from './BackBodyComponent'
 
