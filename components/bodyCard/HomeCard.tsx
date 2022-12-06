@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import * as React from "react";
 import {
   Card,
@@ -18,16 +18,24 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CommentIcon from "@mui/icons-material/ChatBubbleOutline";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import { CardDetailUi, GuideBar, ReadMore, SeeComments } from "../ui";
+import {
+  CardDetailUi,
+  CommentBar,
+  GuideBar,
+  ReadMore,
+  SeeComments,
+} from "../ui";
 import { ClinicDetails } from "../Clinic/ClinicDetails";
 import { Clinic } from "../../interfaces";
-
+import { UseWindowSize, WindowSize } from "../../utils/useWindowSize";
 
 interface Props {
   clinic: Clinic;
 }
 
 export const HomeCard: FC<Props> = ({ clinic }) => {
+  const mobile = UseWindowSize();
+  const size = WindowSize();
   const [clinicDetails, setClinicDetails] = useState(true);
 
   const handleThrough = () => {
@@ -40,7 +48,7 @@ export const HomeCard: FC<Props> = ({ clinic }) => {
         <Card
           sx={{
             width: "100%",
-            height: "84vh",
+            height: size.height - 71,
           }}
           elevation={0}
         >
@@ -61,14 +69,16 @@ export const HomeCard: FC<Props> = ({ clinic }) => {
               <Typography
                 sx={{ fontSize: 15, textTransform: "capitalize" }}
                 variant="subtitle2"
-              >{clinic.name}</Typography>
+              >
+                {clinic.name}
+              </Typography>
             }
-            subheader={clinic.city+", "+clinic.country}
+            subheader={clinic.city + ", " + clinic.country}
           />
           <CardActionArea onClick={() => setClinicDetails(!clinicDetails)}>
             <CardMedia
               component="img"
-              height="160"
+              height={size.height*0.28}
               image={clinic.photo}
               alt="Clinic"
             />
@@ -109,16 +119,28 @@ export const HomeCard: FC<Props> = ({ clinic }) => {
           <CardContent>
             <CardDetailUi
               author="Finantial"
-              comment={ <ReadMore text={clinic.finantial} />}
+              comment={
+                mobile ? <ReadMore text={clinic.finantial} /> : clinic.finantial
+              }
             ></CardDetailUi>
             <CardDetailUi
               author="Speciality"
-              comment={ <ReadMore text={clinic.speciality} />}
+              comment={
+                mobile ? (
+                  <ReadMore text={clinic.speciality} />
+                ) : (
+                  clinic.speciality
+                )
+              }
             ></CardDetailUi>
             <CardDetailUi
               author="Technology"
               comment={
-                <ReadMore text={clinic.technology} />
+                mobile ? (
+                  <ReadMore text={clinic.technology} />
+                ) : (
+                  clinic.technology
+                )
               }
             ></CardDetailUi>
           </CardContent>
@@ -130,28 +152,31 @@ export const HomeCard: FC<Props> = ({ clinic }) => {
             alignItems="center"
             sx={{ marginTop: 2 }}
           >
+            <CommentBar name="" avatar=""></CommentBar>
             <Button
               variant="contained"
               size="medium"
               color="secondary"
               sx={{
-                width: "95%",
+                width: "90%",  color:"#001B87"
               }}
             >
               Sign in securely button
             </Button>
             <Button
               variant="text"
-              sx={{ color: "#001B87", fontSize: 13, width: "95%" }}
+              sx={{ color: "#001B87", fontSize: 13, width: "90%" }}
             >
               Create an account
             </Button>
           </Stack>
         </Card>
       ) : (
-        <ClinicDetails handleThrough={handleThrough} name={clinic.name}></ClinicDetails>
+        <ClinicDetails
+          handleThrough={handleThrough}
+          name={clinic.name}
+        ></ClinicDetails>
       )}
     </>
   );
 };
-

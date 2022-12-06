@@ -1,7 +1,7 @@
 import { FC, ReactNode } from "react";
-import { BackBodyComponent } from "../ui";
 import * as React from "react";
-import { Typography } from "@mui/material";
+import { Typography, Card, IconButton } from "@mui/material";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 interface Props {
   children?: ReactNode;
@@ -11,10 +11,25 @@ interface Props {
 
 export const ClinicDetails: FC<Props> = ({ handleThrough, name }) => {
   return (
-    <BackBodyComponent handleThrough={handleThrough}>
-      <Typography align="center" sx={{ fontWeight: "medium", marginTop: -4 }}>
+    <Card
+    sx={{
+      width: "100%",
+      height: "84vh",
+    }}
+    elevation={0}
+  >
+    <IconButton
+      aria-label="back"
+      sx={{
+        color: "black", marginLeft: 2
+      }}
+      onClick={() => handleThrough(true)}
+    >
+      <ArrowBackIosIcon />
+    </IconButton>
+    <Typography align="center" sx={{ fontWeight: "medium", marginTop: -4 }}>
         {name}
       </Typography>
-    </BackBodyComponent>
+  </Card>
   );
 };

@@ -5,12 +5,14 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { WindowSize} from "../../utils/useWindowSize"
 
 interface Props {
   children?: ReactNode;
 }
 
 export const RightBar: FC<Props> = ({ children }) => {
+  const size = WindowSize()
   const [value, setValue] = React.useState("recents");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -22,15 +24,16 @@ export const RightBar: FC<Props> = ({ children }) => {
       <Paper
         sx={{
           width: "100%",
-          height: '79vh'
+          height: size.height-130
         }}
+    
       >
         {children}
       </Paper>
       <Paper
         elevation={0}
         sx={{
-          width: "100%",
+          width: "100%"
         }}
       >
         <BottomNavigation

@@ -22,18 +22,22 @@ export const ChatMessages: FC<Props> = ({}) => {
   return (
     <List sx={{ width: "100%", minWidth: 300, bgcolor: "background.paper" }}>
       <Grid container>
-        <Grid item xs={11} sx={{ marginLeft: 3, marginRight:-5, marginTop: 2 }}>
-        <Typography align="center" sx={{ fontWeight:'medium'}} >Chats</Typography>
+        <Grid
+          item
+          xs={11}
+          sx={{ marginLeft: 3, marginRight: -5, marginTop: 2 }}
+        >
+          <Typography align="center" sx={{ fontWeight: "medium" }}>
+            Chats
+          </Typography>
         </Grid>
         <Grid item xs={1}>
-        <IconButton
-          aria-label="settings"
-        >
-          <CloseIcon />
-        </IconButton>
+          <IconButton aria-label="settings">
+            <CloseIcon />
+          </IconButton>
         </Grid>
       </Grid>
-      <ListItem>
+      <ListItem alignItems="flex-start">
         <ListItemText
           primary={
             <React.Fragment>
@@ -59,7 +63,7 @@ export const ChatMessages: FC<Props> = ({}) => {
             primary={
               <React.Fragment>
                 <Typography
-                  sx={{ display: "inline", fontWeight:'medium'}}
+                  sx={{ display: "inline", fontWeight: "medium" }}
                   component="span"
                   variant="body1"
                   color="text.primary"
@@ -71,14 +75,15 @@ export const ChatMessages: FC<Props> = ({}) => {
             secondary={
               <React.Fragment>
                 <Typography
-                  sx={{ display: "inline"}}
+                  sx={{ display: "inline" }}
                   component="span"
                   variant="body2"
                   color="text.primary"
-                >
-                 
-                </Typography>
-                <span style={{ fontWeight: '500', color:'black'}}>Neighborhood doing errands this </span> 0:13
+                ></Typography>
+                <span style={{ fontWeight: "500", color: "black" }}>
+                  Neighborhood doing errands this{" "}
+                </span>{" "}
+                0:13
               </React.Fragment>
             }
           />
@@ -91,7 +96,7 @@ export const ChatMessages: FC<Props> = ({}) => {
             primary={
               <React.Fragment>
                 <Typography
-                  sx={{ display: "inline", fontWeight:'medium'}}
+                  sx={{ display: "inline", fontWeight: "medium" }}
                   component="span"
                   variant="body1"
                   color="text.primary"
@@ -103,7 +108,7 @@ export const ChatMessages: FC<Props> = ({}) => {
             secondary={
               <React.Fragment>
                 <Typography
-                  sx={{ display: "inline"}}
+                  sx={{ display: "inline" }}
                   component="span"
                   variant="body2"
                   color="text.primary"
@@ -111,7 +116,8 @@ export const ChatMessages: FC<Props> = ({}) => {
                   you:
                 </Typography>
                 {" your neighborhood doing errands thi…"}
-                <span style={{ fontWeight: '500', color:'black'}}> </span>16:33
+                <span style={{ fontWeight: "500", color: "black" }}> </span>
+                16:33
               </React.Fragment>
             }
           />
@@ -124,7 +130,7 @@ export const ChatMessages: FC<Props> = ({}) => {
             primary={
               <React.Fragment>
                 <Typography
-                  sx={{ display: "inline", fontWeight:'medium'}}
+                  sx={{ display: "inline", fontWeight: "medium" }}
                   component="span"
                   variant="body1"
                   color="text.primary"
@@ -136,7 +142,7 @@ export const ChatMessages: FC<Props> = ({}) => {
             secondary={
               <React.Fragment>
                 <Typography
-                  sx={{ display: "inline"}}
+                  sx={{ display: "inline" }}
                   component="span"
                   variant="body2"
                   color="text.primary"
@@ -144,7 +150,8 @@ export const ChatMessages: FC<Props> = ({}) => {
                   you:
                 </Typography>
                 {" I'll be in your neighborhood …"}
-                <span style={{ fontWeight: '500', color:'black'}}> </span>12:45
+                <span style={{ fontWeight: "500", color: "black" }}> </span>
+                12:45
               </React.Fragment>
             }
           />
@@ -157,7 +164,7 @@ export const ChatMessages: FC<Props> = ({}) => {
             primary={
               <React.Fragment>
                 <Typography
-                  sx={{ display: "inline", fontWeight:'medium'}}
+                  sx={{ display: "inline", fontWeight: "medium" }}
                   component="span"
                   variant="body1"
                   color="text.primary"
@@ -169,7 +176,7 @@ export const ChatMessages: FC<Props> = ({}) => {
             secondary={
               <React.Fragment>
                 <Typography
-                  sx={{ display: "inline"}}
+                  sx={{ display: "inline" }}
                   component="span"
                   variant="body2"
                   color="text.primary"
@@ -177,7 +184,7 @@ export const ChatMessages: FC<Props> = ({}) => {
                   you:
                 </Typography>
                 {" I'll be in your neighborhood doing errands this …"}
-                <span style={{ fontWeight: '500', color:'black'}}> </span>Sat
+                <span style={{ fontWeight: "500", color: "black" }}> </span>Sat
               </React.Fragment>
             }
           />

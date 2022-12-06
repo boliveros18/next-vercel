@@ -7,6 +7,6 @@ export * from './ReadMore'
 export * from './CardDetailUi'
 export * from './SeeComments'
 export * from './CommentUi'
-export * from './CommentInteractions'
-export * from './BackBodyComponent'
+export * from './CommentBar'
+export * from './CommentForm'
 

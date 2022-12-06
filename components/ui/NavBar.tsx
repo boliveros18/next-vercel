@@ -183,7 +183,7 @@ export const NavBar: FC<Props> = ({}) => {
           edge="start"
           color="inherit"
           aria-label="open drawer"
-          sx={{ mr: 2, display: { xs: "block", sm: "none" }, color: "black" }}
+          sx={{ mr: 2, display: { xs: "block",sm: "block", md: "none" }, color: "black" }}
         >
           <MenuIcon />
         </IconButton>
@@ -191,7 +191,7 @@ export const NavBar: FC<Props> = ({}) => {
           variant="h6"
           noWrap
           component="div"
-          sx={{ display: { xs: "none", sm: "block" } }}
+          sx={{ display: { xs: "none", sm: "block", md: "block"}, marginRight: 2 }}
         >
           <Link href="/" passHref>
             <a style={{ textDecoration: "none" }}>
@@ -205,7 +205,8 @@ export const NavBar: FC<Props> = ({}) => {
             </a>
           </Link>
         </Typography>
-        <Search style={{ color: "black" }}>
+        <Box sx={{ flexGrow: 1 }} />
+        <Search sx={{ color: "black", width:"40ch" }}>
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
@@ -214,7 +215,6 @@ export const NavBar: FC<Props> = ({}) => {
             inputProps={{ "aria-label": "search" }}
           />
         </Search>
-        <Box sx={{ flexGrow: 1 }} />
         <Box sx={{ display: { xs: "none", md: "flex" }, color: "black" }}>
           <IconButton
             size="large"
@@ -267,8 +267,8 @@ export const NavBar: FC<Props> = ({}) => {
             <MoreIcon />
           </IconButton>
         </Box>
-        <Button variant="contained" color="secondary" size="medium">
-          Sign
+        <Button variant="contained" color="secondary" size="medium" sx={{ color:"#001B87" }}>
+          Login
         </Button>
       </Toolbar>
       {renderMobileMenu}

@@ -1,9 +1,9 @@
 import { FC } from "react";
 import * as React from "react";
-import { Box, Card, CardHeader, Avatar, IconButton } from "@mui/material";
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { CardDetailUi, CommentInteractions } from "./";
+import { Box, Card, CardHeader, Avatar, IconButton, Grid } from "@mui/material";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { CardDetailUi } from "./";
 
 interface Props {
   author: string;
@@ -25,33 +25,49 @@ export const CommentUi: FC<Props> = ({
   answers,
 }) => {
   return (
-      <Box
-        sx={{
-          height: "100%",
-          maxHeight: 85,
-          bgcolor: "background.paper",
-          overflow: "auto",
-        }}
-      >
-        <Card sx={{ maxWidth: "100%" }}>
-          <CardHeader
-            avatar={
-              <Avatar alt="Remy Sharp" src={photo} />
-            }
-            action={
-              <IconButton
-                aria-label="like"
-                style={{
-                  color: "black", marginRight: -10
-                }}
-              >
-                { like ?   <CheckCircleIcon fontSize="small" sx={{color:'blue'}} /> : <CheckCircleOutlineIcon fontSize="small" /> }
-              </IconButton>
-            }
-            title={<CardDetailUi author={author} comment={comment}/>}
-            subheader={<CommentInteractions date={date} likes={likes}/>}
-          />
-        </Card>
-      </Box>
+    <Box
+      sx={{
+        height: "100%",
+        maxHeight: 85,
+        bgcolor: "background.paper",
+        overflow: "auto",
+      }}
+    >
+      <Card sx={{ maxWidth: "100%" }}>
+        <CardHeader
+          avatar={<Avatar alt="Remy Sharp" src={photo} />}
+          action={
+            <IconButton
+              aria-label="like"
+              style={{
+                color: "black",
+                marginRight: -10,
+              }}
+            >
+              {like ? (
+                <CheckCircleIcon fontSize="small" sx={{ color: "blue" }} />
+              ) : (
+                <CheckCircleOutlineIcon fontSize="small" />
+              )}
+            </IconButton>
+          }
+          title={<CardDetailUi author={author} comment={comment} />}
+          subheader={
+            <Grid container spacing={2}>
+              <Grid item xs={3}>
+                <span>{date}</span>
+              </Grid>
+              <Grid item xs={3}>
+                <span>{likes} Likes</span>
+              </Grid>
+              <Grid item xs={3}>
+                <a style={{ fontWeight: "500", cursor: "pointer" }}>Answer</a>
+              </Grid>
+              <Grid item xs={3}></Grid>
+            </Grid>
+          }
+        />
+      </Card>
+    </Box>
   );
 };
