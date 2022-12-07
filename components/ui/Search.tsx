@@ -8,8 +8,6 @@ import { styled } from '@mui/material/styles';
   '&:hover': {
     backgroundColor: "#e0dede",
   },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
   width: '100%',
   [theme.breakpoints.up('md')]: {
     marginLeft: 10,

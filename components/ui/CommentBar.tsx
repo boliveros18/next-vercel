@@ -31,7 +31,7 @@ export const CommentBar: FC<Props> = ({ name, avatar }) => {
           }}
         >
           <Typography
-            sx={{ fontSize: 15, textTransform: "capitalize", color: "#001B87" }}
+            sx={{ fontSize: 15, textTransform: "capitalize" }}
             variant="subtitle2"
           >
             Post

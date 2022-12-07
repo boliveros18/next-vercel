@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useState, MouseEvent } from "react";
 import * as React from "react";
 import {
   AppBar,
@@ -12,6 +12,8 @@ import {
   Divider,
   ListItemIcon,
   Button,
+  Select,
+  SelectChangeEvent,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
@@ -33,14 +35,18 @@ interface Props {
 }
 
 export const NavBar: FC<Props> = ({}) => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [procedure, setProcedure] = useState("");
+  const handleChange = (event: SelectChangeEvent) => {
+    setProcedure(event.target.value as string);
+  };
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-    React.useState<null | HTMLElement>(null);
+   useState<null | HTMLElement>(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleProfileMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -53,7 +59,7 @@ export const NavBar: FC<Props> = ({}) => {
     handleMobileMenuClose();
   };
 
-  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleMobileMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
@@ -183,7 +189,10 @@ export const NavBar: FC<Props> = ({}) => {
           edge="start"
           color="inherit"
           aria-label="open drawer"
-          sx={{ mr: 2, display: { xs: "block",sm: "block", md: "none" }, color: "black" }}
+          sx={{
+            display: { xs: "block", sm: "block", md: "none" },
+            color: "black",
+          }}
         >
           <MenuIcon />
         </IconButton>
@@ -191,7 +200,9 @@ export const NavBar: FC<Props> = ({}) => {
           variant="h6"
           noWrap
           component="div"
-          sx={{ display: { xs: "none", sm: "block", md: "block"}, marginRight: 2 }}
+          sx={{
+            display: { xs: "none", sm: "block", md: "block" },
+          }}
         >
           <Link href="/" passHref>
             <a style={{ textDecoration: "none" }}>
@@ -206,7 +217,24 @@ export const NavBar: FC<Props> = ({}) => {
           </Link>
         </Typography>
         <Box sx={{ flexGrow: 1 }} />
-        <Search sx={{ color: "black", width:"40ch" }}>
+        <Select
+          size="small"
+          sx={{
+            minWidth: 65,
+            boxShadow: "none",
+            ".MuiOutlinedInput-notchedOutline": { border: "none" }
+          }}
+          value={procedure}
+          displayEmpty
+          inputProps={{ "aria-label": "Without label" }}
+          onChange={handleChange}
+        >
+          <MenuItem value="">All</MenuItem>
+          <MenuItem value="plastic">Plastic</MenuItem>
+          <MenuItem value="oncology">Onconlogy</MenuItem>
+          <MenuItem value="orthopedic">Orthopedic</MenuItem>
+        </Select>
+        <Search sx={{ color: "black", width: "40ch" }}>
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
@@ -267,7 +295,7 @@ export const NavBar: FC<Props> = ({}) => {
             <MoreIcon />
           </IconButton>
         </Box>
-        <Button variant="contained" color="secondary" size="medium" sx={{ color:"#001B87" }}>
+        <Button variant="outlined" color="primary" size="medium">
           Login
         </Button>
       </Toolbar>

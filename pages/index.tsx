@@ -58,7 +58,7 @@ const HomePage: NextPage<Props> = ({clinic}) => {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   //const { id } = params as { id: string };
 
-  const clinic = await dbEntries.getClinicById("638d7d5914d979d16abd777a");
+  const clinic = await dbEntries.getClinicById("638f784d3299c817f2182c74");
 
   if (!clinic) {
     return {

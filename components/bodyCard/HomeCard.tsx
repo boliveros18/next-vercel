@@ -154,18 +154,18 @@ export const HomeCard: FC<Props> = ({ clinic }) => {
           >
             <CommentBar name="" avatar=""></CommentBar>
             <Button
-              variant="contained"
+              variant="outlined"
               size="medium"
-              color="secondary"
+              color="primary"
               sx={{
-                width: "90%",  color:"#001B87"
+                width: "90%",  color:"black"
               }}
             >
               Sign in securely button
             </Button>
             <Button
               variant="text"
-              sx={{ color: "#001B87", fontSize: 13, width: "90%" }}
+              sx={{ fontSize: 13, width: "90%" }}
             >
               Create an account
             </Button>
