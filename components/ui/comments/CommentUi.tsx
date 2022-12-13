@@ -3,14 +3,14 @@ import * as React from "react";
 import { Box, Card, CardHeader, Avatar, IconButton, Grid } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { CardDetailUi } from "./";
+import { CardDetailUi } from "..";
 
 interface Props {
   author: string;
   comment: any;
   photo: string;
   date: string;
-  likes: string;
+  likes: number;
   like: boolean;
   answers?: [];
 }
@@ -53,17 +53,16 @@ export const CommentUi: FC<Props> = ({
           }
           title={<CardDetailUi author={author} comment={comment} />}
           subheader={
-            <Grid container spacing={2}>
-              <Grid item xs={3}>
+            <Grid container spacing={1}>
+              <Grid item xs={2}>
                 <span>{date}</span>
               </Grid>
               <Grid item xs={3}>
                 <span>{likes} Likes</span>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={2}>
                 <a style={{ fontWeight: "500", cursor: "pointer" }}>Answer</a>
               </Grid>
-              <Grid item xs={3}></Grid>
             </Grid>
           }
         />

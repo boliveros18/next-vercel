@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useContext } from "react";
 import * as React from "react";
 import {
   Card,
@@ -18,43 +18,37 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CommentIcon from "@mui/icons-material/ChatBubbleOutline";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import {
-  CardDetailUi,
-  CommentBar,
-  GuideBar,
-  ReadMore,
-  SeeComments,
-} from "../ui";
-import { ClinicDetails } from "../Clinic/ClinicDetails";
-import { Clinic } from "../../interfaces";
-import { UseWindowSize, WindowSize } from "../../utils/useWindowSize";
+import { CardDetailUi, GuideBar, ReadMore, SeeComments } from "../ui";
+import { ClinicDetails } from "../clinic/ClinicDetails";
+import { WindowSize, UseWindowSize } from "../../utils/useWindowSize";
+import { ClinicContext } from "../../context/clinic/ClinicContext";
 
-interface Props {
-  clinic: Clinic;
-}
+interface Props {}
 
-export const HomeCard: FC<Props> = ({ clinic }) => {
+export const HomeCard: FC<Props> = () => {
   const mobile = UseWindowSize();
   const size = WindowSize();
-  const [clinicDetails, setClinicDetails] = useState(true);
+  const [toogle, setToogle] = useState(true);
+  const { clinics } = useContext(ClinicContext);
 
   const handleThrough = () => {
-    setClinicDetails(!clinicDetails);
+    setToogle(!toogle);
   };
 
   return (
     <>
-      {clinicDetails ? (
+      {toogle ? (
         <Card
           sx={{
             width: "100%",
-            height: size.height - 71,
+            height: size.height - 115,
           }}
           elevation={0}
         >
           <GuideBar />
           <CardHeader
-            avatar={<Avatar alt={clinic.name} src={clinic.avatar} />}
+            sx={{ mt: -1, mb: -1 }}
+            avatar={<Avatar alt={clinics[0]?.name} src={clinics[0]?.avatar} />}
             action={
               <IconButton
                 aria-label="settings"
@@ -70,17 +64,26 @@ export const HomeCard: FC<Props> = ({ clinic }) => {
                 sx={{ fontSize: 15, textTransform: "capitalize" }}
                 variant="subtitle2"
               >
-                {clinic.name}
+                {clinics[0]?.name + " "}{" "}
+                {clinics[0]?.certified ? (
+                  <CheckCircleIcon sx={{ color: "blue", fontSize: "15px" }} />
+                ) : (
+                  <CheckCircleOutlineIcon
+                    fontSize="small"
+                    sx={{ color: "gray", fontSize: "15px" }}
+                  />
+                )}
               </Typography>
             }
-            subheader={clinic.city + ", " + clinic.country}
+            subheader={clinics[0]?.city + ", " + clinics[0]?.country}
           />
-          <CardActionArea onClick={() => setClinicDetails(!clinicDetails)}>
+          <CardActionArea onClick={() => setToogle(!toogle)}>
             <CardMedia
               component="img"
-              height={size.height*0.28}
-              image={clinic.photo}
+              height={size.height - 500}
+              image={clinics[0]?.photo}
               alt="Clinic"
+              sx={{ maxHeight: "330px" }}
             />
           </CardActionArea>
           <CardActions
@@ -120,16 +123,20 @@ export const HomeCard: FC<Props> = ({ clinic }) => {
             <CardDetailUi
               author="Finantial"
               comment={
-                mobile ? <ReadMore text={clinic.finantial} /> : clinic.finantial
+                mobile ? (
+                  <ReadMore text={clinics[0]?.finantial} />
+                ) : (
+                  clinics[0]?.finantial
+                )
               }
             ></CardDetailUi>
             <CardDetailUi
               author="Speciality"
               comment={
                 mobile ? (
-                  <ReadMore text={clinic.speciality} />
+                  <ReadMore text={clinics[0]?.speciality} />
                 ) : (
-                  clinic.speciality
+                  clinics[0]?.speciality
                 )
               }
             ></CardDetailUi>
@@ -137,9 +144,9 @@ export const HomeCard: FC<Props> = ({ clinic }) => {
               author="Technology"
               comment={
                 mobile ? (
-                  <ReadMore text={clinic.technology} />
+                  <ReadMore text={clinics[0]?.technology} />
                 ) : (
-                  clinic.technology
+                  clinics[0]?.technology
                 )
               }
             ></CardDetailUi>
@@ -152,21 +159,18 @@ export const HomeCard: FC<Props> = ({ clinic }) => {
             alignItems="center"
             sx={{ marginTop: 2 }}
           >
-            <CommentBar name="" avatar=""></CommentBar>
             <Button
               variant="outlined"
               size="medium"
               color="primary"
               sx={{
-                width: "90%",  color:"black"
+                width: "90%",
+                color: "black",
               }}
             >
               Sign in securely button
             </Button>
-            <Button
-              variant="text"
-              sx={{ fontSize: 13, width: "90%" }}
-            >
+            <Button variant="text" sx={{ fontSize: 13, width: "90%" }}>
               Create an account
             </Button>
           </Stack>
@@ -174,7 +178,6 @@ export const HomeCard: FC<Props> = ({ clinic }) => {
       ) : (
         <ClinicDetails
           handleThrough={handleThrough}
-          name={clinic.name}
         ></ClinicDetails>
       )}
     </>

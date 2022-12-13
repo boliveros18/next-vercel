@@ -1,10 +1,10 @@
-import { FC, ReactNode, useState, MouseEvent } from "react";
+import { FC, ReactNode, useState, MouseEvent, useContext } from "react";
+import { useRouter } from "next/router";
 import * as React from "react";
 import {
   AppBar,
   IconButton,
   Toolbar,
-  Typography,
   Box,
   Badge,
   Menu,
@@ -12,12 +12,9 @@ import {
   Divider,
   ListItemIcon,
   Button,
-  Select,
-  SelectChangeEvent,
+  Avatar,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import AccountCircle from "@mui/icons-material/PersonOutline";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import MoreIcon from "@mui/icons-material/MoreVert";
@@ -25,23 +22,28 @@ import ContentCopy from "@mui/icons-material/ContentCopy";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Logout from "@mui/icons-material/Logout";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Search, SearchIconWrapper, StyledInputBase } from "./Search";
+import { AuthContext } from "../../../context/auth";
 
-import Link from "next/link";
-import Image from "next/image";
+import { Search, SearchIconWrapper, StyledInputBase } from "../styled/Search";
+
+import { MenuUi } from "./MenuUi";
+import { BrandUi } from "./BrandUi";
+import { SelectUi } from "./SelectUi";
 
 interface Props {
   children?: ReactNode;
 }
 
 export const NavBar: FC<Props> = ({}) => {
-  const [procedure, setProcedure] = useState("");
-  const handleChange = (event: SelectChangeEvent) => {
-    setProcedure(event.target.value as string);
-  };
+  const { user, isLoggedIn, logout } = useContext(AuthContext);
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-   useState<null | HTMLElement>(null);
+    useState<null | HTMLElement>(null);
+
+  const navigateTo = (url: string) => {
+    router.push(url);
+  };
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -82,8 +84,8 @@ export const NavBar: FC<Props> = ({}) => {
     >
       <MenuItem onClick={handleMenuClose} sx={{ width: 300, maxWidth: "100%" }}>
         <ListItemIcon>
-          <AccountCircle fontSize="medium" />
-        </ListItemIcon>
+          <Avatar alt="name" src="/static/images/avatar/2.jpg" sx={{ mr: 1 }} />
+        </ListItemIcon>{" "}
         Profile
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>
@@ -99,7 +101,7 @@ export const NavBar: FC<Props> = ({}) => {
         Payments
       </MenuItem>
       <Divider />
-      <MenuItem>
+      <MenuItem onClick={logout}>
         <ListItemIcon>
           <Logout fontSize="small" />
         </ListItemIcon>
@@ -169,7 +171,7 @@ export const NavBar: FC<Props> = ({}) => {
           aria-haspopup="true"
           color="inherit"
         >
-          <AccountCircle />
+          <Avatar alt="name" src="/static/images/avatar/2.jpg" />
         </IconButton>
         <p style={{ paddingRight: 145 }}>Profile</p>
         <ExpandMoreIcon />
@@ -184,56 +186,10 @@ export const NavBar: FC<Props> = ({}) => {
       style={{ backgroundColor: "white" }}
     >
       <Toolbar>
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="open drawer"
-          sx={{
-            display: { xs: "block", sm: "block", md: "none" },
-            color: "black",
-          }}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography
-          variant="h6"
-          noWrap
-          component="div"
-          sx={{
-            display: { xs: "none", sm: "block", md: "block" },
-          }}
-        >
-          <Link href="/" passHref>
-            <a style={{ textDecoration: "none" }}>
-              <Image
-                style={{}}
-                src="/Brand.png"
-                width={139}
-                height={40}
-                alt="logo"
-              ></Image>
-            </a>
-          </Link>
-        </Typography>
+        <MenuUi />
+        <BrandUi />
         <Box sx={{ flexGrow: 1 }} />
-        <Select
-          size="small"
-          sx={{
-            minWidth: 65,
-            boxShadow: "none",
-            ".MuiOutlinedInput-notchedOutline": { border: "none" }
-          }}
-          value={procedure}
-          displayEmpty
-          inputProps={{ "aria-label": "Without label" }}
-          onChange={handleChange}
-        >
-          <MenuItem value="">All</MenuItem>
-          <MenuItem value="plastic">Plastic</MenuItem>
-          <MenuItem value="oncology">Onconlogy</MenuItem>
-          <MenuItem value="orthopedic">Orthopedic</MenuItem>
-        </Select>
+        <SelectUi />
         <Search sx={{ color: "black", width: "40ch" }}>
           <SearchIconWrapper>
             <SearchIcon />
@@ -243,61 +199,83 @@ export const NavBar: FC<Props> = ({}) => {
             inputProps={{ "aria-label": "search" }}
           />
         </Search>
-        <Box sx={{ display: { xs: "none", md: "flex" }, color: "black" }}>
-          <IconButton
-            size="large"
-            aria-label="show 4 new mails"
-            color="inherit"
+        {isLoggedIn ? (
+          <Box sx={{ display: { xs: "none", md: "flex" }, color: "black" }}>
+            <IconButton
+              size="large"
+              aria-label="show 2 new products"
+              color="inherit"
+            >
+              <Badge badgeContent={2} color="error">
+                <AddShoppingCartIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
+            >
+              <Badge badgeContent={4} color="error">
+                <ChatBubbleOutlineIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            >
+              <Badge badgeContent={7} color="error">
+                <NotificationsNoneIcon fontSize="medium" />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <Avatar alt="name" src="/static/images/avatar/2.jpg" />
+            </IconButton>
+          </Box>
+        ) : (
+          <Box sx={{ display: { xs: "flex", md: "flex" }, color: "black" }}>
+            <IconButton
+              size="large"
+              aria-label="show 2 new products"
+              color="inherit"
+            >
+              <Badge badgeContent={2} color="error">
+                <AddShoppingCartIcon />
+              </Badge>
+            </IconButton>
+          </Box>
+        )}
+        {isLoggedIn ? (
+          <Box sx={{ display: { xs: "flex", md: "none" }, color: "black" }}>
+            <IconButton
+              size="large"
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MoreIcon />
+            </IconButton>
+          </Box>
+        ) : (
+          <Button
+            variant="outlined"
+            color="primary"
+            size="medium"
+            onClick={() => navigateTo(`/auth/login?p=${router.asPath}`)}
           >
-            <Badge badgeContent={2} color="error">
-              <AddShoppingCartIcon />
-            </Badge>
-          </IconButton>
-          <IconButton
-            size="large"
-            aria-label="show 4 new mails"
-            color="inherit"
-          >
-            <Badge badgeContent={4} color="error">
-              <ChatBubbleOutlineIcon />
-            </Badge>
-          </IconButton>
-          <IconButton
-            size="large"
-            aria-label="show 17 new notifications"
-            color="inherit"
-          >
-            <Badge badgeContent={7} color="error">
-              <NotificationsNoneIcon fontSize="medium" />
-            </Badge>
-          </IconButton>
-          <IconButton
-            size="large"
-            edge="end"
-            aria-label="account of current user"
-            aria-controls={menuId}
-            aria-haspopup="true"
-            onClick={handleProfileMenuOpen}
-            color="inherit"
-          >
-            <AccountCircle fontSize="medium" />
-          </IconButton>
-        </Box>
-        <Box sx={{ display: { xs: "flex", md: "none" }, color: "black" }}>
-          <IconButton
-            size="large"
-            aria-label="show more"
-            aria-controls={mobileMenuId}
-            aria-haspopup="true"
-            onClick={handleMobileMenuOpen}
-            color="inherit"
-          >
-            <MoreIcon />
-          </IconButton>
-        </Box>
-        <Button variant="outlined" color="primary" size="medium">
-          Login
-        </Button>
+            Login
+          </Button>
+        )}
       </Toolbar>
       {renderMobileMenu}
       {renderMenu}

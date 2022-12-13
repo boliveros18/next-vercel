@@ -7,7 +7,7 @@ import Document, {
   DocumentContext,
   DocumentInitialProps,
 } from "next/document";
-import { HOME_TITLE } from '../constans/home';
+import { HOME_TITLE } from "../constans/home";
 
 class MyDocument extends Document {
   static async getInitialProps(
@@ -24,9 +24,8 @@ class MyDocument extends Document {
   render() {
     return (
       <Html lang="es">
-         <title>{HOME_TITLE}</title>
+        <title>{HOME_TITLE}</title>
         <Head>
-       
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"

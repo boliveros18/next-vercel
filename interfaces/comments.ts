@@ -1,12 +1,11 @@
 export interface Comments {
   _id: string;
-  photo: string;
-  username: string;
+  user_photo: string;
+  user_name: string;
   user_id: string;
   description: string;
   approved: boolean;
-  likes: string;
-  status: string;
+  likes: number;
   createdAt: number;
   answers: [];
 }

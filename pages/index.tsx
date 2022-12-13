@@ -1,18 +1,32 @@
-import * as React from "react";
+import { useState, useContext, useEffect } from "react";
 import { GetServerSideProps, NextPage } from "next";
 import { dbEntries } from "../database";
 import { Layout } from "../components/layouts";
 import { HomeCard } from "../components/bodyCard";
-import { Grid } from "@mui/material";
-import { SideBar, RightBar } from "../components/ui";
+import { Grid, BottomNavigation, BottomNavigationAction } from "@mui/material";
+import { SideBarFixed, RightBar } from "../components/ui";
 import { ChatMessages } from "../components/chat";
 import { Clinic } from "../interfaces";
+import AirplanemodeActiveOutlinedIcon from "@mui/icons-material/AirplanemodeActiveOutlined";
+import AccessibilityNewOutlinedIcon from "@mui/icons-material/AccessibilityNewOutlined";
+import RoomServiceOutlinedIcon from "@mui/icons-material/RoomServiceOutlined";
+import { ClinicContext } from "../context/clinic/ClinicContext";
 
 interface Props {
-  clinic: Clinic;
+  clinic: Clinic[];
 }
 
-const HomePage: NextPage<Props> = ({clinic}) => {
+const HomePage: NextPage<Props> = ({ clinic }) => {
+  const [value, setValue] = useState("recents");
+  const { setClinics } = useContext(ClinicContext);
+
+  useEffect(() => {
+    setClinics(clinic);
+  }, [clinic, setClinics]);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
 
   return (
     <Layout>
@@ -25,17 +39,38 @@ const HomePage: NextPage<Props> = ({clinic}) => {
           sx={{ display: { xs: "none", sm: "none", md: "block" } }}
           justifyContent="flex-start"
         >
-          <SideBar />
+          <SideBarFixed />
         </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          md={5}
-          display="flex"
-          justifyContent="center"
-        >
-          <HomeCard clinic={clinic} />
+        <Grid item xs={12} sm={6} md={5} justifyContent="center">
+          <HomeCard />
+          <BottomNavigation
+            sx={{
+              display: { xs: "block", sm: "none", md: "none" },
+              pt: 1,
+              pb: 1,
+            }}
+            showLabels
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          >
+            <BottomNavigationAction
+              label="Procedures"
+              icon={<AccessibilityNewOutlinedIcon />}
+              sx={{ color: "#c4bebe", width: "33.33%" }}
+            />
+            <BottomNavigationAction
+              label="Ticket"
+              icon={<AirplanemodeActiveOutlinedIcon />}
+              sx={{ color: "#c4bebe", width: "33.33%" }}
+            />
+            <BottomNavigationAction
+              label="Hotels"
+              icon={<RoomServiceOutlinedIcon />}
+              sx={{ color: "#c4bebe", width: "33.33%" }}
+            />
+          </BottomNavigation>
         </Grid>
         <Grid
           item
@@ -58,7 +93,7 @@ const HomePage: NextPage<Props> = ({clinic}) => {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   //const { id } = params as { id: string };
 
-  const clinic = await dbEntries.getClinicById("638f784d3299c817f2182c74");
+  const clinic = await dbEntries.getClinicById("6397a5607931691ab657dedc");
 
   if (!clinic) {
     return {
@@ -71,10 +106,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
   return {
     props: {
-      clinic: clinic,
+      clinic: [clinic],
     },
   };
 };
-
 
 export default HomePage;

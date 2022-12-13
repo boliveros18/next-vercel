@@ -1,4 +1,4 @@
-import { Comments } from "./";
+import { Comments, Qualification } from "./";
 
 export interface Clinic {
   _id: string;
@@ -12,11 +12,11 @@ export interface Clinic {
   name: string;
   city: string;
   country: string;
-  instagram: string;
-  qualification: number;
-  certifications: string;
+  instagram: { name: string; link: string };
+  qualification: Qualification;
+  certifications: { name: string; description: string; logo: string };
   address: string;
-  comments: Comments;
+  comments: Comments[];
 }
 
 export type categoryStatus = "principal" | "general";

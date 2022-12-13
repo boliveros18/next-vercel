@@ -1,14 +1,15 @@
 import { FC, ReactNode } from "react";
-import { NavBar } from "../ui";
+import { NavBar, SideBar } from "../ui";
 
 interface Props {
   children?: ReactNode;
 }
 
-export const Layout: FC<Props> = ({children}) => {
+export const Layout: FC<Props> = ({ children }) => {
   return (
     <div>
-      <NavBar/>
+      <NavBar />
+      <SideBar />
       {children}
     </div>
   );
