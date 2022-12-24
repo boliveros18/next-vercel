@@ -11,7 +11,7 @@ export const InstagramLink: FC<Props> = ({}) => {
   return (
     <Grid container>
       <Box sx={{ flexGrow: 1 }} />
-      <Link href={clinics[0].instagram.link} sx={{ textDecoration: "none" }}>
+      <Link href={clinics[0].instagram.link}  target="_blank" sx={{ textDecoration: "none" }}>
         <Typography
           sx={{
             fontSize: 14,

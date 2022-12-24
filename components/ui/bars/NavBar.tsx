@@ -15,8 +15,10 @@ import {
   Avatar,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import ManageAccountIcon from '@mui/icons-material/ManageAccountsOutlined';
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import PaymentOutlinedIcon from '@mui/icons-material/PaymentOutlined';
 import MoreIcon from "@mui/icons-material/MoreVert";
 import ContentCopy from "@mui/icons-material/ContentCopy";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
@@ -88,6 +90,13 @@ export const NavBar: FC<Props> = ({}) => {
         </ListItemIcon>{" "}
         Profile
       </MenuItem>
+      <Divider />
+      <MenuItem onClick={handleMenuClose}>
+        <ListItemIcon>
+          <ManageAccountIcon fontSize="small" />
+        </ListItemIcon>
+        Edit
+      </MenuItem>
       <MenuItem onClick={handleMenuClose}>
         <ListItemIcon>
           <ContentCopy fontSize="small" />
@@ -96,7 +105,7 @@ export const NavBar: FC<Props> = ({}) => {
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>
         <ListItemIcon>
-          <ContentCopy fontSize="small" />
+          <PaymentOutlinedIcon fontSize="small" />
         </ListItemIcon>
         Payments
       </MenuItem>

@@ -9,6 +9,7 @@ import {
   ListItemIcon,
   Typography,
   Box,
+  Drawer
 } from "@mui/material";
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import AirplanemodeActiveOutlinedIcon from "@mui/icons-material/AirplanemodeActiveOutlined";
@@ -74,8 +75,8 @@ export const SideBarFixed: FC<Props> = ({}) => {
             <ListItemText sx={{ ml: 2 }}>Hotel reservation</ListItemText>
           </MenuItem>
         </MenuList>
-        <Box sx={{ flexGrow: 1 }} />
       </Paper>
+      <Box sx={{ flexGrow: 1 }} />
       <Typography sx={{ fontSize: 13 }} align="center">
         Super Medical group -{" "}
         <Link href="./privacynotice">

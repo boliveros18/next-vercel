@@ -11,18 +11,21 @@ import AirplanemodeActiveOutlinedIcon from "@mui/icons-material/AirplanemodeActi
 import AccessibilityNewOutlinedIcon from "@mui/icons-material/AccessibilityNewOutlined";
 import RoomServiceOutlinedIcon from "@mui/icons-material/RoomServiceOutlined";
 import { ClinicContext } from "../context/clinic/ClinicContext";
+import { UIContext } from '../context/ui/UIContext';
 
 interface Props {
   clinic: Clinic[];
 }
 
 const HomePage: NextPage<Props> = ({ clinic }) => {
+  const { setLoading } = useContext(UIContext);
   const [value, setValue] = useState("recents");
   const { setClinics } = useContext(ClinicContext);
 
   useEffect(() => {
     setClinics(clinic);
-  }, [clinic, setClinics]);
+    setLoading(true)
+  }, [clinic, setClinics, setLoading]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -93,7 +96,7 @@ const HomePage: NextPage<Props> = ({ clinic }) => {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   //const { id } = params as { id: string };
 
-  const clinic = await dbEntries.getClinicById("6397a5607931691ab657dedc");
+  const clinic = await dbEntries.getClinicById("639939c2fe172d9a7eb5f973");
 
   if (!clinic) {
     return {

@@ -1,0 +1,49 @@
+[{
+  "_id": {
+    "$oid": "6397a5607931691ab657dedc"
+  },
+  "category": "principal",
+  "certified": false,
+  "finantial": "8 million US in 2021",
+  "speciality": "Plastic and Reconstruction",
+  "technology": "Animation Deformity: Evaluating the Role of Morphotopologic Features in Suggesting Preventive Surgical Procedures",
+  "avatar": "/static/images/avatar/1.jpg",
+  "photo": "https://clinicajaca.com/wp-content/uploads/2020/08/clinicajaca-22-scaled.jpg",
+  "name": "Clinica porto azul",
+  "city": "Barranquilla",
+  "country": "Colombia",
+  "instagram": {
+    "name": "clinicaportoazulauna",
+    "link": "https://www.instagram.com/clinicaportoazulauna/?hl=es"
+  },
+  "qualification": {
+    "status": false,
+    "number": 15,
+    "current": 4.3,
+    "new": 3
+  },
+  "certifications": {
+    "name": "Plantree Gold Certification",
+    "description": "Plantree Gold Certification for Excellent in Person Centered Care - 2018 ",
+    "logo": "/static/images/certifications/plantree_certification.jfif"
+  },
+  "address": "Cra 105#45-265",
+  "comments": [
+    {
+      "user_photo": "/static/images/avatar/3.jpg",
+      "user_name": "charlesWid20",
+      "user_id": "tert34345",
+      "description": "Me gusto mucho. Muy buena la atencion.",
+      "approved": true,
+      "likes": 3,
+      "createdAt": {
+        "$numberLong": "1670882656140"
+      },
+      "answers": [],
+      "_id": {
+        "$oid": "6397a5607931691ab657dedd"
+      }
+    }
+  ],
+  "__v": 0
+}]

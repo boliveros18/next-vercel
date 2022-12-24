@@ -14,11 +14,13 @@ import { CommentForm, StyledInputComment } from "../styled/CommentForm";
 import { getFormatDistanceToNow } from "../../../utils";
 import { Clinic } from "../../../interfaces";
 import { ClinicContext } from "../../../context/clinic/ClinicContext";
-import { UseWindowSize} from "../../../utils/useWindowSize";
+import { UseWindowSize } from "../../../utils/useWindowSize";
+import { AuthContext } from "../../../context/auth";
 
 interface Props {}
 
 export const SeeComments: FC<Props> = ({}) => {
+  const { isLoggedIn } = useContext(AuthContext);
   const mobile = UseWindowSize();
   const [clinic, setClinic] = useState<Clinic>({} as Clinic);
 
@@ -28,7 +30,7 @@ export const SeeComments: FC<Props> = ({}) => {
     setClinic(clinics[0]);
   }, [clinics, setClinic]);
 
-  return (
+  return isLoggedIn ? (
     <div>
       <Accordion elevation={0} sx={{ marginTop: -2 }}>
         <AccordionSummary
@@ -92,5 +94,7 @@ export const SeeComments: FC<Props> = ({}) => {
         </IconButton>
       </Toolbar>
     </div>
+  ) : (
+    <div />
   );
 };

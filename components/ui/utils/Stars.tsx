@@ -1,8 +1,9 @@
-import { FC, ReactNode, useState, useEffect } from "react";
+import { FC, ReactNode, useState, useEffect, useContext } from "react";
 import { Qualification } from "../../../interfaces";
 
 import { IconButton, Box } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
+import { AuthContext } from "../../../context/auth";
 
 interface Props {
   children?: ReactNode;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export const Stars: FC<Props> = ({ qualification }) => {
+  const { isLoggedIn } = useContext(AuthContext);
   const [currentValue, setCurrentValue] = useState(0);
   const [hoverValue, setHoverValue] = useState(0);
   const stars = Array(5).fill(0);
@@ -18,8 +20,10 @@ export const Stars: FC<Props> = ({ qualification }) => {
     setCurrentValue(Math.round(qualification.current));
   }, [qualification]);
 
+  
+  
   const handleClick = (value: number) => {
-    setCurrentValue(value);
+    isLoggedIn ? setCurrentValue(value): (null)
   };
 
   const handleMouseOver = (newHoverValue: number) => {
@@ -31,11 +35,11 @@ export const Stars: FC<Props> = ({ qualification }) => {
   };
 
   return (
-    <Box>
+    <Box >
       {stars.map((_, item) => (
         <IconButton
           size="large"
-          key={item}
+          key={item}  
           onClick={() => handleClick(item + 1)}
           onMouseOver={() => handleMouseOver(item + 1)}
           onMouseLeave={handleMouseLeave}

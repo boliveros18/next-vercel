@@ -1,4 +1,4 @@
-import { FC, ReactNode, useReducer } from "react";
+import { FC, ReactNode, useReducer, useState, useMemo } from "react";
 import { UIContext, uiReducer } from "./";
 
 interface ProviderProps {
@@ -15,6 +15,7 @@ const UI_INITIAL_STATE: UIState = {
 
 export const UIProvider: FC<ProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(uiReducer, UI_INITIAL_STATE);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const openSideMenu = () => {
     dispatch({ type: "UI-Open Sidebar" });
@@ -22,9 +23,11 @@ export const UIProvider: FC<ProviderProps> = ({ children }) => {
   const closeSideMenu = () => {
     dispatch({ type: "UI-Close Sidebar" });
   };
+   
+  useMemo(() => ({ loading, setLoading }), [loading]);
 
   return (
-    <UIContext.Provider value={{ ...state, openSideMenu, closeSideMenu }}>
+    <UIContext.Provider value={{ ...state, openSideMenu, closeSideMenu, loading, setLoading }}>
       {children}
     </UIContext.Provider>
   );

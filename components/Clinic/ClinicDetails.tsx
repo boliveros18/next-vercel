@@ -7,7 +7,7 @@ import {
   CardMedia,
   CardContent,
   Box,
-  Divider
+  Divider,
 } from "@mui/material";
 import { QualificationUi, ReadMore, SeeComments } from "../ui";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -23,7 +23,7 @@ interface Props {
   handleThrough: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const ClinicDetails: FC<Props> = ({ handleThrough}) => {
+export const ClinicDetails: FC<Props> = ({ handleThrough }) => {
   const { clinics } = useContext(ClinicContext);
   const mobile = UseWindowSize();
   const size = WindowSize();

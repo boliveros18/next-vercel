@@ -1,0 +1,39 @@
+[{
+  "_id": {
+    "$oid": "6397a5607931691ab657ded8"
+  },
+  "name": "Bresneth Oliveros",
+  "email": "boliveros@google.com",
+  "password": "$2a$10$wyi9LFkwzrdzsxVrbT8jkuwaiWcovKPJbTP.YAoiPnmzcn6GXrHYq",
+  "role": "admin",
+  "__v": 0,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1670882656150"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1670882656150"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6397a5607931691ab657ded9"
+  },
+  "name": "Eduardo Rios",
+  "email": "eduardo@google.com",
+  "password": "$2a$10$6x/bZu2sTaYVkqgUV5eFzuSiLPruC6KMAQy7D73BZsMBXLkkt9rlu",
+  "role": "client",
+  "__v": 0,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1670882656150"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1670882656150"
+    }
+  }
+}]
