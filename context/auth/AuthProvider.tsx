@@ -80,7 +80,7 @@ export const AuthProvider:FC<Props> = ({ children }) => {
 
             return {
                 hasError: true,
-                message: 'No se pudo crear el usuario - intente de nuevo'
+                message: 'Failed to create user - try again'
             }
         }
     }

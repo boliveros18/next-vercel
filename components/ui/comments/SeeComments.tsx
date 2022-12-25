@@ -32,11 +32,11 @@ export const SeeComments: FC<Props> = ({}) => {
 
   return isLoggedIn ? (
     <div>
-      <Accordion elevation={0} sx={{ marginTop: -2 }}>
+      <Accordion elevation={0}>
         <AccordionSummary
           aria-controls="panel1a-content"
           id="panel1a-header"
-          sx={{ marginBottom: -2, marginTop: -1 }}
+          sx={{ marginBottom: -2, marginTop: -2 }}
         >
           <Typography sx={{ fontSize: 15, fontWeight: "500" }}>
             See the {clinic?.comments?.length} comments
@@ -95,6 +95,41 @@ export const SeeComments: FC<Props> = ({}) => {
       </Toolbar>
     </div>
   ) : (
-    <div />
+    <div>
+      {" "}
+      <Accordion elevation={0}>
+        <AccordionSummary
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+          sx={{ marginBottom: -2, marginTop: -2 }}
+        >
+          <Typography sx={{ fontSize: 15, fontWeight: "500" }}>
+            See the {clinic?.comments?.length} comments
+          </Typography>
+        </AccordionSummary>
+        {clinic?.comments?.length > 0 ? (
+          clinic?.comments?.map((item) => (
+            <AccordionDetails key={item._id}>
+              <CommentUi
+                author={item.user_name}
+                comment={
+                  mobile ? (
+                    <ReadMore text={item.description} />
+                  ) : (
+                    item.description
+                  )
+                }
+                photo={item.user_photo}
+                like={item.approved}
+                likes={item.likes}
+                date={getFormatDistanceToNow(item.createdAt)}
+              ></CommentUi>
+            </AccordionDetails>
+          ))
+        ) : (
+          <div />
+        )}
+      </Accordion>
+    </div>
   );
 };

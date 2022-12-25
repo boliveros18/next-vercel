@@ -45,7 +45,8 @@ const LoginPage = () => {
       setTimeout(() => setShowError(false), 3000);
       return;
     }
-
+    
+    // Todo: navegar a la pantalla que el usuario estaba
     router.replace("/");
   };
 

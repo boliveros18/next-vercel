@@ -38,7 +38,7 @@ const checkJWT = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     userId = await jwt.isValidToken(token);
   } catch (error) {
     return res.status(401).json({
-      message: "Token de autorización no es válido",
+      message: "Authorization token is invalid",
     });
   }
 
@@ -47,7 +47,7 @@ const checkJWT = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   await db.disconnect();
 
   if (!user) {
-    return res.status(400).json({ message: "No existe usuario con ese id" });
+    return res.status(400).json({ message: "There is no user with that id" });
   }
 
   const { _id, email, role, name } = user;

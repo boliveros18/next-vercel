@@ -4,7 +4,7 @@ import { dbEntries } from "../database";
 import { Layout } from "../components/layouts";
 import { HomeCard } from "../components/bodyCard";
 import { Grid, BottomNavigation, BottomNavigationAction } from "@mui/material";
-import { SideBarFixed, RightBar } from "../components/ui";
+import { SideBar, RightBar } from "../components/ui";
 import { ChatMessages } from "../components/chat";
 import { Clinic } from "../interfaces";
 import AirplanemodeActiveOutlinedIcon from "@mui/icons-material/AirplanemodeActiveOutlined";
@@ -42,7 +42,7 @@ const HomePage: NextPage<Props> = ({ clinic }) => {
           sx={{ display: { xs: "none", sm: "none", md: "block" } }}
           justifyContent="flex-start"
         >
-          <SideBarFixed />
+          <SideBar keepOpen={true} />
         </Grid>
         <Grid item xs={12} sm={6} md={5} justifyContent="center">
           <HomeCard />

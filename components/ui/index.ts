@@ -4,7 +4,6 @@ export * from "./bars/SelectUi";
 export * from "./bars/BrandUi";
 export * from "./styled/Search";
 export * from "./bars/SideBar";
-export * from "./bars/SideBarFixed";
 export * from "./bars/RightBar";
 export * from "./utils/ShareMediaUi";
 export * from "./utils/GuideBar";

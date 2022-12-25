@@ -35,19 +35,19 @@ const registerUser = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     if ( password.length < 6 ) {
         return res.status(400).json({
-            message: 'La contraseña debe de ser de 6 caracteres'
+            message: 'Password must be at least 6 characters'
         });
     }
 
     if ( name.length < 2 ) {
         return res.status(400).json({
-            message: 'El nombre debe de ser de 2 caracteres'
+            message: 'The name must be at least 2 characters'
         });
     }
     
     if ( !validations.isValidEmail( email ) ) {
         return res.status(400).json({
-            message: 'El correo no tiene formato de correo'
+            message: 'The mail does not have mail format'
         });
     }
     
@@ -57,7 +57,7 @@ const registerUser = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     if ( user ) {
         return res.status(400).json({
-            message:'No puede usar ese correo'
+            message:'You can t use that email'
         })
     }
 
@@ -74,7 +74,7 @@ const registerUser = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
     } catch (error) {
         console.log(error);
         return res.status(500).json({
-            message: 'Revisar logs del servidor'
+            message: 'Review server logs'
         })
     }
    

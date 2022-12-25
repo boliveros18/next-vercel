@@ -45,9 +45,9 @@ export const CommentUi: FC<Props> = ({
               }}
             >
               {like ? (
-                <CheckCircleIcon fontSize="small" sx={{ color: "blue" }} />
+                <CheckCircleIcon sx={{ color: "blue",fontSize: "15px"  }} />
               ) : (
-                <CheckCircleOutlineIcon fontSize="small" />
+                <CheckCircleOutlineIcon sx={{fontSize: "15px"  }} />
               )}
             </IconButton>
           }

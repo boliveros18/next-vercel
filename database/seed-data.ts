@@ -99,7 +99,7 @@ export const seedData: SeedData = {
           user_photo: "/static/images/avatar/3.jpg",
           user_id: "tert34345",
           user_name: "charlesWid20",
-          description: "Me gusto mucho. Muy buena la atencion.",
+          description: "I loved it. Very good attention.",
           approved: true,
           likes: 3,
           createdAt: Date.now(),

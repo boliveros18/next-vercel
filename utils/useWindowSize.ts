@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
- export function UseWindowSize() {
+export function UseWindowSize() {
   const [windowSize, setWindowSize] = useState({
     width: 0,
     height: 0,
@@ -20,7 +20,7 @@ import { useState, useEffect } from "react";
   return windowSize.width < 1150 && windowSize.height < 710 ? true : false;
 }
 
- export function WindowSize() {
+export function WindowSize() {
   const [windowSize, setWindowSize] = useState({
     width: 0,
     height: 0,
