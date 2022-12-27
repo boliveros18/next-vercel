@@ -1,6 +1,7 @@
 import type { AppProps } from "next/app";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { UIProvider } from "../context/ui";
+import { SessionProvider } from "next-auth/react"
 import { ClinicProvider } from "../context/clinic";
 import { SWRConfig } from 'swr';
 import { AuthProvider } from "../context/auth";
@@ -13,6 +14,7 @@ interface Props extends AppProps {
 
 export default function App({ Component, pageProps }: Props) {
   return (
+    <SessionProvider>
     <SWRConfig 
     value={{
       fetcher: (resource, init) => fetch(resource, init).then(res => res.json())
@@ -29,5 +31,6 @@ export default function App({ Component, pageProps }: Props) {
     </UIProvider>
     </AuthProvider>
     </SWRConfig>
+    </SessionProvider>
   );
 }

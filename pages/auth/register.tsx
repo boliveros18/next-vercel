@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
-import { useRouter } from "next/router";
 import NextLink from "next/link";
+import { GetServerSideProps } from 'next';
+import { signIn, getSession } from 'next-auth/react';
 import {
   Box,
   Button,
@@ -16,7 +17,6 @@ import { useForm } from "react-hook-form";
 import Image from "next/image";
 
 import { AuthContext } from "../../context/auth";
-import { entriesApi } from "../../apis";
 import { AuthLayout } from "../../components/layouts";
 import { validations } from "../../utils";
 
@@ -27,7 +27,6 @@ type FormData = {
 };
 
 const RegisterPage = () => {
-  const router = useRouter();
   const { registerUser } = useContext(AuthContext);
 
   const {
@@ -49,8 +48,7 @@ const RegisterPage = () => {
       return;
     }
 
-    // Todo: navegar a la pantalla que el usuario estaba
-    router.replace("/");
+    await signIn('credentials',{ email, password });
   };
 
   return (
@@ -59,7 +57,7 @@ const RegisterPage = () => {
         <Grid
           display="flex"
           justifyContent="center"
-          sx={{ marginBottom: 4, marginTop: 20 }}
+          sx={{ marginBottom: 4, marginTop: 18 }}
         >
           <NextLink href="/" passHref>
             <Link style={{ textDecoration: "none" }}>
@@ -213,5 +211,26 @@ const RegisterPage = () => {
     </AuthLayout>
   );
 };
+
+export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+    
+  const session = await getSession({ req });
+
+  const { p = '/' } = query;
+
+  if ( session ) {
+      return {
+          redirect: {
+              destination: p.toString(),
+              permanent: false
+          }
+      }
+  }
+
+
+  return {
+      props: { }
+  }
+}
 
 export default RegisterPage;

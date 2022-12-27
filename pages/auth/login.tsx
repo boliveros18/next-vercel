@@ -1,5 +1,6 @@
-import { useState, useContext } from "react";
+import { useState, useEffect } from "react";
 import NextLink from "next/link";
+import { GetServerSideProps } from "next";
 import Image from "next/image";
 import {
   Box,
@@ -13,11 +14,10 @@ import {
 } from "@mui/material";
 import { ErrorOutline } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
+import { signIn, getSession, getProviders } from "next-auth/react";
 
-import { AuthContext } from "../../context/auth";
 import { AuthLayout } from "../../components/layouts";
 import { validations } from "../../utils";
-import { useRouter } from "next/router";
 
 type FormData = {
   email: string;
@@ -25,29 +25,23 @@ type FormData = {
 };
 
 const LoginPage = () => {
-  const router = useRouter();
-  const { loginUser } = useContext(AuthContext);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
   const [showError, setShowError] = useState(false);
+  const [providers, setProviders] = useState<any>({});
+
+  useEffect(() => {
+    getProviders().then((prov) => {
+      setProviders(prov);
+    });
+  }, []);
 
   const onLoginUser = async ({ email, password }: FormData) => {
     setShowError(false);
-
-    const isValidLogin = await loginUser(email, password);
-
-    if (!isValidLogin) {
-      setShowError(true);
-      setTimeout(() => setShowError(false), 3000);
-      return;
-    }
-    
-    // Todo: navegar a la pantalla que el usuario estaba
-    router.replace("/");
+    await signIn("credentials", { email, password });
   };
 
   return (
@@ -56,7 +50,7 @@ const LoginPage = () => {
         <Grid
           display="flex"
           justifyContent="center"
-          sx={{ marginBottom: 4, marginTop: 10 }}
+          sx={{ marginBottom: 4, marginTop: 16 }}
         >
           <NextLink href="/" passHref>
             <Link style={{ textDecoration: "none" }}>
@@ -142,19 +136,45 @@ const LoginPage = () => {
           display="flex"
           justifyContent="end"
           sx={{ fontSize: 15, marginBottom: 3 }}
-        > New to iMedical?&nbsp;
+        >
+          {" "}
+          New to iMedical?&nbsp;
           <NextLink href="/auth/register" passHref>
-            <Link underline="none" color="#001B87" sx={{fontWeight: "500"}}>
-             Sing Up
+            <Link underline="none" color="#001B87" sx={{ fontWeight: "500" }}>
+              Sing Up
             </Link>
           </NextLink>
         </Grid>
-        <Divider />
+        <Grid
+          item
+          xs={12}
+          display="flex"
+          flexDirection='column' 
+        >
+          {Object.values(providers).map((provider: any) => {
+            if (provider.id === "credentials")
+              return <div key="credentials"></div>;
+
+            return (
+              <Button
+                key={provider.id}
+                variant="outlined"
+                fullWidth
+                color="primary"
+                sx={{ width: "100%", mb: 1 }}
+                onClick={() => signIn(provider.id)}
+              >
+                {provider.name}
+              </Button>
+            );
+          })}
+        </Grid>
+        <Divider sx={{ width: "100%", mt: 2 }} />
         <Typography sx={{ fontSize: 13, marginTop: 6 }} align="center">
           Super Medical group -{" "}
           <NextLink href="./privacynotice">
             <Link
-            underline="none"
+              underline="none"
               style={{
                 fontWeight: "500",
                 color: "#001B87",
@@ -166,7 +186,7 @@ const LoginPage = () => {
           <br />
           <NextLink href="./conditionuse">
             <Link
-            underline="none"
+              underline="none"
               style={{
                 fontWeight: "500",
                 color: "#001B87",
@@ -180,6 +200,28 @@ const LoginPage = () => {
       </form>
     </AuthLayout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  query,
+}) => {
+  const session = await getSession({ req });
+
+  const { p = "/" } = query;
+
+  if (session) {
+    return {
+      redirect: {
+        destination: p.toString(),
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 };
 
 export default LoginPage;
