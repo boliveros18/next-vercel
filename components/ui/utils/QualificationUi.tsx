@@ -1,5 +1,4 @@
 import { FC, ReactNode, useContext } from "react";
-import { Clinic } from "../../../interfaces";
 import { Typography, Box, Grid } from "@mui/material";
 import { ClinicContext } from "../../../context/clinic/ClinicContext";
 
@@ -14,8 +13,8 @@ export const QualificationUi: FC<Props> = ({}) => {
       <Box sx={{ flexGrow: 1 }} />
       <Grid item>
         <Typography sx={{ fontSize: 14, fontWeight: "500" }}>
-          {clinics[0].qualification.current > 3 ? "Excellent(" : "Good("}
-          {clinics[0].qualification.number + " qualifications) | "}
+          {clinics[0].qualification.map( item => item.stars).reduce((previous, current) => previous + current)/clinics[0].qualification.length > 3 ? "Excellent(" : "Good("}
+          {clinics[0].qualification.length + " qualifications) | "}
         </Typography>
       </Grid>
       <Grid item>
@@ -35,7 +34,7 @@ export const QualificationUi: FC<Props> = ({}) => {
               ml: "5px",
             }}
           >
-            {clinics[0].qualification.current * 2}
+            {clinics[0].qualification.map( item => item.stars).reduce((previous, current) => previous + current)/clinics[0].qualification.length * 2}
           </Typography>
         </Box>
       </Grid>

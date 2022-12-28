@@ -25,17 +25,16 @@ const entrySchema = new Schema({
     name: String,
     link: String,
   },
-  qualification: {
-    status: Boolean,
-    number: Number,
-    current: Number,
-    new: Number,
-  },
-  certifications: {
-    name: String,
-    description: String,
-    logo: String,
-  },
+  qualification: [
+    { user_id: String, user_name: String, approved: Boolean, stars: Number },
+  ],
+  certifications: [
+    {
+      name: String,
+      description: String,
+      logo: String,
+    },
+  ],
   address: { type: String, require: true },
   comments: [
     {
@@ -43,8 +42,7 @@ const entrySchema = new Schema({
       user_name: String,
       user_id: String,
       description: String,
-      approved: Boolean,
-      likes: Number,
+      likes: [{ user_id: String, user_name: String, approved: Boolean }],
       createdAt: Number,
       answers: [],
     },

@@ -5,7 +5,7 @@ import {
     ListItemText,
     Skeleton,
   } from "@mui/material";
-  import { UIContext } from "../../../context/ui/UIContext";
+  import { UIContext } from "../../../context/ui";
 
 interface Props {
 }
@@ -13,7 +13,7 @@ interface Props {
 export const MessageSkeleton: FC<Props> = () => {
     const { loading } = useContext(UIContext);
   return (
-    <ListItem button alignItems="flex-start">
+    <ListItem alignItems="flex-start">
     <ListItemAvatar>
       {loading ? null : (
         <Skeleton

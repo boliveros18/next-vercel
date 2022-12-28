@@ -12,9 +12,8 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
-import { Search, SearchIconWrapper, StyledInputBase } from "../ui";
-import { MessageSkeleton } from "../ui/utils/MessageSkeleton";
-import { UIContext } from "../../context/ui/UIContext";
+import { Search, SearchIconWrapper, StyledInputBase, MessageSkeleton } from "../ui";
+import { UIContext } from "../../context/ui";
 
 interface Props {
   children?: ReactNode;
@@ -58,7 +57,7 @@ export const ChatMessages: FC<Props> = ({}) => {
       </ListItem>
       <div style={{ overflow: "auto", maxHeight: 415 }}>
         {loading ? (
-          <ListItem button alignItems="flex-start">
+          <ListItem alignItems="flex-start">
             <ListItemAvatar>
               <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
             </ListItemAvatar>

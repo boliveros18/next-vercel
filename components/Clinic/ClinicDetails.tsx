@@ -13,10 +13,9 @@ import { QualificationUi, ReadMore, SeeComments } from "../ui";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { WindowSize, UseWindowSize } from "../../utils/useWindowSize";
-import { ClinicContext } from "../../context/clinic/ClinicContext";
-import { Stars } from "../ui/utils/Stars";
-import { InstagramLink } from "../ui/utils/InstagramLink";
+import { WindowSize, UseWindowSize } from "../../utils";
+import { ClinicContext } from "../../context/clinic";
+import { Stars, InstagramLink } from "../ui";
 
 interface Props {
   children?: ReactNode;
@@ -61,19 +60,19 @@ export const ClinicDetails: FC<Props> = ({ handleThrough }) => {
         sx={{ marginTop: 1, maxHeight: "330px" }}
       />
       <CardContent>
-        <Stars qualification={clinics[0].qualification}></Stars>
+        <Stars></Stars>
         <Divider sx={{ mt: 1 }} />
         <Card sx={{ display: "flex" }} elevation={0}>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <CardContent sx={{ flex: "1 0 auto" }}>
               <Typography sx={{ fontSize: 15, fontWeight: "500" }}>
-                {clinics[0].certifications.name}
+                {clinics[0].certifications[0].name}
               </Typography>
               <Typography sx={{ fontSize: 14 }}>
                 {mobile ? (
-                  <ReadMore text={clinics[0].certifications.description} />
+                  <ReadMore text={clinics[0].certifications[0].description} />
                 ) : (
-                  clinics[0].certifications.description
+                  clinics[0].certifications[0].description
                 )}
               </Typography>
             </CardContent>
@@ -82,7 +81,7 @@ export const ClinicDetails: FC<Props> = ({ handleThrough }) => {
           <CardMedia
             component="img"
             sx={{ width: 70, m: 1 }}
-            image={clinics[0].certifications.logo}
+            image={clinics[0].certifications[0].logo}
             alt="Live from space album cover"
           />
         </Card>

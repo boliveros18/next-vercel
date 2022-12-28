@@ -1,4 +1,4 @@
-import { FC, ReactNode, useState, useContext, useEffect } from "react";
+import { FC, useContext } from "react";
 import * as React from "react";
 import {
   Typography,
@@ -12,9 +12,8 @@ import {
 import { CommentUi, ReadMore } from "..";
 import { CommentForm, StyledInputComment } from "../styled/CommentForm";
 import { getFormatDistanceToNow } from "../../../utils";
-import { Clinic } from "../../../interfaces";
-import { ClinicContext } from "../../../context/clinic/ClinicContext";
-import { UseWindowSize } from "../../../utils/useWindowSize";
+import { ClinicContext } from "../../../context/clinic";
+import { UseWindowSize } from "../../../utils";
 import { AuthContext } from "../../../context/auth";
 
 interface Props {}
@@ -22,14 +21,9 @@ interface Props {}
 export const SeeComments: FC<Props> = ({}) => {
   const { isLoggedIn } = useContext(AuthContext);
   const mobile = UseWindowSize();
-  const [clinic, setClinic] = useState<Clinic>({} as Clinic);
-
   const { clinics } = useContext(ClinicContext);
 
-  useEffect(() => {
-    setClinic(clinics[0]);
-  }, [clinics, setClinic]);
-
+ 
   return isLoggedIn ? (
     <div>
       <Accordion elevation={0}>
@@ -39,12 +33,12 @@ export const SeeComments: FC<Props> = ({}) => {
           sx={{ marginBottom: -2, marginTop: -2 }}
         >
           <Typography sx={{ fontSize: 15, fontWeight: "500" }}>
-            See the {clinic?.comments?.length} comments
+            See the {clinics[0]?.comments?.length} comments
           </Typography>
         </AccordionSummary>
-        {clinic?.comments?.length > 0 ? (
-          clinic?.comments?.map((item) => (
-            <AccordionDetails key={item._id}>
+        {clinics[0]?.comments?.length > 0 ? (
+          clinics[0]?.comments?.map((item) => (
+            <AccordionDetails key={item.user_id}>
               <CommentUi
                 author={item.user_name}
                 comment={
@@ -55,8 +49,8 @@ export const SeeComments: FC<Props> = ({}) => {
                   )
                 }
                 photo={item.user_photo}
-                like={item.approved}
-                likes={item.likes}
+                like={true}//item.likes.map(item=>item.user_id) === user._id ? true : false }
+                likes={item.likes.filter(i => i.approved === true).length}
                 date={getFormatDistanceToNow(item.createdAt)}
               ></CommentUi>
             </AccordionDetails>
@@ -104,12 +98,12 @@ export const SeeComments: FC<Props> = ({}) => {
           sx={{ marginBottom: -2, marginTop: -2 }}
         >
           <Typography sx={{ fontSize: 15, fontWeight: "500" }}>
-            See the {clinic?.comments?.length} comments
+            See the {clinics[0]?.comments?.length} comments
           </Typography>
         </AccordionSummary>
-        {clinic?.comments?.length > 0 ? (
-          clinic?.comments?.map((item) => (
-            <AccordionDetails key={item._id}>
+        {clinics[0]?.comments?.length > 0 ? (
+          clinics[0]?.comments?.map((item) => (
+            <AccordionDetails key={item.user_id}>
               <CommentUi
                 author={item.user_name}
                 comment={
@@ -120,8 +114,8 @@ export const SeeComments: FC<Props> = ({}) => {
                   )
                 }
                 photo={item.user_photo}
-                like={item.approved}
-                likes={item.likes}
+                like={true}//item.likes.map(item=>item.user_id) === user._id ? true : false }
+                likes={item.likes.filter(i => i.approved === true).length}
                 date={getFormatDistanceToNow(item.createdAt)}
               ></CommentUi>
             </AccordionDetails>

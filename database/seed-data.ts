@@ -1,4 +1,4 @@
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 
 interface SeedData {
   users: SeedUser[];
@@ -6,10 +6,10 @@ interface SeedData {
 }
 
 interface SeedUser {
-  name     : string;
-  email    : string;
-  password : string;
-  role     : 'admin'|'client'
+  name: string;
+  email: string;
+  password: string;
+  role: "admin" | "client";
 }
 
 interface SeedClinics {
@@ -24,17 +24,16 @@ interface SeedClinics {
   city: string;
   country: string;
   instagram: { name: string; link: string };
-  qualification: {
-    status: boolean;
-    number: number;
-    current: number;
-    new: number;
-  };
-  certifications: {
-    name: string;
-    description: string;
-    logo: string;
-  }
+  qualification: [
+    { user_id: string; user_name: string; approved: boolean; stars: number }
+  ];
+  certifications: [
+    {
+      name: string;
+      description: string;
+      logo: string;
+    }
+  ];
   address: string;
   comments: [
     {
@@ -42,8 +41,7 @@ interface SeedClinics {
       user_name: string;
       user_id: string;
       description: string;
-      approved: boolean;
-      likes: number;
+      likes: [{ user_id: String; user_name: String; approved: Boolean }];
       createdAt: number;
       answers: [];
     }
@@ -53,18 +51,18 @@ interface SeedClinics {
 export const seedData: SeedData = {
   users: [
     {
-        name: 'Bresneth Oliveros',
-        email: 'boliveros@google.com',
-        password: bcrypt.hashSync('123456'),
-        role: 'admin'
+      name: "Bresneth Oliveros",
+      email: "boliveros@google.com",
+      password: bcrypt.hashSync("123456"),
+      role: "admin",
     },
     {
-        name: 'Eduardo Rios',
-        email: 'eduardo@google.com',
-        password: bcrypt.hashSync('123456'),
-        role: 'client'
+      name: "Eduardo Rios",
+      email: "eduardo@google.com",
+      password: bcrypt.hashSync("123456"),
+      role: "client",
     },
-],
+  ],
   clinics: [
     {
       category: "principal",
@@ -81,27 +79,38 @@ export const seedData: SeedData = {
       country: "Colombia",
       instagram: {
         name: "clinicaportoazulauna",
-        link: "https://www.instagram.com/clinicaportoazulauna/?hl=es"
+        link: "https://www.instagram.com/clinicaportoazulauna/?hl=es",
       },
-      qualification: {
-        status: false,
-        number: 15,
-        current: 4.3,
-        new: 3,
-      },
-      certifications: {name: "Plantree Gold Certification",
-                description: "Plantree Gold Certification for Excellent in Person Centered Care - 2018 ",
-                logo: "/static/images/certifications/plantree_certification.jfif"     
-    },
+      qualification: [
+        {
+          user_id: "63ab286da6e59074d5465dd1",
+          user_name: "codo",
+          approved: false,
+          stars: 2,
+        },
+      ],
+      certifications: [
+        {
+          name: "Plantree Gold Certification",
+          description:
+            "Plantree Gold Certification for Excellent in Person Centered Care - 2018 ",
+          logo: "/static/images/certifications/plantree_certification.jfif",
+        },
+      ],
       address: "Cra 105#45-265",
       comments: [
         {
           user_photo: "/static/images/avatar/3.jpg",
-          user_id: "tert34345",
-          user_name: "charlesWid20",
+          user_id: "63ab286da6e59074d5465dd1",
+          user_name: "codo",
           description: "I loved it. Very good attention.",
-          approved: true,
-          likes: 3,
+          likes: [
+            {
+              user_id: "63aa11440fffc0374b6cb107",
+              user_name: "Eduardo Rios",
+              approved: true,
+            },
+          ],
           createdAt: Date.now(),
           answers: [],
         },

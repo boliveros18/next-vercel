@@ -9,7 +9,7 @@ export const Layout: FC<Props> = ({ children }) => {
   return (
     <div>
       <NavBar />
-      <SideBar />
+      <SideBar keepOpen={false} />
       {children}
     </div>
   );

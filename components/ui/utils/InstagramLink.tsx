@@ -1,6 +1,6 @@
 import { FC, ReactNode, useContext } from "react";
 import { Typography, Box, Link, Grid } from "@mui/material";
-import { ClinicContext } from "../../../context/clinic/ClinicContext";
+import { ClinicContext } from "../../../context/clinic";
 
 interface Props {
   children?: ReactNode;

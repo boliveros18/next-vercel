@@ -1,4 +1,4 @@
-import { Comments, Qualification } from "./";
+import { Comments, Likes } from "./";
 
 export interface Clinic {
   _id: string;
@@ -13,8 +13,8 @@ export interface Clinic {
   city: string;
   country: string;
   instagram: { name: string; link: string };
-  qualification: Qualification;
-  certifications: { name: string; description: string; logo: string };
+  qualification: Likes[];
+  certifications: [{ name: string; description: string; logo: string }];
   address: string;
   comments: Comments[];
 }

@@ -18,14 +18,14 @@ interface Props {
 }
 
 const HomePage: NextPage<Props> = ({ clinic }) => {
+    const { setClinics } = useContext(ClinicContext);
   const { setLoading } = useContext(UIContext);
   const [value, setValue] = useState("recents");
-  const { setClinics } = useContext(ClinicContext);
 
   useEffect(() => {
     setClinics(clinic);
     setLoading(true)
-  }, [clinic, setClinics, setLoading]);
+  }, [ clinic, setClinics, setLoading]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -96,7 +96,7 @@ const HomePage: NextPage<Props> = ({ clinic }) => {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   //const { id } = params as { id: string };
 
-  const clinic = await dbEntries.getClinicById("63aa11440fffc0374b6cb10a");
+  const clinic = await dbEntries.getClinicById("63ab77d06d6dc52c56dc662b");
 
   if (!clinic) {
     return {

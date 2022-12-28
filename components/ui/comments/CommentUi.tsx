@@ -3,7 +3,7 @@ import * as React from "react";
 import { Box, Card, CardHeader, Avatar, IconButton, Grid } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { CardDetailUi } from "..";
+import { CardDetailUi } from "../";
 
 interface Props {
   author: string;

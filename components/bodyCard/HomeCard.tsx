@@ -19,12 +19,11 @@ import {
   ReadMore,
   SeeComments,
 } from "../ui";
-import { ClinicDetails } from "../clinic/ClinicDetails";
-import { WindowSize, UseWindowSize } from "../../utils/useWindowSize";
-import { ClinicContext } from "../../context/clinic/ClinicContext";
-import { SingInUi } from "../ui/utils/SingInUi";
-import { ShareMediaUi } from "../ui/utils/ShareMediaUi";
-import { UIContext } from "../../context/ui/UIContext";
+import { ClinicDetails } from "../clinic";
+import { WindowSize, UseWindowSize } from "../../utils";
+import { ClinicContext } from "../../context/clinic";
+import { SingInUi, ShareMediaUi } from "../ui";
+import { UIContext } from "../../context/ui";
 
 interface Props {}
 

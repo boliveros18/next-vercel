@@ -1,5 +1,5 @@
 import InputBase from "@mui/material/InputBase";
-import { styled} from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 
 export const CommentForm = styled("div")(({ theme }) => ({
   position: "relative",

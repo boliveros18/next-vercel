@@ -5,7 +5,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { WindowSize } from "../../../utils/useWindowSize";
+import { WindowSize } from "../../../utils";
 
 interface Props {
   children?: ReactNode;

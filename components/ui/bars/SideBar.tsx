@@ -17,7 +17,7 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import MedicalServicesOutlinedIcon from "@mui/icons-material/MedicalServicesOutlined";
 import AccessibilityNewOutlinedIcon from "@mui/icons-material/AccessibilityNewOutlined";
 import RoomServiceOutlinedIcon from "@mui/icons-material/RoomServiceOutlined";
-import { WindowSize } from "../../../utils/useWindowSize";
+import { WindowSize } from "../../../utils";
 import { UIContext } from "../../../context/ui";
 import Link from "next/link";
 

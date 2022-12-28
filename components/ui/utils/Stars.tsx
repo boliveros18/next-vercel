@@ -1,5 +1,5 @@
 import { FC, ReactNode, useState, useEffect, useContext } from "react";
-import { Qualification } from "../../../interfaces";
+import { ClinicContext } from "../../../context/clinic/ClinicContext";
 
 import { IconButton, Box } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
@@ -7,23 +7,26 @@ import { AuthContext } from "../../../context/auth";
 
 interface Props {
   children?: ReactNode;
-  qualification: Qualification;
 }
 
-export const Stars: FC<Props> = ({ qualification }) => {
+export const Stars: FC<Props> = ({}) => {
+  const { clinics } = useContext(ClinicContext);
   const { isLoggedIn } = useContext(AuthContext);
   const [currentValue, setCurrentValue] = useState(0);
   const [hoverValue, setHoverValue] = useState(0);
   const stars = Array(5).fill(0);
+  const countStars =
+    clinics[0].qualification
+      .map((item) => item.stars)
+      .reduce((previous, current) => previous + current) /
+    clinics[0].qualification.length;
 
   useEffect(() => {
-    setCurrentValue(Math.round(qualification.current));
-  }, [qualification]);
+    setCurrentValue(Math.round(countStars));
+  }, [countStars]);
 
-  
-  
   const handleClick = (value: number) => {
-    isLoggedIn ? setCurrentValue(value): (null)
+    isLoggedIn ? setCurrentValue(value) : null;
   };
 
   const handleMouseOver = (newHoverValue: number) => {
@@ -35,11 +38,11 @@ export const Stars: FC<Props> = ({ qualification }) => {
   };
 
   return (
-    <Box >
+    <Box>
       {stars.map((_, item) => (
         <IconButton
           size="large"
-          key={item}  
+          key={item}
           onClick={() => handleClick(item + 1)}
           onMouseOver={() => handleMouseOver(item + 1)}
           onMouseLeave={handleMouseLeave}
