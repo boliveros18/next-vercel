@@ -24,7 +24,6 @@ import { WindowSize, UseWindowSize } from "../../utils";
 import { ClinicContext } from "../../context/clinic";
 import { SingInUi, ShareMediaUi } from "../ui";
 import { UIContext } from "../../context/ui";
-import { Clinic } from "../../interfaces";
 
 interface Props {}
 

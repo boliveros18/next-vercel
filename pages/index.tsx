@@ -20,7 +20,7 @@ interface Props {
 
 const HomePage: NextPage<Props> = ({ clinic }) => {
 
-  const { setClinics } = useContext(ClinicContext);
+  const { clinics, setClinics } = useContext(ClinicContext);
   const { setLoading } = useContext(UIContext);
   const [value, setValue] = useState("recents");
 

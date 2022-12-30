@@ -6,17 +6,19 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { AuthContext } from "../../../context/auth";
 import { ClinicContext } from "../../../context/clinic/ClinicContext";
-import { Clinic } from "../../../interfaces";
+import { Clinic, Qualification } from "../../../interfaces";
 
 interface Props {
   children?: ReactNode;
 }
 
 export const CardActionsUi: FC<Props> = ({}) => {
-  const [onClick, setOnClick] = useState(false);
   const { clinics, updateClinic } = useContext(ClinicContext);
   const { isLoggedIn, user } = useContext(AuthContext);
   const [inputs, setInputs] = useState({} as Clinic);
+  const [qualification, setQualification] = useState<Qualification[]>(
+    clinics[0].qualification
+  );
   const index = clinics[0]?.qualification.findIndex(
     (i) => i.user_id === user?._id
   );
@@ -30,12 +32,22 @@ export const CardActionsUi: FC<Props> = ({}) => {
       clinics[0]?.qualification.filter((i) => i.user_id === user?._id)
         .length === 1
     ) {
-      inputs.qualification[index].approved = !clinics[0].qualification[index].approved;
+      inputs.qualification[index].approved =
+        !clinics[0].qualification[index].approved;
       setInputs({ ...inputs });
       updateClinic(clinics[0]._id, inputs);
     } else {
+      inputs.qualification.push({
+        user_id: user?._id || "",
+        user_name: user?.name || "",
+        approved: true,
+        stars: inputs.qualification[0].average,
+        average: inputs.qualification[0].average,
+      });
+      setQualification({ ...qualification });
+      setInputs({ ...inputs, qualification });
+      updateClinic(clinics[0]._id, inputs);
     }
-    setOnClick(!onClick);
   };
 
   return (
