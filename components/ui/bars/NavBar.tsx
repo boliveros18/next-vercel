@@ -88,7 +88,7 @@ export const NavBar: FC<Props> = ({}) => {
         <ListItemIcon>
           <Avatar alt="name" src="/static/images/avatar/2.jpg" sx={{ mr: 1 }} />
         </ListItemIcon>{" "}
-        Profile
+        {user?.name}
       </MenuItem>
       <Divider />
       <MenuItem onClick={handleMenuClose}>
@@ -182,7 +182,7 @@ export const NavBar: FC<Props> = ({}) => {
         >
           <Avatar alt="name" src="/static/images/avatar/2.jpg" />
         </IconButton>
-        <p style={{ paddingRight: 145 }}>Profile</p>
+        <p style={{ paddingRight: 145 }}>{user?.name}</p>
         <ExpandMoreIcon />
       </MenuItem>
     </Menu>

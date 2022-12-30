@@ -1,4 +1,4 @@
-import { Comments, Likes } from "./";
+import { Comments, Qualification, Certification } from "./";
 
 export interface Clinic {
   _id: string;
@@ -13,10 +13,11 @@ export interface Clinic {
   city: string;
   country: string;
   instagram: { name: string; link: string };
-  qualification: Likes[];
-  certifications: [{ name: string; description: string; logo: string }];
+  qualification: Qualification []
+  certifications: Certification[];
   address: string;
   comments: Comments[];
+  createdAt: number;
 }
 
 export type categoryStatus = "principal" | "general";

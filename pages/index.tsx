@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { GetServerSideProps, NextPage } from "next";
-import { dbEntries } from "../database";
+import { dbClinics } from "../database";
 import { Layout } from "../components/layouts";
 import { HomeCard } from "../components/bodyCard";
 import { Grid, BottomNavigation, BottomNavigationAction } from "@mui/material";
@@ -11,21 +11,23 @@ import AirplanemodeActiveOutlinedIcon from "@mui/icons-material/AirplanemodeActi
 import AccessibilityNewOutlinedIcon from "@mui/icons-material/AccessibilityNewOutlined";
 import RoomServiceOutlinedIcon from "@mui/icons-material/RoomServiceOutlined";
 import { ClinicContext } from "../context/clinic/ClinicContext";
-import { UIContext } from '../context/ui/UIContext';
+import { UIContext } from "../context/ui/UIContext";
+import { getPrincipalClinics } from '../utils/arrayFunctions';
 
 interface Props {
   clinic: Clinic[];
 }
 
 const HomePage: NextPage<Props> = ({ clinic }) => {
-    const { setClinics } = useContext(ClinicContext);
+
+  const { setClinics } = useContext(ClinicContext);
   const { setLoading } = useContext(UIContext);
   const [value, setValue] = useState("recents");
 
   useEffect(() => {
-    setClinics(clinic);
-    setLoading(true)
-  }, [ clinic, setClinics, setLoading]);
+    setClinics(getPrincipalClinics(clinic.flat()));
+    setLoading(true);
+  }, [clinic, setClinics, setLoading]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -94,9 +96,7 @@ const HomePage: NextPage<Props> = ({ clinic }) => {
   );
 };
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  //const { id } = params as { id: string };
-
-  const clinic = await dbEntries.getClinicById("63ab77d06d6dc52c56dc662b");
+  const clinic = await dbClinics.getAllClinics();
 
   if (!clinic) {
     return {

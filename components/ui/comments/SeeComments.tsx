@@ -19,7 +19,7 @@ import { AuthContext } from "../../../context/auth";
 interface Props {}
 
 export const SeeComments: FC<Props> = ({}) => {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, user } = useContext(AuthContext);
   const mobile = UseWindowSize();
   const { clinics } = useContext(ClinicContext);
 
@@ -49,7 +49,7 @@ export const SeeComments: FC<Props> = ({}) => {
                   )
                 }
                 photo={item.user_photo}
-                like={true}//item.likes.map(item=>item.user_id) === user._id ? true : false }
+                like={item.likes.filter(item=>item.user_id === user?._id).length === 1  ? true : false}
                 likes={item.likes.filter(i => i.approved === true).length}
                 date={getFormatDistanceToNow(item.createdAt)}
               ></CommentUi>
@@ -105,6 +105,7 @@ export const SeeComments: FC<Props> = ({}) => {
           clinics[0]?.comments?.map((item) => (
             <AccordionDetails key={item.user_id}>
               <CommentUi
+                disable={!isLoggedIn}
                 author={item.user_name}
                 comment={
                   mobile ? (
@@ -114,7 +115,7 @@ export const SeeComments: FC<Props> = ({}) => {
                   )
                 }
                 photo={item.user_photo}
-                like={true}//item.likes.map(item=>item.user_id) === user._id ? true : false }
+                like={item.likes.filter(item=>item.user_id === user?._id).length === 1  ? true : false}
                 likes={item.likes.filter(i => i.approved === true).length}
                 date={getFormatDistanceToNow(item.createdAt)}
               ></CommentUi>

@@ -1,4 +1,4 @@
-import { FC, useState, useContext } from "react";
+import { FC, useState, useContext, useEffect } from "react";
 import * as React from "react";
 import {
   Card,
@@ -24,11 +24,11 @@ import { WindowSize, UseWindowSize } from "../../utils";
 import { ClinicContext } from "../../context/clinic";
 import { SingInUi, ShareMediaUi } from "../ui";
 import { UIContext } from "../../context/ui";
+import { Clinic } from "../../interfaces";
 
 interface Props {}
 
 export const HomeCard: FC<Props> = () => {
-
   const { loading } = useContext(UIContext);
   const mobile = UseWindowSize();
   const height = WindowSize().height;
@@ -37,7 +37,6 @@ export const HomeCard: FC<Props> = () => {
   const handleThrough = () => {
     setToogle(!toogle);
   };
-
 
   return (
     <>
@@ -105,7 +104,7 @@ export const HomeCard: FC<Props> = () => {
             }
             subheader={
               loading ? (
-                clinics[0]?.city + ", " + clinics[0]?.country
+                clinics[0]?.city + ", " + clinics[0]?.country 
               ) : (
                 <Skeleton animation="wave" height={10} width="40%" />
               )

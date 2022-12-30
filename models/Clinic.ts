@@ -26,7 +26,7 @@ const entrySchema = new Schema({
     link: String,
   },
   qualification: [
-    { user_id: String, user_name: String, approved: Boolean, stars: Number },
+    { user_id: String, user_name: String, approved: Boolean, stars: Number, average: Number },
   ],
   certifications: [
     {
@@ -43,10 +43,12 @@ const entrySchema = new Schema({
       user_id: String,
       description: String,
       likes: [{ user_id: String, user_name: String, approved: Boolean }],
-      createdAt: Number,
       answers: [],
+      createdAt: Number,
+      updatedAt: Number
     },
   ],
+  createdAt: { type: Number },
 });
 
 const ClinicModel: Model<IClinic> =

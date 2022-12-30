@@ -18,10 +18,10 @@ export const UIProvider: FC<ProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const openSideMenu = () => {
-    dispatch({ type: "UI-Open Sidebar" });
+    dispatch({ type: "UI_OPEN_SIDEBAR" });
   };
   const closeSideMenu = () => {
-    dispatch({ type: "UI-Close Sidebar" });
+    dispatch({ type: "UI-CLOSE_SIDEBAR" });
   };
    
   useMemo(() => ({ loading, setLoading }), [loading]);

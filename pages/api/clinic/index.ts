@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import mongoose from "mongoose";
 import { db } from "../../../database";
 import { Clinic, IClinic } from "../../../models";
 
@@ -9,32 +8,19 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { id } = req.query;
-
-  if (!mongoose.isValidObjectId(id)) {
-    return res.status(400).json({ message: "The id is invalid " + id });
-  }
-
   switch (req.method) {
     case "GET":
-      return getClinic(req, res);
+      return getClinics(res);
     default:
       return res.status(400).json({ message: "The endpoint does not exist" });
   }
 }
 
-const getClinic = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id } = req.query;
-
+const getClinics = async (res: NextApiResponse<Data>) => {
   await db.connect();
-  const entryInDB = await Clinic.findById(id);
+  const clinics : any = await Clinic.find().sort({
+    createdAt: "ascending",
+  });
   await db.disconnect();
-
-  if (!entryInDB) {
-    return res
-      .status(400)
-      .json({ message: "There is no entry with that ID: " + id });
-  }
-
-  return res.status(200).json(entryInDB);
+  return res.status(200).json(clinics);
 };
