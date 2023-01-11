@@ -1,12 +1,12 @@
-import { Likes } from "./";
-
-export interface Comments {
+export interface Comment {
+  _id?: string;
+  parent_id: string;
   user_photo: string;
   user_name: string;
   user_id: string;
   description: string;
-  likes: Likes[];
-  answers: [];
   createdAt: number;
   updatedAt: number;
+  //like: []
+  //answer: []
 }

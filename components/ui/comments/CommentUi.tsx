@@ -1,107 +1,157 @@
-import { FC, useContext, useState } from "react";
+import { FC, useContext, useState, useEffect } from "react";
 import * as React from "react";
-import { ClinicContext } from "../../../context/clinic";
+import { CommentContext } from "../../../context/comment";
 import { AuthContext } from "../../../context/auth";
-import { Clinic, Comments, Likes } from "../../../interfaces";
-import { Box, Card, CardHeader, Avatar, IconButton, Grid } from "@mui/material";
+import { Clinic } from "../../../interfaces";
+import { AnswerUi, ItemRefUi } from "../";
+import {
+  Box,
+  Card,
+  CardHeader,
+  Avatar,
+  IconButton,
+  Grid,
+  Divider,
+} from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { CardDetailUi } from "../";
+import { getFormatDistanceToNow } from "../../../utils";
 
 interface Props {
-  author: string;
-  comment: any;
-  photo: string;
-  date: string;
-  like: number;
-  answers?: [];
+  parent_id: string;
 }
 
-export const CommentUi: FC<Props> = ({
-  author,
-  comment,
-  photo,
-  like,
-  date,
-  answers,
-}) => {
-
-  const { clinics, updateClinic } = useContext(ClinicContext);
+export const CommentUi: FC<Props> = ({ parent_id }) => {
+  const [toogle, setToogle] = useState(false);
+  const { comment } = useContext(CommentContext);
   const { isLoggedIn, user } = useContext(AuthContext);
   const [inputs, setInputs] = useState({} as Clinic);
-  const [comments, setComments] = useState<Comments[]>(clinics[0]?.comments);
-  const [likes, setLikes] = useState<Likes[]>(clinics[0]?.comments[0].likes);
 
-  const index = clinics[0]?.comments?.map(i=>i.likes.findIndex(
-    (i) => i.user_id === user?._id)
-  )[0];
+  const handleAnswers = () => {
+    setToogle(!toogle);
+  };
 
-  const handleLike = () => {
+  const answers = comment.length;
+
+  const handleLike = async () => {
     if (
-      clinics[0]?.comments.map(i=>i.likes.filter((i) => i.user_id === user?._id))[0]
+      clinics[0]?.comments[id].likes.filter((i) => i.user_id === user?._id)
         .length === 1
     ) {
-      comments[0].likes[index].approved = !comments[0].likes[index].approved;
-      setInputs({ ...inputs,  comments });
-      updateClinic(clinics[0]._id, inputs);
+      inputs.comments[id].likes[index].approved =
+        !clinics[0]?.comments[id].likes[index].approved;
+      setInputs({ ...inputs });
+      await updateClinic(clinics[0]._id, inputs);
     } else {
-      setLikes({ ...likes });
-      comments[0].likes.push({
+      inputs.comments[id].likes.push({
         user_id: user?._id || "",
         user_name: user?.name || "",
         approved: true,
       });
-      setComments({ ...comments });
-      setInputs({ ...inputs, comments });
-      updateClinic(clinics[0]._id, inputs);
+      setInputs({ ...inputs });
+      await updateClinic(clinics[0]?._id, inputs);
     }
   };
 
   return (
+    <Box
+      sx={{
+        height: "100%",
+        bgcolor: "background.paper",
+      }}
+    >
+      <Card sx={{ maxWidth: "100%" }} elevation={0}>
+        <CardHeader
+          avatar={
+            <Avatar
+              alt={clinics[0]?.comments[id].user_name}
+              src={clinics[0]?.comments[id].user_photo}
+            />
+          }
+          action={
+            <IconButton
+              disabled={!isLoggedIn}
+              aria-label="like"
+              style={{
+                color: "black",
+                marginRight: -10,
+              }}
+              onClick={handleLike}
+            >
+              {clinics[0]?.comments[id].likes[index]?.approved && isLoggedIn ? (
+                <CheckCircleIcon sx={{ color: "blue", fontSize: "15px" }} />
+              ) : (
+                <CheckCircleOutlineIcon sx={{ fontSize: "15px" }} />
+              )}
+            </IconButton>
+          }
+          title={
+            <ItemRefUi
+              author={clinics[0]?.comments[id].user_name}
+              link={`./api/user/${clinics[0]?.comments[id].user_id}`}
+              tag={false}
+            >
+              {clinics[0]?.comments[id].description}
+            </ItemRefUi>
+          }
+          subheader={
+            <Grid container spacing={0}>
+              <Grid item xs={4}>
+                <span>
+                  {getFormatDistanceToNow(clinics[0]?.comments[id].createdAt)}
+                </span>
+              </Grid>
+              <Grid item xs={4}>
+                <span>
+                  {
+                    clinics[0]?.comments[id].likes.filter(
+                      (i) => i.approved === true
+                    ).length
+                  }{" "}
+                  Likes
+                </span>
+              </Grid>
+              <Grid item xs={2}>
+                {isLoggedIn && (
+                  <a style={{ fontWeight: "500", cursor: "pointer" }}>Answer</a>
+                )}
+              </Grid>
+            </Grid>
+          }
+        />
+      </Card>
       <Box
         sx={{
-          height: "100%",
-          maxHeight: 85,
-          bgcolor: "background.paper",
-          overflow: "auto",
+          maxWidth: "100%",
+          mt: -2,
+          mb: 2,
+          ml: 6,
+          fontSize: "14px",
+          fontWeight: "500",
         }}
       >
-        <Card sx={{ maxWidth: "100%" }}>
-          <CardHeader
-            avatar={<Avatar alt="Remy Sharp" src={photo} />}
-            action={
-              <IconButton
-                disabled={!isLoggedIn}
-                aria-label="like"
-                style={{
-                  color: "black",
-                  marginRight: -10,
-                }}
-                onClick={handleLike}
-              >
-                {  clinics[0]?.comments[0].likes[index]?.approved && isLoggedIn ? (
-                  <CheckCircleIcon sx={{ color: "blue", fontSize: "15px" }} />
-                ) : (
-                  <CheckCircleOutlineIcon sx={{ fontSize: "15px" }} />
-                )}
-              </IconButton>
-            }
-            title={<CardDetailUi author={author} comment={comment} />}
-            subheader={
-              <Grid container spacing={1}>
-                <Grid item xs={2}>
-                  <span>{date}</span>
-                </Grid>
-                <Grid item xs={3}>
-                  <span>{like} Likes</span>
-                </Grid>
-                <Grid item xs={2}>
-                  {isLoggedIn && <a style={{ fontWeight: "500", cursor: "pointer"}}>Answer</a>}
-                </Grid>
-              </Grid>
-            }
-          />
-        </Card>
+        {answers > 0 ? (
+          <Divider textAlign="right" sx={{ width: "30%" }}>
+            <a
+              style={{ fontWeight: "500", cursor: "pointer", color: "gray" }}
+              onClick={handleAnswers}
+            >
+              {!toogle
+                ? "See " + answers + (answers > 1 ? " answers" : " answer")
+                : "Hide answers"}
+            </a>
+          </Divider>
+        ) : null}
       </Box>
+      {toogle && clinics[0]?.comments[id]?.answers.length > 0 ? (
+        clinics[0]?.comments[id]?.answers.map((item, Oid) => (
+          <Box key={item.user_id}>
+            <AnswerUi id={id} Oid={Oid} />
+          </Box>
+        ))
+      ) : (
+        <div />
+      )}
+    </Box>
   );
 };

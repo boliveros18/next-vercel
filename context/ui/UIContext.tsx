@@ -6,6 +6,8 @@ interface ContextProps {
   closeSideMenu: () => void;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
+  onFocus: boolean;
+  setOnFocus: Dispatch<SetStateAction<boolean>>;
 }
 
 export const UIContext = createContext({} as ContextProps);

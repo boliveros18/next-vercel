@@ -12,7 +12,12 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
-import { Search, SearchIconWrapper, StyledInputBase, MessageSkeleton } from "../ui";
+import {
+  Search,
+  SearchIconWrapper,
+  StyledInputBase,
+  MessageSkeleton,
+} from "../ui";
 import { UIContext } from "../../context/ui";
 
 interface Props {

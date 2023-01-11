@@ -1,37 +1,87 @@
-import { useState, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { GetServerSideProps, NextPage } from "next";
-import { dbClinics } from "../database";
+import {
+  dbAnswers,
+  dbCertifications,
+  dbClinics,
+  dbComments,
+  dbLikes,
+  dbQualifications,
+} from "../database";
 import { Layout } from "../components/layouts";
 import { HomeCard } from "../components/bodyCard";
-import { Grid, BottomNavigation, BottomNavigationAction } from "@mui/material";
+import { Grid } from "@mui/material";
 import { SideBar, RightBar } from "../components/ui";
 import { ChatMessages } from "../components/chat";
-import { Clinic } from "../interfaces";
-import AirplanemodeActiveOutlinedIcon from "@mui/icons-material/AirplanemodeActiveOutlined";
-import AccessibilityNewOutlinedIcon from "@mui/icons-material/AccessibilityNewOutlined";
-import RoomServiceOutlinedIcon from "@mui/icons-material/RoomServiceOutlined";
-import { ClinicContext } from "../context/clinic/ClinicContext";
+import {
+  Answer,
+  Certification,
+  Clinic,
+  Comment,
+  Like,
+  Qualification,
+} from "../interfaces";
+import { AnswerContext } from "../context/answer";
+import { CertificationContext } from "../context/certification";
+import { ClinicContext } from "../context/clinic";
+import { CommentContext } from "../context/comment";
+import { LikeContext } from "../context/like";
+import { QualificationContext } from "../context/qualification";
 import { UIContext } from "../context/ui/UIContext";
-import { getPrincipalClinics } from '../utils/arrayFunctions';
+
+import { getPrincipalClinics } from "../utils/arrayFunctions";
+
 
 interface Props {
+  answer: Answer[];
+  certification: Certification[];
   clinic: Clinic[];
+  comment: Comment[];
+  like: Like[];
+  qualification: Qualification[];
 }
 
-const HomePage: NextPage<Props> = ({ clinic }) => {
-
-  const { clinics, setClinics } = useContext(ClinicContext);
+const HomePage: NextPage<Props> = ({
+  answer,
+  certification,
+  clinic,
+  comment,
+  like,
+  qualification,
+}) => {
+  const { setAnswers } = useContext(AnswerContext);
+  const { setCertifications } = useContext(CertificationContext);
+  const { setClinics } = useContext(ClinicContext);
+  const { setComments } = useContext(CommentContext);
+  const { setLikes } = useContext(LikeContext);
+  const { setQualifications } = useContext(QualificationContext);
   const { setLoading } = useContext(UIContext);
-  const [value, setValue] = useState("recents");
+
+  const principalClinics = getPrincipalClinics(clinic, qualification).flat()
 
   useEffect(() => {
-    setClinics(getPrincipalClinics(clinic.flat()));
+    setAnswers(answer.flat());
+    setCertifications(certification.flat());
+    setClinics(clinic.flat());
+    setComments(comment.flat());
+    setLikes(like.flat());
+    setQualifications(qualification.flat());
     setLoading(true);
-  }, [clinic, setClinics, setLoading]);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
-  };
+  }, [
+    answer,
+    certification,
+    clinic,
+    comment,
+    like,
+    qualification,
+    setAnswers,
+    setCertifications,
+    setClinics,
+    setComments,
+    setLikes,
+    setQualifications,
+    setLoading,
+  ]);
 
   return (
     <Layout>
@@ -48,34 +98,6 @@ const HomePage: NextPage<Props> = ({ clinic }) => {
         </Grid>
         <Grid item xs={12} sm={6} md={5} justifyContent="center">
           <HomeCard />
-          <BottomNavigation
-            sx={{
-              display: { xs: "block", sm: "none", md: "none" },
-              pt: 1,
-              pb: 1,
-            }}
-            showLabels
-            value={value}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
-          >
-            <BottomNavigationAction
-              label="Procedures"
-              icon={<AccessibilityNewOutlinedIcon />}
-              sx={{ color: "#c4bebe", width: "33.33%" }}
-            />
-            <BottomNavigationAction
-              label="Ticket"
-              icon={<AirplanemodeActiveOutlinedIcon />}
-              sx={{ color: "#c4bebe", width: "33.33%" }}
-            />
-            <BottomNavigationAction
-              label="Hotels"
-              icon={<RoomServiceOutlinedIcon />}
-              sx={{ color: "#c4bebe", width: "33.33%" }}
-            />
-          </BottomNavigation>
         </Grid>
         <Grid
           item
@@ -96,7 +118,12 @@ const HomePage: NextPage<Props> = ({ clinic }) => {
   );
 };
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const answer = await dbAnswers.getAllAnswers();
+  const certification = await dbCertifications.getAllCertifications();
   const clinic = await dbClinics.getAllClinics();
+  const comment = await dbComments.getAllComments();
+  const like = await dbLikes.getAllLikes();
+  const qualification = await dbQualifications.getAllQualifications();
 
   if (!clinic) {
     return {
@@ -109,7 +136,12 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
   return {
     props: {
+      answer: [answer],
+      certification: [certification],
       clinic: [clinic],
+      comment: [comment],
+      like: [like],
+      qualification: [qualification],
     },
   };
 };

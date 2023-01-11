@@ -1,26 +1,24 @@
 import { FC, ReactNode, useReducer, useState, useMemo } from "react";
 import { ClinicContext, clinicsReducer } from "./";
-import { Clinic, Qualification} from "../../interfaces";
+import { Clinic } from "../../interfaces";
 import { ClinicService } from "../../services";
 
 interface ProviderProps {
   children: ReactNode;
 }
 
-export interface ClinicState {
+export interface State {
   clinics: Clinic[];
   clinic: Clinic;
-  qualification: Qualification
 }
 
-const CLINICS_INITIAL_STATE: ClinicState = {
+const INITIAL_STATE: State = {
   clinics: [],
   clinic: {} as Clinic,
-  qualification: {} as Qualification,
 };
 
 export const ClinicProvider: FC<ProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(clinicsReducer, CLINICS_INITIAL_STATE);
+  const [state, dispatch] = useReducer(clinicsReducer, INITIAL_STATE);
 
   const [clinics, setClinics] = useState<Clinic[]>([]);
   useMemo(() => ({ clinics, setClinics }), [clinics]);

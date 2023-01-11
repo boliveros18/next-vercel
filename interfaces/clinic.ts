@@ -1,8 +1,5 @@
-import { Comments, Qualification, Certification } from "./";
-
 export interface Clinic {
-  _id: string;
-  category: categoryStatus;
+  _id?: string;
   certified: boolean;
   finantial: string;
   speciality: string;
@@ -12,12 +9,13 @@ export interface Clinic {
   name: string;
   city: string;
   country: string;
-  instagram: { name: string; link: string };
-  qualification: Qualification []
-  certifications: Certification[];
   address: string;
-  comments: Comments[];
+  instagram: string;
   createdAt: number;
+  updatedAt: number;
+  //comment: []
+  //certification: []
+  //qualification: []
+  //like: []
 }
 
-export type categoryStatus = "principal" | "general";

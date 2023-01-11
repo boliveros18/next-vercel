@@ -4,11 +4,11 @@ import { useSession, signOut } from "next-auth/react";
 import Cookies from "js-cookie";
 import axios from "axios";
 
-import { entriesApi } from "../../apis";
+import { ApiClient } from "../../apis";
 import { AuthService } from "../../services";
 import { User } from "../../interfaces";
 
-export interface AuthState {
+export interface State {
   isLoggedIn: boolean;
   user?: User;
 }
@@ -17,14 +17,14 @@ interface Props {
   children?: ReactNode;
 }
 
-const AUTH_INITIAL_STATE: AuthState = {
+const INITIAL_STATE: State = {
   isLoggedIn: false,
   user: undefined,
 };
 
 export const AuthProvider: FC<Props> = ({ children }) => {
   const { data, status } = useSession();
-  const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
+  const [state, dispatch] = useReducer(authReducer, INITIAL_STATE);
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -46,7 +46,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
     password: string
   ): Promise<{ hasError: boolean; message?: string }> => {
     try {
-      const { data } = await entriesApi.post("/user/register", {
+      const { data } = await ApiClient.post("/user/register", {
         name,
         email,
         password,

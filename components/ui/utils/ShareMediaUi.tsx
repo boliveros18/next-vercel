@@ -15,14 +15,13 @@ import {
 } from "next-share";
 import { LINK_PAGE, hashtag } from "../../../constans";
 
-
 interface Props {
   children?: ReactNode;
   name: string;
-  description: string; 
+  description: string;
 }
 
-export const ShareMediaUi: FC<Props> = ({name, description}) => {
+export const ShareMediaUi: FC<Props> = ({ name, description }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -57,32 +56,25 @@ export const ShareMediaUi: FC<Props> = ({name, description}) => {
           horizontal: "right",
         }}
       >
-        <Grid container >
+        <Grid container>
           <Grid item sx={{ m: 1 }}>
             <FacebookShareButton
               url={LINK_PAGE}
-              quote={
-                name+": "+description
-              }
+              quote={name + ": " + description}
               hashtag={hashtag}
             >
               <FacebookIcon size={32} round />
             </FacebookShareButton>
           </Grid>
           <Grid item sx={{ m: 1 }}>
-            <FacebookMessengerShareButton
-              url={LINK_PAGE}
-              appId={""}
-            >
+            <FacebookMessengerShareButton url={LINK_PAGE} appId={""}>
               <FacebookMessengerIcon size={32} round />
             </FacebookMessengerShareButton>
           </Grid>
           <Grid item sx={{ m: 1 }}>
             <WhatsappShareButton
               url={LINK_PAGE}
-              title={
-                name+": "+description
-              }
+              title={name + ": " + description}
               separator=":: "
             >
               <WhatsappIcon size={32} round />
@@ -91,19 +83,13 @@ export const ShareMediaUi: FC<Props> = ({name, description}) => {
           <Grid item sx={{ m: 1 }}>
             <TwitterShareButton
               url={LINK_PAGE}
-              title={
-                name+": "+description
-              }
+              title={name + ": " + description}
             >
               <TwitterIcon size={32} round />
             </TwitterShareButton>
           </Grid>
           <Grid item sx={{ m: 1 }}>
-            <EmailShareButton
-              url={LINK_PAGE}
-              subject={name}
-              body={description}
-            >
+            <EmailShareButton url={LINK_PAGE} subject={name} body={description}>
               <EmailIcon size={32} round />
             </EmailShareButton>
           </Grid>

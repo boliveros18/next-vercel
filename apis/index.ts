@@ -1,1 +1,1 @@
-export { default as entriesApi} from './entriesApi'
+export { default as ApiClient} from './ApiClient'

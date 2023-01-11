@@ -1,6 +1,11 @@
-export * from "./comments";
-export * from "./user";
-export * from "./likes";
-export * from "./clinic";
-export * from "./qualification";
+export * from "./answer";
 export * from "./certification";
+export * from "./clinic";
+export * from "./comment";
+export * from "./like";
+export * from "./qualification";
+export * from "./user";
+
+
+
+

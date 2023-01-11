@@ -1,19 +1,12 @@
-import { ClinicState } from "./";
-import { Clinic} from "../../interfaces";
+import { State } from "./";
 
-type ClinicsActionType =
-  | { type: "CLINIC_UPDATED"; payload: Clinic }
-  | { type: "REFRESH_DATA"; payload: Clinic[] };
+type Action = "CLINIC_UPDATED";
+type ActionType = { type: Action; payload?: any };
 
-export const clinicsReducer = (
-  state: ClinicState,
-  action: ClinicsActionType
-): ClinicState => {
+export const clinicsReducer = (state: State, action: ActionType): State => {
   switch (action.type) {
     case "CLINIC_UPDATED":
       return { ...state, clinic: action.payload };
-    case "REFRESH_DATA":
-      return { ...state, clinics: [...action.payload] };
     default:
       return state;
   }

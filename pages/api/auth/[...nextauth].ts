@@ -1,6 +1,5 @@
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-import GoogleProvider from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 
 import { dbUsers } from "../../../database";
@@ -29,6 +28,7 @@ export default NextAuth({
           credentials!.email,
           credentials!.password
         );
+        
       },
     }),
 
@@ -78,7 +78,6 @@ export default NextAuth({
     async session({ session, token, user }) {
       session.accessToken = token.accessToken;
       session.user = token.user as any;
-
       return session;
     },
     

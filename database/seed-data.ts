@@ -25,7 +25,13 @@ interface SeedClinics {
   country: string;
   instagram: { name: string; link: string };
   qualification: [
-    { user_id: string; user_name: string; approved: boolean; stars: number, average: number }
+    {
+      user_id: string;
+      user_name: string;
+      approved: boolean;
+      stars: number;
+      average: number;
+    }
   ];
   certifications: [
     {
@@ -45,8 +51,7 @@ interface SeedClinics {
       answers: [];
       createdAt: number;
       updatedAt: number;
-    },
-  
+    }
   ];
   createdAt: number;
 }
@@ -90,7 +95,7 @@ export const seedData: SeedData = {
           user_name: "codo",
           approved: false,
           stars: 2,
-          average: 2
+          average: 2,
         },
       ],
       certifications: [
@@ -120,8 +125,7 @@ export const seedData: SeedData = {
           updatedAt: Date.now(),
         },
       ],
-      createdAt: Date.now()
+      createdAt: Date.now(),
     },
   ],
-
 };

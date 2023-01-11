@@ -69,7 +69,6 @@ const updateClinic = async (
   }
 
   const {
-    category = clinicToUpdate.category,
     certified = clinicToUpdate.certified,
     finantial = clinicToUpdate.finantial,
     speciality = clinicToUpdate.speciality,
@@ -79,18 +78,14 @@ const updateClinic = async (
     name = clinicToUpdate.name,
     city = clinicToUpdate.city,
     country = clinicToUpdate.country,
-    instagram = clinicToUpdate.instagram,
-    qualification = clinicToUpdate.qualification,
-    certifications = clinicToUpdate.certifications,
     address = clinicToUpdate.address,
-    comments = clinicToUpdate.comments,
+    updatedAt = clinicToUpdate.updatedAt
   } = req.body;
 
   try {
     const updatedClinic = await Clinic.findByIdAndUpdate(
       id,
       {
-        category,
         certified,
         finantial,
         speciality,
@@ -100,11 +95,8 @@ const updateClinic = async (
         name,
         city,
         country,
-        instagram,
-        qualification,
-        certifications,
         address,
-        comments
+        updatedAt
       },
       { runValidators: true, new: true }
     );

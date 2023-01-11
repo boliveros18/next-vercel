@@ -1,5 +1,4 @@
-import { FC, ReactNode } from "react";
-import * as React from "react";
+import { FC, ReactNode, SyntheticEvent, useState } from "react";
 import { Paper, BottomNavigation, BottomNavigationAction } from "@mui/material";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
@@ -13,15 +12,16 @@ interface Props {
 
 export const RightBar: FC<Props> = ({ children }) => {
   const size = WindowSize();
-  const [value, setValue] = React.useState("recents");
+  const [value, setValue] = useState("recents");
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleChange = (event: SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
 
   return (
-    <>
+    <div>
       <Paper
+        elevation={0}
         sx={{
           width: "100%",
           height: size.height - 130,
@@ -33,6 +33,7 @@ export const RightBar: FC<Props> = ({ children }) => {
         elevation={0}
         sx={{
           width: "100%",
+          bottom: 0,
         }}
       >
         <BottomNavigation
@@ -64,6 +65,6 @@ export const RightBar: FC<Props> = ({ children }) => {
           />
         </BottomNavigation>
       </Paper>
-    </>
+    </div>
   );
 };

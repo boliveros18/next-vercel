@@ -135,12 +135,9 @@ export const NavBar: FC<Props> = ({}) => {
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
+      sx={{ width: 333, maxWidth: "100%" }}
     >
-      <MenuItem
-        sx={{
-          width: 300,
-        }}
-      >
+      <MenuItem>
         <IconButton
           size="large"
           aria-label="show 2 new articles"

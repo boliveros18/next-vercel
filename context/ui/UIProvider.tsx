@@ -5,17 +5,18 @@ interface ProviderProps {
   children: ReactNode;
 }
 
-export interface UIState {
+export interface State {
   sidemenuOpen: boolean;
 }
 
-const UI_INITIAL_STATE: UIState = {
+const INITIAL_STATE: State = {
   sidemenuOpen: false,
 };
 
 export const UIProvider: FC<ProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(uiReducer, UI_INITIAL_STATE);
+  const [state, dispatch] = useReducer(uiReducer, INITIAL_STATE);
   const [loading, setLoading] = useState<boolean>(false);
+  const [onFocus, setOnFocus] = useState<boolean>(false);
 
   const openSideMenu = () => {
     dispatch({ type: "UI_OPEN_SIDEBAR" });
@@ -23,11 +24,19 @@ export const UIProvider: FC<ProviderProps> = ({ children }) => {
   const closeSideMenu = () => {
     dispatch({ type: "UI-CLOSE_SIDEBAR" });
   };
-   
-  useMemo(() => ({ loading, setLoading }), [loading]);
 
   return (
-    <UIContext.Provider value={{ ...state, openSideMenu, closeSideMenu, loading, setLoading }}>
+    <UIContext.Provider
+      value={{
+        ...state,
+        openSideMenu,
+        closeSideMenu,
+        loading,
+        setLoading,
+        onFocus,
+        setOnFocus,
+      }}
+    >
       {children}
     </UIContext.Provider>
   );

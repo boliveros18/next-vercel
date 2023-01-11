@@ -1,7 +1,8 @@
 export interface Qualification {
+    _id?: string;
+    parent_id: string;
     user_id: string;
     user_name: string;
-    approved: boolean;
     stars: number;
     average: number;
   };

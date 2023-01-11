@@ -1,8 +1,9 @@
-import { UIState } from "./";
+import { State } from "./";
 
-type UIActionType = { type: "UI_OPEN_SIDEBAR" } | { type: "UI-CLOSE_SIDEBAR" };
+type Action = "UI_OPEN_SIDEBAR" | "UI-CLOSE_SIDEBAR";
+type ActionType = { type: Action };
 
-export const uiReducer = (state: UIState, action: UIActionType): UIState => {
+export const uiReducer = (state: State, action: ActionType): State => {
   switch (action.type) {
     case "UI_OPEN_SIDEBAR":
       return {

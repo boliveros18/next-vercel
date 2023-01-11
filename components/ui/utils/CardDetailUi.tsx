@@ -2,14 +2,27 @@ import { FC } from "react";
 import * as React from "react";
 
 interface Props {
-  author: string;
+  author: any;
   comment: any;
+  link?: any;
+  info?: boolean;
 }
 
-export const CardDetailUi: FC<Props> = ({ author, comment }) => {
+export const CardDetailUi: FC<Props> = ({ author, comment, link, info }) => {
   return (
-    <div>
-      <span style={{ fontSize: 14, fontWeight: "500" }}>{author + " "}</span>
+    <div style={{ marginBottom: info ? -4 : 0, marginTop: info ? -6 : 0 }}>
+      <a
+        href={link}
+        style={{
+          fontSize: 14,
+          fontWeight: "500",
+          cursor: "pointer",
+          textDecoration: "none",
+          color: "black",
+        }}
+      >
+        {author + " "}
+      </a>
       <span style={{ fontSize: 14 }}>{comment}</span>
     </div>
   );

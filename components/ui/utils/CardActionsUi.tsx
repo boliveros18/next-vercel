@@ -5,49 +5,31 @@ import CommentIcon from "@mui/icons-material/ChatBubbleOutline";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { AuthContext } from "../../../context/auth";
-import { ClinicContext } from "../../../context/clinic/ClinicContext";
-import { Clinic, Qualification } from "../../../interfaces";
+import { LikeContext } from "../../../context/like";
+import { UIContext } from "../../../context/ui";
 
 interface Props {
   children?: ReactNode;
+  parent_id: string;
 }
 
-export const CardActionsUi: FC<Props> = ({}) => {
-  const { clinics, updateClinic } = useContext(ClinicContext);
-  const { isLoggedIn, user } = useContext(AuthContext);
-  const [inputs, setInputs] = useState({} as Clinic);
-  const [qualification, setQualification] = useState<Qualification[]>(
-    clinics[0].qualification
-  );
-  const index = clinics[0]?.qualification.findIndex(
-    (i) => i.user_id === user?._id
-  );
+export const CardActionsUi: FC<Props> = ({parent_id}) => {
+  const { setOnFocus } = useContext(UIContext);
+  const { likes, createLike, deleteLike } = useContext(LikeContext);
+  const { isLoggedIn, user } = useContext(AuthContext); 
 
-  useEffect(() => {
-    setInputs(clinics[0]);
-  }, [clinics]);
 
   const handleLike = () => {
-    if (
-      clinics[0]?.qualification.filter((i) => i.user_id === user?._id)
-        .length === 1
-    ) {
-      inputs.qualification[index].approved =
-        !clinics[0].qualification[index].approved;
-      setInputs({ ...inputs });
-      updateClinic(clinics[0]._id, inputs);
-    } else {
-      inputs.qualification.push({
+    const index = likes?.findIndex(i=>i.parent_id===parent_id && i.user_id === user?._id )
+    if(index > -1){
+       deleteLike(likes[index]?._id || "")
+    } else{
+      createLike({
         user_id: user?._id || "",
-        user_name: user?.name || "",
-        approved: true,
-        stars: inputs.qualification[0].average,
-        average: inputs.qualification[0].average,
-      });
-      setQualification({ ...qualification });
-      setInputs({ ...inputs, qualification });
-      updateClinic(clinics[0]._id, inputs);
-    }
+        user_name: user?.name  || "",
+        parent_id: parent_id
+      })
+    }    
   };
 
   return (
@@ -65,7 +47,7 @@ export const CardActionsUi: FC<Props> = ({}) => {
           disabled={!isLoggedIn}
           onClick={handleLike}
         >
-          {clinics[0]?.qualification[index]?.approved ? (
+          {likes?.filter(i=> i.user_id === user?._id && i.parent_id===parent_id)?.length === 1  ? (
             <CheckCircleIcon sx={{ color: "blue" }} fontSize="medium" />
           ) : (
             <CheckCircleOutlineIcon fontSize="medium" />
@@ -75,6 +57,7 @@ export const CardActionsUi: FC<Props> = ({}) => {
           aria-label="comment"
           color={isLoggedIn ? "primary" : "default"}
           disabled={!isLoggedIn}
+          onClick={() => setOnFocus(true)}
         >
           <CommentIcon fontSize="medium" />
         </IconButton>

@@ -35,7 +35,7 @@ export const SideBar: FC<Props> = ({ keepOpen = false }) => {
       size.height > 0 && (
         <>
           <Paper
-            sx={{ width: 290, height: size.height - 130, maxWidth: "100%" }}
+            sx={{ width: 300, height: size.height - 130, maxWidth: "90%" }}
             elevation={0}
           >
             <MenuList>

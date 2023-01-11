@@ -6,7 +6,7 @@ interface Props {
   text: any;
 }
 
-export const ReadMore: FC<Props> = ({ text }) => {
+export const ReadMore: FC<Props> = ({ text, children }) => {
   const letters: number = 25;
   const [isReadMore, setIsReadMore] = useState(true);
   const toggleReadMore = () => {
