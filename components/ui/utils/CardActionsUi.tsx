@@ -7,6 +7,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { AuthContext } from "../../../context/auth";
 import { LikeContext } from "../../../context/like";
 import { UIContext } from "../../../context/ui";
+import { Like } from "../../../interfaces";
 
 interface Props {
   children?: ReactNode;
@@ -15,14 +16,15 @@ interface Props {
 
 export const CardActionsUi: FC<Props> = ({parent_id}) => {
   const { setOnFocus } = useContext(UIContext);
-  const { likes, createLike, deleteLike } = useContext(LikeContext);
-  const { isLoggedIn, user } = useContext(AuthContext); 
-
+  const { likes, createLike, deleteLike, setLikes } = useContext(LikeContext);
+  const { isLoggedIn, user } = useContext(AuthContext);
 
   const handleLike = () => {
+
     const index = likes?.findIndex(i=>i.parent_id===parent_id && i.user_id === user?._id )
+   
     if(index > -1){
-       deleteLike(likes[index]?._id || "")
+       deleteLike(likes[index]._id || "")
     } else{
       createLike({
         user_id: user?._id || "",
@@ -32,6 +34,7 @@ export const CardActionsUi: FC<Props> = ({parent_id}) => {
     }    
   };
 
+   
   return (
     <CardActions
       disableSpacing
@@ -41,13 +44,12 @@ export const CardActionsUi: FC<Props> = ({parent_id}) => {
     >
       <div>
         <IconButton
-          name="approved"
           aria-label="like"
           color={isLoggedIn ? "primary" : "default"}
           disabled={!isLoggedIn}
           onClick={handleLike}
         >
-          {likes?.filter(i=> i.user_id === user?._id && i.parent_id===parent_id)?.length === 1  ? (
+          {likes.filter(i=>i.parent_id === parent_id).map(i=>i.user_id===user?._id).length === 1  ? (
             <CheckCircleIcon sx={{ color: "blue" }} fontSize="medium" />
           ) : (
             <CheckCircleOutlineIcon fontSize="medium" />

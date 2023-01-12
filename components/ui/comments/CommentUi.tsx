@@ -1,8 +1,9 @@
-import { FC, useContext, useState, useEffect } from "react";
+import { FC, useContext, useState } from "react";
 import * as React from "react";
 import { CommentContext } from "../../../context/comment";
+import { LikeContext } from "../../../context/like";
+import { AnswerContext } from "../../../context/answer";
 import { AuthContext } from "../../../context/auth";
-import { Clinic } from "../../../interfaces";
 import { AnswerUi, ItemRefUi } from "../";
 import {
   Box,
@@ -22,34 +23,38 @@ interface Props {
 }
 
 export const CommentUi: FC<Props> = ({ parent_id }) => {
+  const [ind, setInd] = useState<number>(0);
   const [toogle, setToogle] = useState(false);
-  const { comment } = useContext(CommentContext);
+  const { comments } = useContext(CommentContext);
+  const { answers } = useContext(AnswerContext);
+  const { likes, createLike, deleteLike } = useContext(LikeContext);
   const { isLoggedIn, user } = useContext(AuthContext);
-  const [inputs, setInputs] = useState({} as Clinic);
 
   const handleAnswers = () => {
     setToogle(!toogle);
   };
 
-  const answers = comment.length;
+  const getIndex = (ind: number) => {
+    setInd(ind);
+  };
 
-  const handleLike = async () => {
-    if (
-      clinics[0]?.comments[id].likes.filter((i) => i.user_id === user?._id)
-        .length === 1
-    ) {
-      inputs.comments[id].likes[index].approved =
-        !clinics[0]?.comments[id].likes[index].approved;
-      setInputs({ ...inputs });
-      await updateClinic(clinics[0]._id, inputs);
+  const handleLike = () => {
+    const index = likes?.findIndex(
+      (i) =>
+        i.parent_id ===
+          comments?.filter((i) => i.parent_id === parent_id)[ind]?._id &&
+        i.user_id === user?._id
+    );
+    console.log(index)
+    if (index > -1) {
+      deleteLike(likes[index]?._id || "");
     } else {
-      inputs.comments[id].likes.push({
+      createLike({
         user_id: user?._id || "",
         user_name: user?.name || "",
-        approved: true,
+        parent_id:
+          comments?.filter((i) => i.parent_id === parent_id)[ind]?._id || "",
       });
-      setInputs({ ...inputs });
-      await updateClinic(clinics[0]?._id, inputs);
     }
   };
 
@@ -60,95 +65,137 @@ export const CommentUi: FC<Props> = ({ parent_id }) => {
         bgcolor: "background.paper",
       }}
     >
-      <Card sx={{ maxWidth: "100%" }} elevation={0}>
-        <CardHeader
-          avatar={
-            <Avatar
-              alt={clinics[0]?.comments[id].user_name}
-              src={clinics[0]?.comments[id].user_photo}
-            />
-          }
-          action={
-            <IconButton
-              disabled={!isLoggedIn}
-              aria-label="like"
-              style={{
-                color: "black",
-                marginRight: -10,
-              }}
-              onClick={handleLike}
+      {comments?.map((i) => i.parent_id === parent_id).length > 0 ? (
+        comments
+          ?.filter((i) => i.parent_id === parent_id)
+          .map((item, index) => (
+            <div
+              key={index}
+              style={{ marginBottom: -6, marginTop: -2 }}
+              onChange={() => getIndex(index || 0)}
             >
-              {clinics[0]?.comments[id].likes[index]?.approved && isLoggedIn ? (
-                <CheckCircleIcon sx={{ color: "blue", fontSize: "15px" }} />
+              <Card sx={{ maxWidth: "100%" }} elevation={0}>
+                <CardHeader
+                  avatar={<Avatar alt={item.user_name} src={item.user_photo} />}
+                  action={
+                    <IconButton
+                      disabled={!isLoggedIn}
+                      aria-label="like"
+                      style={{
+                        color: "black",
+                        marginRight: -10,
+                      }}
+                      onClick={handleLike}
+                    >
+                      {likes?.filter(
+                        (i) =>
+                          i.user_id === user?._id && i.parent_id === parent_id
+                      )?.length === 1 && isLoggedIn ? (
+                        <CheckCircleIcon
+                          sx={{ color: "blue", fontSize: "15px" }}
+                        />
+                      ) : (
+                        <CheckCircleOutlineIcon sx={{ fontSize: "15px" }} />
+                      )}
+                    </IconButton>
+                  }
+                  title={
+                    <ItemRefUi
+                      author={item.user_name}
+                      link={`./api/user/${item.user_id}`}
+                      tag={false}
+                    >
+                      {item.description}
+                    </ItemRefUi>
+                  }
+                  subheader={
+                    <Grid container spacing={0}>
+                      <Grid item xs={4}>
+                        <span>{getFormatDistanceToNow(item.createdAt)}</span>
+                      </Grid>
+                      <Grid item xs={4}>
+                        <span>
+                          {likes?.filter((i) => i.parent_id === parent_id)
+                            ?.length + " "}
+                          Likes
+                        </span>
+                      </Grid>
+                      <Grid item xs={2}>
+                        {isLoggedIn && (
+                          <a style={{ fontWeight: "500", cursor: "pointer" }}>
+                            Answer
+                          </a>
+                        )}
+                      </Grid>
+                    </Grid>
+                  }
+                />
+              </Card>
+              <Box
+                sx={{
+                  maxWidth: "100%",
+                  mt: -2,
+                  mb: 2,
+                  ml: 6,
+                  fontSize: "14px",
+                  fontWeight: "500",
+                }}
+              >
+                {answers?.filter(
+                  (i) =>
+                    i.parent_id ===
+                    comments?.filter((i) => i.parent_id === parent_id)[index]
+                      ?._id
+                ).length > 0 ? (
+                  <Divider textAlign="right" sx={{ width: "30%" }}>
+                    <a
+                      style={{
+                        fontWeight: "500",
+                        cursor: "pointer",
+                        color: "gray",
+                      }}
+                      onClick={handleAnswers}
+                    >
+                      {!toogle
+                        ? "See " +
+                          answers?.filter(
+                            (i) =>
+                              i.parent_id ===
+                              comments?.filter(
+                                (i) => i.parent_id === parent_id
+                              )[index]?._id
+                          ).length +
+                          (answers?.filter(
+                            (i) =>
+                              i.parent_id ===
+                              comments?.filter(
+                                (i) => i.parent_id === parent_id
+                              )[index]?._id
+                          ).length > 1
+                            ? " answers"
+                            : " answer")
+                        : "Hide answers"}
+                    </a>
+                  </Divider>
+                ) : null}
+              </Box>
+              {toogle &&
+              answers?.filter(
+                (i) =>
+                  i.parent_id ===
+                  comments?.filter((i) => i.parent_id === parent_id)[index]?._id
+              ).length ? (
+                <AnswerUi
+                  parent_id={
+                    comments?.filter((i) => i.parent_id === parent_id)[index]
+                      ?._id || ""
+                  }
+                />
               ) : (
-                <CheckCircleOutlineIcon sx={{ fontSize: "15px" }} />
+                <div />
               )}
-            </IconButton>
-          }
-          title={
-            <ItemRefUi
-              author={clinics[0]?.comments[id].user_name}
-              link={`./api/user/${clinics[0]?.comments[id].user_id}`}
-              tag={false}
-            >
-              {clinics[0]?.comments[id].description}
-            </ItemRefUi>
-          }
-          subheader={
-            <Grid container spacing={0}>
-              <Grid item xs={4}>
-                <span>
-                  {getFormatDistanceToNow(clinics[0]?.comments[id].createdAt)}
-                </span>
-              </Grid>
-              <Grid item xs={4}>
-                <span>
-                  {
-                    clinics[0]?.comments[id].likes.filter(
-                      (i) => i.approved === true
-                    ).length
-                  }{" "}
-                  Likes
-                </span>
-              </Grid>
-              <Grid item xs={2}>
-                {isLoggedIn && (
-                  <a style={{ fontWeight: "500", cursor: "pointer" }}>Answer</a>
-                )}
-              </Grid>
-            </Grid>
-          }
-        />
-      </Card>
-      <Box
-        sx={{
-          maxWidth: "100%",
-          mt: -2,
-          mb: 2,
-          ml: 6,
-          fontSize: "14px",
-          fontWeight: "500",
-        }}
-      >
-        {answers > 0 ? (
-          <Divider textAlign="right" sx={{ width: "30%" }}>
-            <a
-              style={{ fontWeight: "500", cursor: "pointer", color: "gray" }}
-              onClick={handleAnswers}
-            >
-              {!toogle
-                ? "See " + answers + (answers > 1 ? " answers" : " answer")
-                : "Hide answers"}
-            </a>
-          </Divider>
-        ) : null}
-      </Box>
-      {toogle && clinics[0]?.comments[id]?.answers.length > 0 ? (
-        clinics[0]?.comments[id]?.answers.map((item, Oid) => (
-          <Box key={item.user_id}>
-            <AnswerUi id={id} Oid={Oid} />
-          </Box>
-        ))
+            </div>
+          ))
       ) : (
         <div />
       )}

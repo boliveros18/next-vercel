@@ -64,19 +64,11 @@ export const SeeComments: FC<Props> = ({ children, parent_id }) => {
           </Typography>
         </AccordionSummary>
         <Box sx={{ height: height - 235, overflow: "auto" }}>
-          {comments?.map(i=>i.parent_id===parent_id).length > 0 ? (
-            comments?.filter(i=>i.parent_id===parent_id).map((item, id) => (
               <AccordionDetails
-                key={id}
                 sx={{ marginBottom: -6, marginTop: -2 }}
               >
-              { <CommentUi parent_id={item.parent_id} />
-                  }
-              </AccordionDetails>
-            ))
-          ) : (
-            <div />
-          )}
+               <CommentUi parent_id={parent_id} />
+              </AccordionDetails>        
         </Box>
       </Accordion>
       {isLoggedIn && (
