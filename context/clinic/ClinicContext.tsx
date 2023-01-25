@@ -4,7 +4,8 @@ import { Clinic } from "../../interfaces";
 interface ContextProps {
   clinics: Clinic[];
   clinic: Clinic;
-  setClinics: Dispatch<SetStateAction<Clinic[]>>;
+  principals: Clinic[];
+  setPrincipals: Dispatch<SetStateAction<Clinic[]>>;
   updateClinic: (id: string, payload: Clinic) => Promise<void>;
 }
 

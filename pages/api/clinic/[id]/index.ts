@@ -82,6 +82,7 @@ const updateClinic = async (
     country = clinicToUpdate.country,
     address = clinicToUpdate.address,
     instagram = clinicToUpdate.instagram,
+    qualification = clinicToUpdate.qualification,
     updatedAt = clinicToUpdate.updatedAt
   } = req.body;
 
@@ -102,6 +103,7 @@ const updateClinic = async (
         country,
         address,
         instagram,
+        qualification,
         updatedAt
       },
       { runValidators: true, new: true }

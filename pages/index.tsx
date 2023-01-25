@@ -34,7 +34,6 @@ interface Props {
   certification: Certification[];
   clinic: Clinic[];
   comment: Comment[];
- // like: Like[];
   qualification: Qualification[];
 }
 
@@ -43,23 +42,20 @@ const HomePage: NextPage<Props> = ({
   certification,
   clinic,
   comment,
-  //like,
   qualification,
 }) => {
   const { setAnswers } = useContext(AnswerContext);
   const { setCertifications } = useContext(CertificationContext);
-  const { setClinics } = useContext(ClinicContext);
+  const { setPrincipals, principals } = useContext(ClinicContext);
   const { setComments } = useContext(CommentContext);
-  //const { setLikes } = useContext(LikeContext);
   const { setQualifications } = useContext(QualificationContext);
   const { setLoading } = useContext(UIContext);
 
   useEffect(() => {
     setAnswers(answer.flat());
     setCertifications(certification.flat());
-    setClinics(clinic.flat());
+    setPrincipals(clinic.flat());
     setComments(comment.flat());
-    //setLikes(like?.flat());
     setQualifications(qualification.flat());
     setLoading(true);
   }, [
@@ -67,18 +63,14 @@ const HomePage: NextPage<Props> = ({
     certification,
     clinic,
     comment,
-    //like,
     qualification,
     setAnswers,
     setCertifications,
-    setClinics,
+    setPrincipals,
     setComments,
-    //setLikes,
     setQualifications,
     setLoading,
   ]);
-
- 
 
   return (
     <Layout>
@@ -116,9 +108,8 @@ const HomePage: NextPage<Props> = ({
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const answer = await dbAnswers.getAllAnswers();
   const certification = await dbCertifications.getAllCertifications();
-  const clinic = await dbClinics.getAllClinics();
+  const clinic = await dbClinics.getPrincipalsClinics();
   const comment = await dbComments.getAllComments();
-  //const like = await dbLikes.getAllLikes();
   const qualification = await dbQualifications.getAllQualifications();
 
   if (!clinic) {
@@ -136,7 +127,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       certification: [certification],
       clinic: [clinic],
       comment: [comment],
-      //like: [like],
       qualification: [qualification],
     },
   };

@@ -17,6 +17,7 @@ const entrySchema = new Schema({
   country: { type: String, require: true },
   address: { type: String, require: true },
   instagram: { type: String, require: true },
+  qualification: { type: Number },
   createdAt: { type: Number },
   updatedAt: { type: Number },
 });

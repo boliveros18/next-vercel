@@ -21,3 +21,12 @@ export const getAllClinics = async (): Promise<IClinic> => {
 
   return JSON.parse(JSON.stringify(clinics));
 };
+
+
+export const getPrincipalsClinics = async (): Promise<IClinic> => {
+  await db.connect();
+  const clinics = await Clinic.find({}).sort({qualification: -1}).limit(5)
+  await db.disconnect();
+
+  return JSON.parse(JSON.stringify(clinics));
+};

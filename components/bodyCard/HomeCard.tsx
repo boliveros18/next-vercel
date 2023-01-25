@@ -34,16 +34,14 @@ import { UIContext } from "../../context/ui";
 interface Props {}
 
 export const HomeCard: FC<Props> = () => {
+
   const [index, setIndex] = useState<number>(0);
   const { isLoggedIn } = useContext(AuthContext);
   const { loading } = useContext(UIContext);
   const mobile = UseWindowSize();
   const height = WindowSize().height;
   const [toogle, setToogle] = useState(true);
-  const { clinics } = useContext(ClinicContext);
-  const { qualifications } = useContext(QualificationContext);
-
-  const principalClinics = getPrincipalClinics(clinics, qualifications).flat()
+  const { principals } = useContext(ClinicContext);
 
   const handleThrough = () => {
     setToogle(!toogle);
@@ -57,7 +55,7 @@ export const HomeCard: FC<Props> = () => {
     <>
       {toogle ? (
         <>
-          <SeeComments parent_id={principalClinics[index]?._id}>
+          <SeeComments parent_id={principals[index]?._id || ""}>
             <Carousel
               stopAutoPlayOnHover
               autoPlay={false}
@@ -68,7 +66,7 @@ export const HomeCard: FC<Props> = () => {
               indicators={false}
               swipe={false}
             >
-              {principalClinics.map((item, n) => (
+              {principals.map((item, n) => (
                 <div key={n}>
                   <Card
                     sx={{
@@ -134,7 +132,7 @@ export const HomeCard: FC<Props> = () => {
                       }
                       subheader={
                         loading ? (
-                          item?.city + ", " + item?.country
+                          item?.province + ", " + item?.country
                         ) : (
                           <Skeleton animation="wave" height={10} width="40%" />
                         )
@@ -158,7 +156,7 @@ export const HomeCard: FC<Props> = () => {
                       )}
                     </CardActionArea>
                     {loading ? (
-                      <CardActionsUi parent_id={principalClinics[index]?._id}/>
+                      <CardActionsUi parent_id={principals[index]?._id || ""}/>
                     ) : (
                       <Skeleton
                         animation="wave"

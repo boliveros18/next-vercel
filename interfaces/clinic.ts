@@ -13,6 +13,7 @@ export interface Clinic {
   country: string;
   address: string;
   instagram: string;
+  qualification: number;
   createdAt: number;
   updatedAt: number;
 }

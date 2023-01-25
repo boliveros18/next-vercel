@@ -4,15 +4,18 @@ import { ClinicContext } from "../../../context/clinic";
 
 interface Props {
   children?: ReactNode;
+  index: number;
 }
 
-export const InstagramLink: FC<Props> = ({}) => {
-  const { clinics } = useContext(ClinicContext);
+//TODO: meter el index en un context de clinic
+
+export const InstagramLink: FC<Props> = ({index}) => {
+  const { principals } = useContext(ClinicContext);
   return (
     <Grid container>
       <Box sx={{ flexGrow: 1 }} />
       <Link
-        href={clinics[0].instagram.link}
+        href={principals[index]?.instagram}
         target="_blank"
         sx={{ textDecoration: "none" }}
       >
@@ -24,7 +27,7 @@ export const InstagramLink: FC<Props> = ({}) => {
             fontWeight: "500",
           }}
         >
-          {"@" + clinics[0].instagram.name}
+          {"@" + principals[index]?.instagram.substring(26, principals[index].instagram.length-7)}
         </Typography>
       </Link>
     </Grid>

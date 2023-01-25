@@ -33,15 +33,14 @@ export const ClinicDetails: FC<Props> = ({ handleThrough, index }) => {
 
   const { qualifications } = useContext(QualificationContext);
   const { certifications } = useContext(CertificationContext);
-  const { clinics } = useContext(ClinicContext);
+  const { principals } = useContext(ClinicContext);
   const mobile = UseWindowSize();
   const size = WindowSize();
-  const principalClinics = getPrincipalClinics(clinics, qualifications).flat()
-  const principalCertifications = getPrincipalClinicsCertifications(principalClinics, certifications)
-  const principalQualifications: Qualification[] = getPrincipalClinicQualifications(principalClinics[index]?._id, qualifications)
+  const principalCertifications = getPrincipalClinicsCertifications(principals, certifications)
+  const principalQualifications: Qualification[] = getPrincipalClinicQualifications(principals[index]?._id || "", qualifications)
 
   return (
-    <SeeComments parent_id={principalClinics[index]?._id}>
+    <SeeComments parent_id={principals[index]?._id || ""}>
       <Card
         sx={{
           width: "100%",
@@ -60,8 +59,8 @@ export const ClinicDetails: FC<Props> = ({ handleThrough, index }) => {
           <ArrowBackIosIcon />
         </IconButton>
         <Typography align="center" sx={{ fontWeight: "medium", marginTop: -4 }}>
-          {principalClinics[index].name + " "}
-          {principalClinics[index].certified ? (
+          {principals[index].name + " "}
+          {principals[index].certified ? (
             <CheckCircleIcon sx={{ color: "blue", fontSize: "15px" }} />
           ) : (
             <CheckCircleOutlineIcon sx={{ color: "gray", fontSize: "15px" }} />
@@ -70,7 +69,7 @@ export const ClinicDetails: FC<Props> = ({ handleThrough, index }) => {
         <CardMedia
           component="img"
           height={size.height - 500}
-          image={principalClinics[index].photo}
+          image={principals[index].photo}
           alt="Clinic"
           sx={{ marginTop: 1, maxHeight: "330px" }}
         />
@@ -104,7 +103,7 @@ export const ClinicDetails: FC<Props> = ({ handleThrough, index }) => {
             />
           </Card>
           <Divider />
-          <InstagramLink />
+          <InstagramLink index={index} />
         </CardContent>
       </Card>
     </SeeComments>
