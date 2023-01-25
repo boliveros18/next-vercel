@@ -9,5 +9,4 @@ export interface Answer {
     user_tag_name: string;
     createdAt: number;
     updatedAt: number;
-    //likes: []
 }

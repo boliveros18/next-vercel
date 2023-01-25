@@ -23,4 +23,6 @@ export * from "./utils/QualificationUi";
 export * from "./utils/ReadMore";
 export * from "./utils/ShareMediaUi";
 export * from "./utils/SingInUi";
+export * from "./utils/ItemCounter";
+export * from "./utils/PrivacyPolicy";
 

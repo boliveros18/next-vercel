@@ -93,6 +93,7 @@ export const SideBar: FC<Props> = ({ keepOpen = false }) => {
                   textDecoration: "none",
                   fontWeight: "500",
                   color: "#001B87",
+                  cursor: "pointer"
                 }}
               >
                 Privacy notice
@@ -107,6 +108,7 @@ export const SideBar: FC<Props> = ({ keepOpen = false }) => {
                   textDecoration: "none",
                   fontWeight: "500",
                   color: "#001B87",
+                  cursor: "pointer"
                 }}
               >
                 Condition of Use

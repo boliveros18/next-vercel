@@ -43,13 +43,15 @@ export const AuthProvider: FC<Props> = ({ children }) => {
   const registerUser = async (
     name: string,
     email: string,
-    password: string
+    password: string,
+    role: string
   ): Promise<{ hasError: boolean; message?: string }> => {
     try {
       const { data } = await ApiClient.post("/user/register", {
         name,
         email,
         password,
+        role
       });
       const { token, user } = data;
       Cookies.set("token", token);

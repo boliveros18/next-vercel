@@ -29,9 +29,9 @@ export default function App({ Component, pageProps }: Props) {
         <AuthProvider>
           <UIProvider>
             <ThemeProvider theme={lightTheme}>
-              <AnswerProvider>
-                <CertificationProvider>
-                  <ClinicProvider>
+              <ClinicProvider>
+                <AnswerProvider>
+                  <CertificationProvider>
                     <CommentProvider>
                       <LikeProvider>
                         <QualificationProvider>
@@ -40,9 +40,9 @@ export default function App({ Component, pageProps }: Props) {
                         </QualificationProvider>
                       </LikeProvider>
                     </CommentProvider>
-                  </ClinicProvider>
-                </CertificationProvider>
-              </AnswerProvider>
+                  </CertificationProvider>
+                </AnswerProvider>
+              </ClinicProvider>
             </ThemeProvider>
           </UIProvider>
         </AuthProvider>

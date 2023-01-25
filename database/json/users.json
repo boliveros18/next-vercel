@@ -1,39 +1,101 @@
 [{
   "_id": {
-    "$oid": "6397a5607931691ab657ded8"
+    "$oid": "63ab77d06d6dc52c56dc6626"
   },
   "name": "Bresneth Oliveros",
   "email": "boliveros@google.com",
-  "password": "$2a$10$wyi9LFkwzrdzsxVrbT8jkuwaiWcovKPJbTP.YAoiPnmzcn6GXrHYq",
+  "password": "$2a$10$I2MnKH/NHnhxlfbu1DQfYuGUI7LWmERbG398YWwWkUCBW2menhMSO",
   "role": "admin",
   "__v": 0,
   "createdAt": {
     "$date": {
-      "$numberLong": "1670882656150"
+      "$numberLong": "1672181712481"
     }
   },
   "updatedAt": {
     "$date": {
-      "$numberLong": "1670882656150"
+      "$numberLong": "1672181712481"
     }
-  }
+  },
+  "avatar": "/static/images/avatar/2.jpg"
 },{
   "_id": {
-    "$oid": "6397a5607931691ab657ded9"
+    "$oid": "63ab77d06d6dc52c56dc6627"
   },
   "name": "Eduardo Rios",
   "email": "eduardo@google.com",
-  "password": "$2a$10$6x/bZu2sTaYVkqgUV5eFzuSiLPruC6KMAQy7D73BZsMBXLkkt9rlu",
+  "password": "$2a$10$WEf8g752n5XbdSg6I1svKumk5oslDcZPCYncz/avnWI2ssWSiRCGC",
   "role": "client",
   "__v": 0,
   "createdAt": {
     "$date": {
-      "$numberLong": "1670882656150"
+      "$numberLong": "1672181712481"
     }
   },
   "updatedAt": {
     "$date": {
-      "$numberLong": "1670882656150"
+      "$numberLong": "1672181712481"
     }
-  }
+  },
+  "avatar": "/static/images/avatar/3.jpg"
+},{
+  "_id": {
+    "$oid": "63ac76f9454855cff2b9c81c"
+  },
+  "name": "codo",
+  "email": "codo@google.com",
+  "password": "$2a$10$BLb.tOlhwgZpxgqGjfbENeyPAPJZ2Ovj7OJdFrAXsUlu6D3GWruQK",
+  "role": "client",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1672247033521"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1672247033521"
+    }
+  },
+  "__v": 0,
+  "avatar": "/static/images/avatar/1.jpg"
+},{
+  "_id": {
+    "$oid": "63ac7798454855cff2b9c823"
+  },
+  "name": "melissa ford",
+  "email": "melissa@google.com",
+  "password": "$2a$10$qezuLEY/121.hmjTSGkIRuAo174Nxn4m9e2omZJaoV26rfGBk/esC",
+  "role": "client",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1672247192158"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1672247192158"
+    }
+  },
+  "__v": 0,
+  "avatar": "/static/images/avatar/2.jpg"
+},{
+  "_id": {
+    "$oid": "63ac7a91454855cff2b9c841"
+  },
+  "name": "maria cano",
+  "email": "maria@google.com",
+  "password": "$2a$10$V0Dp/q8CrlJrAwE6G4hgk.Gv/w8ffVX4i0jCQOnZxIjllGMSOlhRa",
+  "role": "client",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1672247953766"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1672247953766"
+    }
+  },
+  "__v": 0,
+  "avatar": "/static/images/avatar/2.jpg"
 }]

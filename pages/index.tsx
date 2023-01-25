@@ -11,8 +11,8 @@ import {
 import { Layout } from "../components/layouts";
 import { HomeCard } from "../components/bodyCard";
 import { Grid } from "@mui/material";
-import { SideBar, RightBar } from "../components/ui";
-import { ChatMessages } from "../components/chat";
+import { BottomBar, SideBar, RightBar } from "../components/ui";
+
 import {
   Answer,
   Certification,
@@ -29,15 +29,12 @@ import { LikeContext } from "../context/like";
 import { QualificationContext } from "../context/qualification";
 import { UIContext } from "../context/ui/UIContext";
 
-import { getPrincipalClinics } from "../utils/arrayFunctions";
-
-
 interface Props {
   answer: Answer[];
   certification: Certification[];
   clinic: Clinic[];
   comment: Comment[];
-  like: Like[];
+ // like: Like[];
   qualification: Qualification[];
 }
 
@@ -46,25 +43,23 @@ const HomePage: NextPage<Props> = ({
   certification,
   clinic,
   comment,
-  like,
+  //like,
   qualification,
 }) => {
   const { setAnswers } = useContext(AnswerContext);
   const { setCertifications } = useContext(CertificationContext);
   const { setClinics } = useContext(ClinicContext);
   const { setComments } = useContext(CommentContext);
-  const { setLikes } = useContext(LikeContext);
+  //const { setLikes } = useContext(LikeContext);
   const { setQualifications } = useContext(QualificationContext);
   const { setLoading } = useContext(UIContext);
-
-  const principalClinics = getPrincipalClinics(clinic, qualification).flat()
 
   useEffect(() => {
     setAnswers(answer.flat());
     setCertifications(certification.flat());
     setClinics(clinic.flat());
     setComments(comment.flat());
-    setLikes(like.flat());
+    //setLikes(like?.flat());
     setQualifications(qualification.flat());
     setLoading(true);
   }, [
@@ -72,16 +67,18 @@ const HomePage: NextPage<Props> = ({
     certification,
     clinic,
     comment,
-    like,
+    //like,
     qualification,
     setAnswers,
     setCertifications,
     setClinics,
     setComments,
-    setLikes,
+    //setLikes,
     setQualifications,
     setLoading,
   ]);
+
+ 
 
   return (
     <Layout>
@@ -109,11 +106,10 @@ const HomePage: NextPage<Props> = ({
           }}
           justifyContent="flex-end"
         >
-          <RightBar>
-            <ChatMessages />
-          </RightBar>
+          <RightBar />
         </Grid>
       </Grid>
+      <BottomBar />
     </Layout>
   );
 };
@@ -122,7 +118,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const certification = await dbCertifications.getAllCertifications();
   const clinic = await dbClinics.getAllClinics();
   const comment = await dbComments.getAllComments();
-  const like = await dbLikes.getAllLikes();
+  //const like = await dbLikes.getAllLikes();
   const qualification = await dbQualifications.getAllQualifications();
 
   if (!clinic) {
@@ -140,7 +136,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       certification: [certification],
       clinic: [clinic],
       comment: [comment],
-      like: [like],
+      //like: [like],
       qualification: [qualification],
     },
   };

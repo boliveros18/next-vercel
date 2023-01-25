@@ -1,4 +1,4 @@
-import { Clinic, Qualification } from "../interfaces";
+import { Clinic, Qualification, Certification } from "../interfaces";
 
 export const getPrincipalClinics = (
   clinic: Clinic[],
@@ -38,3 +38,27 @@ export const getPrincipalClinics = (
   }
   return principalClinics;
 };
+
+export const getPrincipalClinicsCertifications = (principalClinics: Clinic[], certifications: Certification[]) => {
+
+  const principalClinicsCertifications = new Array(); 
+  for (let i = 0; i < certifications.length ; i++) { 
+    for (let n = 0; n < 6; n++) {
+      if ( principalClinics.flat()[n]?._id == certifications[i].parent_id) {
+        principalClinicsCertifications.push(certifications.flat()[n]); 
+      }
+    }
+  }
+  return principalClinicsCertifications
+}
+
+export const getPrincipalClinicQualifications = (parent_id: string, qualifications: Qualification[]) => {
+
+  const principalClinicQualifications = new Array(); 
+  for (let i = 0; i < qualifications.length ; i++) { 
+      if ( parent_id == qualifications[i].parent_id) {
+        principalClinicQualifications.push(qualifications.flat()[i]); 
+      }
+  }
+  return principalClinicQualifications
+}

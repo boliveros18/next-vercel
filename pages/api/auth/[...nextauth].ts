@@ -12,12 +12,12 @@ export default NextAuth({
       name: "Custom Login",
       credentials: {
         email: {
-          label: "Correo:",
+          label: "Email:",
           type: "email",
           placeholder: "correo@google.com",
         },
         password: {
-          label: "Contraseña:",
+          label: "Password:",
           type: "password",
           placeholder: "Contraseña",
         },
@@ -62,7 +62,8 @@ export default NextAuth({
           case "oauth":
             token.user = await dbUsers.oAUthToDbUser(
               user?.email || "",
-              user?.name || ""
+              user?.name || "",
+              user?.role || ""
             );
             break;
 

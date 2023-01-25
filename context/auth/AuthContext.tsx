@@ -8,7 +8,8 @@ interface ContextProps {
   registerUser: (
     name: string,
     email: string,
-    password: string
+    password: string,
+    role: string
   ) => Promise<{ hasError: boolean; message?: string }>;
   logout: () => void;
 }

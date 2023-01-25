@@ -73,12 +73,15 @@ const updateClinic = async (
     finantial = clinicToUpdate.finantial,
     speciality = clinicToUpdate.speciality,
     technology = clinicToUpdate.technology,
+    phone = clinicToUpdate.phone, 
     avatar = clinicToUpdate.avatar,
     photo = clinicToUpdate.photo,
     name = clinicToUpdate.name,
-    city = clinicToUpdate.city,
+    province = clinicToUpdate.province,
+    state = clinicToUpdate.state,
     country = clinicToUpdate.country,
     address = clinicToUpdate.address,
+    instagram = clinicToUpdate.instagram,
     updatedAt = clinicToUpdate.updatedAt
   } = req.body;
 
@@ -90,12 +93,15 @@ const updateClinic = async (
         finantial,
         speciality,
         technology,
+        phone,
         avatar,
         photo,
         name,
-        city,
+        province,
+        state,
         country,
         address,
+        instagram,
         updatedAt
       },
       { runValidators: true, new: true }

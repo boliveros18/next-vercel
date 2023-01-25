@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import NextLink from "next/link";
-import { GetServerSideProps } from 'next';
-import { signIn, getSession } from 'next-auth/react';
+import { GetServerSideProps } from "next";
+import { signIn, getSession } from "next-auth/react";
 import {
   Box,
   Button,
@@ -15,19 +15,21 @@ import {
 import { ErrorOutline } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
-
 import { AuthContext } from "../../context/auth";
 import { AuthLayout } from "../../components/layouts";
 import { validations } from "../../utils";
+import { PrivacyPolicy } from "../../components/ui";
 
 type FormData = {
   name: string;
   email: string;
   password: string;
+  role: string;
 };
 
 const RegisterPage = () => {
   const { registerUser } = useContext(AuthContext);
+  const [userRole, setUserRole] = useState("client");
 
   const {
     register,
@@ -39,7 +41,12 @@ const RegisterPage = () => {
 
   const onRegisterForm = async ({ name, email, password }: FormData) => {
     setShowError(false);
-    const { hasError, message } = await registerUser(name, email, password);
+    const { hasError, message } = await registerUser(
+      name,
+      email,
+      password,
+      userRole
+    );
 
     if (hasError) {
       setShowError(true);
@@ -48,7 +55,7 @@ const RegisterPage = () => {
       return;
     }
 
-    await signIn('credentials',{ email, password });
+    await signIn("credentials", { email, password });
   };
 
   return (
@@ -82,7 +89,7 @@ const RegisterPage = () => {
         >
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Typography variant="h5">Create an account</Typography>
+              <Typography variant="h5">{`Create a ${userRole} account`}</Typography>
               <Chip
                 label="We cannot reconize this email address"
                 color="error"
@@ -135,9 +142,20 @@ const RegisterPage = () => {
                 size="small"
               />
             </Grid>
+            <Grid item display={{ xs: "none" }}>
+              <TextField
+                label="Role"
+                variant="outlined"
+                value={userRole}
+                fullWidth
+                {...register("role", {
+                  required: "This field is required",
+                })}
+              />
+            </Grid>
             <Grid item xs={12} display="flex" justifyContent="center">
               <Button
-               type="submit"
+                type="submit"
                 variant="outlined"
                 size="medium"
                 color="primary"
@@ -165,72 +183,70 @@ const RegisterPage = () => {
             </Link>
           </NextLink>
         </Grid>
-        <Grid
-          item
-          display="flex"
-          justifyContent="end"
-          sx={{ fontSize: 15, marginBottom: 3 }}
-        >
-          Are you a specialist doctor?&nbsp;
-          <NextLink href="/auth/login" passHref>
-            <Link underline="none" color="#001B87" sx={{ fontWeight: "500" }}>
+        {userRole === "medic" ? (
+          <Grid
+            item
+            display="flex"
+            justifyContent="end"
+            sx={{ fontSize: 15, marginBottom: 3 }}
+          >
+            Do you need any procedure?&nbsp;
+            <Link
+              underline="none"
+              color="#001B87"
+              sx={{ fontWeight: "500", cursor: "pointer" }}
+              onClick={() => setUserRole("client")}
+            >
+              Sign Up as a Client
+            </Link>
+          </Grid>
+        ) : (
+          <Grid
+            item
+            display="flex"
+            justifyContent="end"
+            sx={{ fontSize: 15, marginBottom: 3 }}
+          >
+            Are you a specialist doctor?&nbsp;
+            <Link
+              underline="none"
+              color="#001B87"
+              sx={{ fontWeight: "500", cursor: "pointer" }}
+              onClick={() => setUserRole("medic")}
+            >
               Sign Up as a partner
             </Link>
-          </NextLink>
-        </Grid>
+          </Grid>
+        )}
         <Divider />
-        <Typography sx={{ fontSize: 13, marginTop: 6 }} align="center">
-          Super Medical group -
-          <NextLink href="./privacynotice">
-            <Link
-            underline="none"
-              style={{
-                fontWeight: "500",
-                color: "#001B87",
-              }}
-            >
-              Privacy notice
-            </Link>
-          </NextLink>
-          <br />
-          <NextLink href="./conditionuse">
-            <Link
-            underline="none"
-              style={{
-                fontWeight: "500",
-                color: "#001B87"
-              }}
-
-            >
-              Condition of Use
-            </Link>
-          </NextLink>{" "}
-          Copyright (c) 2022
-        </Typography>
+        <PrivacyPolicy />
       </form>
     </AuthLayout>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
-    
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  query,
+}) => {
   const session = await getSession({ req });
 
-  const { p = '/' } = query;
+  const { m = "/account/medic" } = query;
+  const { p = "/" } = query;
 
-  if ( session ) {
-      return {
-          redirect: {
-              destination: p.toString(),
-              permanent: false
-          }
-      }
+  if (session) {
+    return {
+      redirect: {
+        destination:
+          session.user?.role === "medic" ? m.toString() : p.toString(),
+        permanent: false,
+      },
+    };
   }
-
 
   return {
-      props: { }
-  }
-}
+    props: {},
+  };
+};
 
 export default RegisterPage;

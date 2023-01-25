@@ -45,7 +45,6 @@ export const CommentUi: FC<Props> = ({ parent_id }) => {
           comments?.filter((i) => i.parent_id === parent_id)[ind]?._id &&
         i.user_id === user?._id
     );
-    console.log(index)
     if (index > -1) {
       deleteLike(likes[index]?._id || "");
     } else {

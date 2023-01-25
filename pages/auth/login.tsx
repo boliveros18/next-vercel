@@ -18,6 +18,7 @@ import { signIn, getSession, getProviders } from "next-auth/react";
 
 import { AuthLayout } from "../../components/layouts";
 import { validations } from "../../utils";
+import { PrivacyPolicy } from "../../components/ui";
 
 type FormData = {
   email: string;
@@ -170,33 +171,7 @@ const LoginPage = () => {
           })}
         </Grid>
         <Divider sx={{ width: "100%", mt: 2 }} />
-        <Typography sx={{ fontSize: 13, marginTop: 6 }} align="center">
-          Super Medical group -{" "}
-          <NextLink href="./privacynotice">
-            <Link
-              underline="none"
-              style={{
-                fontWeight: "500",
-                color: "#001B87",
-              }}
-            >
-              Privacy notice
-            </Link>
-          </NextLink>
-          <br />
-          <NextLink href="./conditionuse">
-            <Link
-              underline="none"
-              style={{
-                fontWeight: "500",
-                color: "#001B87",
-              }}
-            >
-              Condition of Use
-            </Link>
-          </NextLink>{" "}
-          Copyright (c) 2022
-        </Typography>
+        <PrivacyPolicy/>
       </form>
     </AuthLayout>
   );

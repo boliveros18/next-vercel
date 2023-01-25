@@ -7,6 +7,4 @@ export interface Comment {
   description: string;
   createdAt: number;
   updatedAt: number;
-  //like: []
-  //answer: []
 }

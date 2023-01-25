@@ -31,7 +31,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
 const registerUser = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
     
-    const { email = '', password = '', name = '' } = req.body as { email: string, password: string, name: string };
+    const { email = '', password = '', name = '', role = '' } = req.body as { email: string, password: string, name: string, role: string };
 
     if ( password.length < 6 ) {
         return res.status(400).json({
@@ -64,8 +64,8 @@ const registerUser = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
     const newUser = new User({
         email: email.toLocaleLowerCase(),
         password: bcrypt.hashSync( password ),
-        role: 'client',
         name,
+        role
     });
 
     try {
@@ -78,7 +78,7 @@ const registerUser = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
         })
     }
    
-    const { _id, role } = newUser;
+    const { _id } = newUser;
 
     const token = jwt.signToken( _id, email );
 

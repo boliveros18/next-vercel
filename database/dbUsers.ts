@@ -29,7 +29,7 @@ export const checkUserEmailPassword = async (
   };
 };
 
-export const oAUthToDbUser = async (oAuthEmail: string, oAuthName: string) => {
+export const oAUthToDbUser = async (oAuthEmail: string, oAuthName: string, oAuthRole: string) => {
   await db.connect();
   const user = await User.findOne({ email: oAuthEmail });
 
@@ -43,7 +43,7 @@ export const oAUthToDbUser = async (oAuthEmail: string, oAuthName: string) => {
     email: oAuthEmail,
     name: oAuthName,
     password: "@",
-    role: "client",
+    role: oAuthRole,
   });
   await newUser.save();
   await db.disconnect();

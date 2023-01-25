@@ -20,7 +20,6 @@ export default async function handler(
 }
 
 const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-
   const session: any = await getSession({ req });
   if (!session) {
     return res
@@ -28,13 +27,17 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       .json({ message: "You must be authenticated to do this" });
   }
 
-  const { user_id = "", user_name = "", parent_id = "" } = req.body;
+  const {
+    user_id = "",
+    user_name = "",
+    parent_id = ""
+  } = req.body
   await db.connect();
 
   const newModel = new Like({
     user_id,
     user_name,
-    parent_id,
+    parent_id
   });
 
   try {
@@ -48,7 +51,6 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       message: error.message || "Check server logs",
     });
   }
-  
 };
 
 const getLikes = async (res: NextApiResponse<Data>) => {

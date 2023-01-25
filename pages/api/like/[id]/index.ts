@@ -50,6 +50,7 @@ const getModel = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 
+
 const deleteModel = async (
   req: NextApiRequest,
   res: NextApiResponse<Data>

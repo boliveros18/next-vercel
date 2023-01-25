@@ -1,54 +1,51 @@
 import { FC, ReactNode, useState, useEffect, useContext } from "react";
-import { ClinicContext } from "../../context/clinic/ClinicContext";
+import { QualificationContext } from "../../context/qualification/QualificationContext";
 import { AuthContext } from "../../context/auth";
-import { Clinic } from "../../interfaces";
+import { Qualification } from "../../interfaces";
 import { QualificationUi } from "../ui";
 
 interface Props {
   children?: ReactNode;
-  id: number;
+  index: number;
+  qualifications: Qualification[]
 }
 
-export const ClinicQualification: FC<Props> = ({ id }) => {
-  const { clinics, updateClinic } = useContext(ClinicContext);
+export const ClinicQualification: FC<Props> = ({ qualifications, index }) => {
+  const { updateQualification } = useContext(QualificationContext);
   const { isLoggedIn, user } = useContext(AuthContext);
-  const [inputs, setInputs] = useState({} as Clinic);
   const [currentValue, setCurrentValue] = useState(0);
 
   const countStars =
-    clinics[id].qualification
+    qualifications
       .map((item) => item.stars)
       .reduce((previous, current) => previous + current) /
-    clinics[id].qualification.length;
+      qualifications.length;
 
-  const index = clinics[id]?.qualification.findIndex(
-    (i) => i.user_id === user?._id
-  );
 
   useEffect(() => {
     setCurrentValue(Math.round(countStars));
-    setInputs(clinics[id]);
-  }, [countStars, clinics, id]);
+  }, [countStars]);
 
-  const generateInput = (inputs: IClinic) => {
+  const generateInput = (qualifications: Qualification[]) => {
     const average =
-      inputs.qualification
+      qualifications
         .map((item) => item.stars)
         .reduce((previous, current) => previous + current) /
-      clinics[id].qualification.length;
-    inputs.qualification.map((i) => `${(i.average = average)}`);
-    setInputs({ ...inputs });
-    updateClinic(clinics[id]._id, inputs);
+        qualifications.length;
+    qualifications.map((i) => `${(i.average = average)}`);
+    for(let i = 0; i < qualifications.length ; i++){
+      updateQualification(qualifications[i]?._id || "", qualifications[i]);
+    }
   };
 
   const handleClick = (value: number) => {
     if (isLoggedIn) {
       if (
-        clinics[id].qualification.filter((i) => i.user_id === user?._id)
+        qualifications.filter((i) => i.user_id === user?._id)
           .length === 1
       ) {
-        inputs.qualification[index].stars = value;
-        generateInput(inputs);
+        qualifications[qualifications.indexOf((i) => i.user_id === user?._id)].stars = value;
+        generateInput(qualifications);
       } else {
         inputs.qualification.push({
           user_id: user?._id || "",
@@ -64,8 +61,8 @@ export const ClinicQualification: FC<Props> = ({ id }) => {
 
   return (
     <QualificationUi
-      average={clinics[id]?.qualification[0]?.average}
-      length={clinics[id]?.qualification?.length}
+      average={qualifications[0]?.average}
+      length={qualifications?.length}
       handleClick={handleClick}
       currentValue={currentValue}
     />

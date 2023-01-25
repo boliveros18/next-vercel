@@ -66,6 +66,7 @@ export const HomeCard: FC<Props> = () => {
                 getIndex(now || 0)
               }
               indicators={false}
+              swipe={false}
             >
               {principalClinics.map((item, n) => (
                 <div key={n}>

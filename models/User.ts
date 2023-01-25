@@ -9,9 +9,8 @@ const userSchema = new Schema(
     role: {
       type: String,
       enum: {
-        values: ["admin", "client"],
+        values: ["admin", "client", "medic"],
         message: "{VALUE} is a wrong value",
-        default: "client",
         required: true,
       },
     },

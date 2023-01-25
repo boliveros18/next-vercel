@@ -21,3 +21,12 @@ export const getAllLikes = async (): Promise<ILike> => {
 
   return JSON.parse(JSON.stringify(likes));
 };
+
+/*
+export const getLikes = async (parent_id: string, user_id: string ): Promise<ILike[]> => {
+  await db.connect();
+  const likes = await Like.find().lean();
+  await db.disconnect();
+  return JSON.parse(JSON.stringify(likes));
+}
+*/

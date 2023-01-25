@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import { BottomBar, NavBar, SideBar } from "../ui";
+import {  NavBar, SideBar } from "../ui";
 
 interface Props {
   children?: ReactNode;
@@ -11,7 +11,6 @@ export const Layout: FC<Props> = ({ children }) => {
       <NavBar />
       <SideBar keepOpen={false} />
       {children}
-      <BottomBar />
     </div>
   );
 };

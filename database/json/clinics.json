@@ -2,7 +2,6 @@
   "_id": {
     "$oid": "63ab77d06d6dc52c56dc662b"
   },
-  "category": "general",
   "certified": false,
   "finantial": "8 million US in 2021",
   "speciality": "Plastic and Reconstruction",
@@ -12,63 +11,19 @@
   "name": "Clinica Porto Azul",
   "city": "Barranquilla",
   "country": "Colombia",
-  "instagram": {
-    "name": "clinicaportoazulauna",
-    "link": "https://www.instagram.com/clinicaportoazulauna/?hl=es"
-  },
-  "qualification": [
-    {
-      "user_id": "63ab77d06d6dc52c56dc6626",
-      "user_name": "Bresneth oliveros",
-      "approved": false,
-      "stars": 4.3,
-      "_id": {
-        "$oid": "63ab77d06d6dc52c56dc662c"
-      }
-    }
-  ],
-  "certifications": [
-    {
-      "name": "Plantree Gold Certification",
-      "description": "Plantree Gold Certification for Excellent in Person Centered Care - 2018 ",
-      "logo": "/static/images/certifications/plantree_certification.jfif",
-      "_id": {
-        "$oid": "63ab77d06d6dc52c56dc662d"
-      }
-    }
-  ],
+  "instagram": "https://www.instagram.com/clinicaportoazulauna/?hl=es",
   "address": "Cra 105#45-265",
-  "comments": [
-    {
-      "user_photo": "/static/images/avatar/3.jpg",
-      "user_name": "codo",
-      "user_id": "63ab286da6e59074d5465dd1",
-      "description": "I loved it. Very good attention.",
-      "likes": [
-        {
-          "user_id": "63ab77d06d6dc52c56dc6627",
-          "user_name": "Eduardo Rios",
-          "approved": true,
-          "_id": {
-            "$oid": "63ab77d06d6dc52c56dc662f"
-          }
-        }
-      ],
-      "createdAt": {
-        "$numberLong": "1672181711974"
-      },
-      "answers": [],
-      "_id": {
-        "$oid": "63ab77d06d6dc52c56dc662e"
-      }
-    }
-  ],
+  "createdAt": {
+    "$numberLong": "1672181711974"
+  },
+  "updatedAt": {
+    "$numberLong": "1672181711974"
+  },
   "__v": 0
 },{
   "_id": {
     "$oid": "63ab77d06d6dc52c56dc662c"
   },
-  "category": "general",
   "certified": false,
   "finantial": "8 million US in 2021",
   "speciality": "Plastic and Reconstruction",
@@ -78,63 +33,19 @@
   "name": "Clinica de rostros",
   "city": "Barranquilla",
   "country": "Colombia",
-  "instagram": {
-    "name": "clinicaportoazulauna",
-    "link": "https://www.instagram.com/clinicaportoazulauna/?hl=es"
-  },
-  "qualification": [
-    {
-      "user_id": "63ab77d06d6dc52c56dc6626",
-      "user_name": "Bresneth oliveros",
-      "approved": false,
-      "stars": 4.5,
-      "_id": {
-        "$oid": "63ab77d06d6dc52c56dc662c"
-      }
-    }
-  ],
-  "certifications": [
-    {
-      "name": "Plantree Gold Certification",
-      "description": "Plantree Gold Certification for Excellent in Person Centered Care - 2018 ",
-      "logo": "/static/images/certifications/plantree_certification.jfif",
-      "_id": {
-        "$oid": "63ab77d06d6dc52c56dc662d"
-      }
-    }
-  ],
+  "instagram": "https://www.instagram.com/clinicaportoazulauna/?hl=es",
   "address": "Cra 105#45-265",
-  "comments": [
-    {
-      "user_photo": "/static/images/avatar/3.jpg",
-      "user_name": "codo",
-      "user_id": "63ab286da6e59074d5465dd1",
-      "description": "I loved it. Very good attention.",
-      "likes": [
-        {
-          "user_id": "63ab77d06d6dc52c56dc6627",
-          "user_name": "Eduardo Rios",
-          "approved": true,
-          "_id": {
-            "$oid": "63ab77d06d6dc52c56dc662f"
-          }
-        }
-      ],
-      "createdAt": {
-        "$numberLong": "1672181711974"
-      },
-      "answers": [],
-      "_id": {
-        "$oid": "63ab77d06d6dc52c56dc662e"
-      }
-    }
-  ],
+  "createdAt": {
+    "$numberLong": "1672181711974"
+  },
+  "updatedAt": {
+    "$numberLong": "1672181711974"
+  },
   "__v": 0
 },{
   "_id": {
     "$oid": "63ab77d06d6dc52c56dc662d"
   },
-  "category": "general",
   "certified": false,
   "finantial": "8 million US in 2021",
   "speciality": "Plastic and Reconstruction",
@@ -144,129 +55,41 @@
   "name": "Clinica del Cancer IPS",
   "city": "Barranquilla",
   "country": "Colombia",
-  "instagram": {
-    "name": "clinicaportoazulauna",
-    "link": "https://www.instagram.com/clinicaportoazulauna/?hl=es"
-  },
-  "qualification": [
-    {
-      "user_id": "63ab77d06d6dc52c56dc6626",
-      "user_name": "Bresneth oliveros",
-      "approved": false,
-      "stars": 4.1,
-      "_id": {
-        "$oid": "63ab77d06d6dc52c56dc662c"
-      }
-    }
-  ],
-  "certifications": [
-    {
-      "name": "Plantree Gold Certification",
-      "description": "Plantree Gold Certification for Excellent in Person Centered Care - 2018 ",
-      "logo": "/static/images/certifications/plantree_certification.jfif",
-      "_id": {
-        "$oid": "63ab77d06d6dc52c56dc662d"
-      }
-    }
-  ],
+  "instagram": "https://www.instagram.com/clinicaportoazulauna/?hl=es",
   "address": "Cra 105#45-265",
-  "comments": [
-    {
-      "user_photo": "/static/images/avatar/3.jpg",
-      "user_name": "codo",
-      "user_id": "63ab286da6e59074d5465dd1",
-      "description": "I loved it. Very good attention.",
-      "likes": [
-        {
-          "user_id": "63ab77d06d6dc52c56dc6627",
-          "user_name": "Eduardo Rios",
-          "approved": true,
-          "_id": {
-            "$oid": "63ab77d06d6dc52c56dc662f"
-          }
-        }
-      ],
-      "createdAt": {
-        "$numberLong": "1672181711974"
-      },
-      "answers": [],
-      "_id": {
-        "$oid": "63ab77d06d6dc52c56dc662e"
-      }
-    }
-  ],
+  "createdAt": {
+    "$numberLong": "1672181711974"
+  },
+  "updatedAt": {
+    "$numberLong": "1672181711974"
+  },
   "__v": 0
 },{
   "_id": {
     "$oid": "63ab77d06d6dc52c56dc662e"
   },
-  "category": "general",
   "certified": false,
   "finantial": "8 million US in 2021",
   "speciality": "Plastic and Reconstruction",
   "technology": "Animation Deformity: Evaluating the Role of Morphotopologic Features in Suggesting Preventive Surgical Procedures",
   "avatar": "/static/images/avatar/1.jpg",
-  "photo": "https://clinicajaca.com/wp-content/uploads/2020/08/clinicajaca-22-scaled.jpg",
+  "photo": "https://clinicajaca.com/wp-content/uploads/2020/08/clinicajaca-07-scaled.jpg",
   "name": "Clinica de rehabilitacion medular",
   "city": "Barranquilla",
   "country": "Colombia",
-  "instagram": {
-    "name": "clinicaportoazulauna",
-    "link": "https://www.instagram.com/clinicaportoazulauna/?hl=es"
-  },
-  "qualification": [
-    {
-      "user_id": "63ab77d06d6dc52c56dc6626",
-      "user_name": "Bresneth oliveros",
-      "approved": false,
-      "stars": 4.6,
-      "_id": {
-        "$oid": "63ab77d06d6dc52c56dc662c"
-      }
-    }
-  ],
-  "certifications": [
-    {
-      "name": "Plantree Gold Certification",
-      "description": "Plantree Gold Certification for Excellent in Person Centered Care - 2018 ",
-      "logo": "/static/images/certifications/plantree_certification.jfif",
-      "_id": {
-        "$oid": "63ab77d06d6dc52c56dc662d"
-      }
-    }
-  ],
+  "instagram": "https://www.instagram.com/clinicaportoazulauna/?hl=es",
   "address": "Cra 105#45-265",
-  "comments": [
-    {
-      "user_photo": "/static/images/avatar/3.jpg",
-      "user_name": "codo",
-      "user_id": "63ab286da6e59074d5465dd1",
-      "description": "I loved it. Very good attention.",
-      "likes": [
-        {
-          "user_id": "63ab77d06d6dc52c56dc6627",
-          "user_name": "Eduardo Rios",
-          "approved": true,
-          "_id": {
-            "$oid": "63ab77d06d6dc52c56dc662f"
-          }
-        }
-      ],
-      "createdAt": {
-        "$numberLong": "1672181711974"
-      },
-      "answers": [],
-      "_id": {
-        "$oid": "63ab77d06d6dc52c56dc662e"
-      }
-    }
-  ],
+  "createdAt": {
+    "$numberLong": "1672181711974"
+  },
+  "updatedAt": {
+    "$numberLong": "1672181711974"
+  },
   "__v": 0
 },{
   "_id": {
     "$oid": "63ab77d06d6dc52c56dc662f"
   },
-  "category": "general",
   "certified": false,
   "finantial": "8 million US in 2021",
   "speciality": "Plastic and Reconstruction",
@@ -276,63 +99,19 @@
   "name": "Clinica Ozuna",
   "city": "Barranquilla",
   "country": "Colombia",
-  "instagram": {
-    "name": "clinicaportoazulauna",
-    "link": "https://www.instagram.com/clinicaportoazulauna/?hl=es"
-  },
-  "qualification": [
-    {
-      "user_id": "63ab77d06d6dc52c56dc6626",
-      "user_name": "Bresneth Oliveros",
-      "approved": false,
-      "stars": 3.5,
-      "_id": {
-        "$oid": "63ab77d06d6dc52c56dc662c"
-      }
-    }
-  ],
-  "certifications": [
-    {
-      "name": "Plantree Gold Certification",
-      "description": "Plantree Gold Certification for Excellent in Person Centered Care - 2018 ",
-      "logo": "/static/images/certifications/plantree_certification.jfif",
-      "_id": {
-        "$oid": "63ab77d06d6dc52c56dc662d"
-      }
-    }
-  ],
+  "instagram": "https://www.instagram.com/clinicaportoazulauna/?hl=es",
   "address": "Cra 105#45-265",
-  "comments": [
-    {
-      "user_photo": "/static/images/avatar/3.jpg",
-      "user_name": "codo",
-      "user_id": "63ab286da6e59074d5465dd1",
-      "description": "I loved it. Very good attention.",
-      "likes": [
-        {
-          "user_id": "63ab77d06d6dc52c56dc6627",
-          "user_name": "Eduardo Rios",
-          "approved": true,
-          "_id": {
-            "$oid": "63ab77d06d6dc52c56dc662f"
-          }
-        }
-      ],
-      "createdAt": {
-        "$numberLong": "1672181711974"
-      },
-      "answers": [],
-      "_id": {
-        "$oid": "63ab77d06d6dc52c56dc662e"
-      }
-    }
-  ],
+  "createdAt": {
+    "$numberLong": "1672181711974"
+  },
+  "updatedAt": {
+    "$numberLong": "1672181711974"
+  },
   "__v": 0
 },{
   "_id": {
     "$oid": "63ab77d06d6dc52c56dc6621"
   },
-  "category": "general",
   "certified": false,
   "finantial": "8 million US in 2021",
   "speciality": "Plastic and Reconstruction",
@@ -342,56 +121,13 @@
   "name": "Clinica del caribe IPS",
   "city": "Barranquilla",
   "country": "Colombia",
-  "instagram": {
-    "name": "clinicaportoazulauna",
-    "link": "https://www.instagram.com/clinicaportoazulauna/?hl=es"
-  },
-  "qualification": [
-    {
-      "user_id": "63ab77d06d6dc52c56dc6626",
-      "user_name": "Bresneth oliveros",
-      "approved": false,
-      "stars": 4.3,
-      "_id": {
-        "$oid": "63ab77d06d6dc52c56dc662c"
-      }
-    }
-  ],
-  "certifications": [
-    {
-      "name": "Plantree Gold Certification",
-      "description": "Plantree Gold Certification for Excellent in Person Centered Care - 2018 ",
-      "logo": "/static/images/certifications/plantree_certification.jfif",
-      "_id": {
-        "$oid": "63ab77d06d6dc52c56dc662d"
-      }
-    }
-  ],
+  "instagram": "https://www.instagram.com/clinicaportoazulauna/?hl=es",
   "address": "Cra 105#45-265",
-  "comments": [
-    {
-      "user_photo": "/static/images/avatar/3.jpg",
-      "user_name": "codo",
-      "user_id": "63ab286da6e59074d5465dd1",
-      "description": "I loved it. Very good attention.",
-      "likes": [
-        {
-          "user_id": "63ab77d06d6dc52c56dc6627",
-          "user_name": "Eduardo Rios",
-          "approved": true,
-          "_id": {
-            "$oid": "63ab77d06d6dc52c56dc662f"
-          }
-        }
-      ],
-      "createdAt": {
-        "$numberLong": "1672181711974"
-      },
-      "answers": [],
-      "_id": {
-        "$oid": "63ab77d06d6dc52c56dc662e"
-      }
-    }
-  ],
+  "createdAt": {
+    "$numberLong": "1672181711974"
+  },
+  "updatedAt": {
+    "$numberLong": "1672181711974"
+  },
   "__v": 0
 }]
