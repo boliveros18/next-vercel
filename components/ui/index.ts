@@ -19,10 +19,10 @@ export * from "./utils/GuideBar";
 export * from "./utils/InstagramLink";
 export * from "./utils/ItemRefUi";
 export * from "./utils/MessageSkeleton";
-export * from "./utils/QualificationUi";
 export * from "./utils/ReadMore";
 export * from "./utils/ShareMediaUi";
 export * from "./utils/SingInUi";
 export * from "./utils/ItemCounter";
+export * from "./utils/ItemQualification";
 export * from "./utils/PrivacyPolicy";
 

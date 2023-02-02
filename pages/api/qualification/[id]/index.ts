@@ -69,16 +69,14 @@ const updateModel = async (
   }
 
   const {
-    stars = modelToUpdate.stars,
-    average = modelToUpdate.average
+    stars = modelToUpdate.stars
   } = req.body;
 
   try {
     const updatedModel = await Qualification.findByIdAndUpdate(
       id,
       {
-       stars,
-       average
+       stars
       },
       { runValidators: true, new: true }
     );

@@ -1,21 +1,19 @@
-import { FC, ReactNode, useContext } from "react";
+import { FC } from "react";
 import { Typography, Box, Link, Grid } from "@mui/material";
-import { ClinicContext } from "../../../context/clinic";
+import PhoneIcon from '@mui/icons-material/Phone';
+import InstagramIcon from '@mui/icons-material/Instagram';
 
 interface Props {
-  children?: ReactNode;
-  index: number;
+  instagram: string
+  phone: string
 }
 
-//TODO: meter el index en un context de clinic
+export const InstagramLink: FC<Props> = ({instagram, phone}) => {
 
-export const InstagramLink: FC<Props> = ({index}) => {
-  const { principals } = useContext(ClinicContext);
   return (
     <Grid container>
-      <Box sx={{ flexGrow: 1 }} />
       <Link
-        href={principals[index]?.instagram}
+        href={instagram}
         target="_blank"
         sx={{ textDecoration: "none" }}
       >
@@ -25,11 +23,23 @@ export const InstagramLink: FC<Props> = ({index}) => {
             cursor: "pointer",
             color: "#001B87",
             fontWeight: "500",
+             mt: 0.5 
           }}
         >
-          {"@" + principals[index]?.instagram.substring(26, principals[index].instagram.length-7)}
+          <InstagramIcon fontSize="small" sx={{ mb:-0.5}}/>
+          {instagram?.substring(26, instagram.length-7)}
         </Typography>
       </Link>
+      <Box sx={{ flexGrow: 1 }} />
+      <Typography
+          sx={{
+            fontSize: 14,
+            mt: 0.5 
+          }}
+        >
+          <PhoneIcon fontSize="small" sx={{ mb:-0.5}}/>
+          { phone }
+        </Typography>
     </Grid>
   );
 };

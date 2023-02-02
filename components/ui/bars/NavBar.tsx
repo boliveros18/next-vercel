@@ -147,7 +147,7 @@ export const NavBar: FC<Props> = ({}) => {
             <AddShoppingCartIcon />
           </Badge>
         </IconButton>
-        <p>Cart</p>
+        Cart
       </MenuItem>
       <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
@@ -155,7 +155,7 @@ export const NavBar: FC<Props> = ({}) => {
             <ChatBubbleOutlineIcon />
           </Badge>
         </IconButton>
-        <p>Messages</p>
+        Messages
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -167,7 +167,7 @@ export const NavBar: FC<Props> = ({}) => {
             <NotificationsNoneIcon />
           </Badge>
         </IconButton>
-        <p>Notifications</p>
+        Notifications
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton

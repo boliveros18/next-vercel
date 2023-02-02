@@ -10,14 +10,13 @@ type ActionType = { type: Action; payload?: any };
 export const likesReducer = (state: State, action: ActionType): State => {
   switch (action.type) {
     case "LIKE_CREATE":
-      return { ...state, likes: [...state.likes, action.payload] };
+      return { ...state, like: action.payload };
     case "LIKE_LIST":
-      return { ...state, likes: [...action.payload] };
+      return { ...state, likes: [...state.likes, action.payload] };
     case "LIKE_GET":
       return { ...state, like: action.payload };
     case "LIKE_DELETED":
-      const filtered = state.likes.filter(({ _id }) => _id !== action.payload);
-      return { ...state, likes: [...filtered] };
+      return { ...state, like: action.payload };
     default:
       return state;
   }

@@ -1,4 +1,4 @@
-import { FC, ReactNode, useReducer, useState, useMemo } from "react";
+import { FC, ReactNode, useReducer } from "react";
 import { QualificationContext, qualificationsReducer } from "./";
 import { Qualification } from "../../interfaces";
 import { QualificationService } from "../../services";
@@ -20,18 +20,29 @@ const INITIAL_STATE: State = {
 export const QualificationProvider: FC<ProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(qualificationsReducer, INITIAL_STATE);
 
-  const [qualifications, setQualifications] = useState<Qualification[]>([]);
-  useMemo(() => ({ qualifications, setQualifications }), [qualifications]);
+  const createQualification = async (payload: Qualification) => {
+    const data  = await QualificationService.createOne(payload);
+    dispatch({ type: "QUALIFICATION_CREATE", payload: data });
+    return data
+  };
 
   const updateQualification = async (id: string, payload: Qualification) => {
-    const { status, data } = await QualificationService.updateOne(id, payload);
-    if (status) dispatch({ type: "QUALIFICATION_UPDATED", payload: data });
+    const  data  = await QualificationService.updateOne(id, payload);
+    dispatch({ type: "QUALIFICATION_UPDATED", payload: data });
     return data;
   };
 
+  const getQualification = async (id: string) => {
+    const data  = await QualificationService.getQualification(id);
+     dispatch({ type: "QUALIFICATION_GET", payload: data });
+    return data;
+  };
+
+  
   return (
     <QualificationContext.Provider
-      value={{ ...state, qualifications, setQualifications, updateQualification }}
+      value={{ ...state, createQualification, getQualification, updateQualification//, id, setId
+       }}
     >
       {children}
     </QualificationContext.Provider>

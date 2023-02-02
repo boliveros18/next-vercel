@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import mongoose from "mongoose";
-import { getSession } from "next-auth/react";
 
 import { db } from "../../../../database";
 import { Answer, IAnswer } from "../../../../models";
@@ -19,8 +18,6 @@ export default function handler(
   }
 
   switch (req.method) {
-    case "POST":
-      return createModel(req, res);
 
     case "PUT":
       return updateModel(req, res);
@@ -37,35 +34,6 @@ export default function handler(
       });
   }
 }
-
-const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const session: any = await getSession({ req });
-  if (!session) {
-    return res
-      .status(401)
-      .json({ message: "You must be authenticated to do this" });
-  }
-
-  await db.connect();
-
-  const newModel = new Answer({
-    user_id: session.user._id,
-    user_name: session.user.name,
-    user_photo: session.user.avatar,
-  });
-
-  try {
-    await newModel.save();
-    await db.disconnect();
-    return res.status(201).json(newModel);
-  } catch (error: any) {
-    await db.disconnect();
-    console.log(error);
-    res.status(400).json({
-      message: error.message || "Check server logs",
-    });
-  }
-};
 
 const getModel = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
@@ -98,9 +66,6 @@ const updateModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   }
 
   const {
-    user_photo = modelToUpdate.user_photo,
-    user_name = modelToUpdate.user_name,
-    user_id = modelToUpdate.user_id,
     description = modelToUpdate.description,
     user_tag_id = modelToUpdate.user_tag_id,
     user_tag_name = modelToUpdate.user_tag_name,
@@ -111,9 +76,6 @@ const updateModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     const updatedModel = await Answer.findByIdAndUpdate(
       id,
       {
-        user_photo,
-        user_name,
-        user_id,
         description,
         user_tag_id,
         user_tag_name,

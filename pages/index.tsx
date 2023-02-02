@@ -1,74 +1,56 @@
 import { useContext, useEffect } from "react";
 import { GetServerSideProps, NextPage } from "next";
-import {
-  dbAnswers,
-  dbCertifications,
-  dbClinics,
-  dbComments,
-  dbLikes,
-  dbQualifications,
-} from "../database";
+import { getSession } from "next-auth/react";
+import { dbClinics, dbComments, dbLikes } from "../database";
 import { Layout } from "../components/layouts";
 import { HomeCard } from "../components/bodyCard";
 import { Grid } from "@mui/material";
 import { BottomBar, SideBar, RightBar } from "../components/ui";
 
-import {
-  Answer,
-  Certification,
-  Clinic,
-  Comment,
-  Like,
-  Qualification,
-} from "../interfaces";
-import { AnswerContext } from "../context/answer";
-import { CertificationContext } from "../context/certification";
+import { Clinic, Comment, Like } from "../interfaces";
+import { LikeContext } from "../context/like";
 import { ClinicContext } from "../context/clinic";
 import { CommentContext } from "../context/comment";
-import { LikeContext } from "../context/like";
-import { QualificationContext } from "../context/qualification";
 import { UIContext } from "../context/ui/UIContext";
 
 interface Props {
-  answer: Answer[];
-  certification: Certification[];
-  clinic: Clinic[];
-  comment: Comment[];
-  qualification: Qualification[];
+  principal: Clinic[];
+  clinics: Clinic[];
+  comments: Comment[];
+  like: Like[];
+  likeLength: [];
 }
 
 const HomePage: NextPage<Props> = ({
-  answer,
-  certification,
-  clinic,
-  comment,
-  qualification,
+  principal,
+  clinics,
+  comments,
+  like,
+  likeLength,
 }) => {
-  const { setAnswers } = useContext(AnswerContext);
-  const { setCertifications } = useContext(CertificationContext);
-  const { setPrincipals, principals } = useContext(ClinicContext);
+  const { setPrincipals, setPrincipal } = useContext(ClinicContext);
+  const { setPrincipalLike, setLikeLength } = useContext(LikeContext);
   const { setComments } = useContext(CommentContext);
-  const { setQualifications } = useContext(QualificationContext);
   const { setLoading } = useContext(UIContext);
 
   useEffect(() => {
-    setAnswers(answer.flat());
-    setCertifications(certification.flat());
-    setPrincipals(clinic.flat());
-    setComments(comment.flat());
-    setQualifications(qualification.flat());
+    setPrincipal(principal.flat());
+    setPrincipals(clinics.flat());
+    setComments(comments.flat());
     setLoading(true);
+    setPrincipalLike(like);
+    setLikeLength(likeLength.flat()[0]);
   }, [
-    answer,
-    certification,
-    clinic,
-    comment,
-    qualification,
-    setAnswers,
-    setCertifications,
+    like,
+    setPrincipalLike,
+    likeLength,
+    setLikeLength,
+    principal,
+    clinics,
+    comments,
+    setPrincipal,
     setPrincipals,
     setComments,
-    setQualifications,
     setLoading,
   ]);
 
@@ -86,7 +68,7 @@ const HomePage: NextPage<Props> = ({
           <SideBar keepOpen={true} />
         </Grid>
         <Grid item xs={12} sm={6} md={5} justifyContent="center">
-          <HomeCard />
+          {<HomeCard />}
         </Grid>
         <Grid
           item
@@ -105,14 +87,20 @@ const HomePage: NextPage<Props> = ({
     </Layout>
   );
 };
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const answer = await dbAnswers.getAllAnswers();
-  const certification = await dbCertifications.getAllCertifications();
-  const clinic = await dbClinics.getPrincipalsClinics();
-  const comment = await dbComments.getAllComments();
-  const qualification = await dbQualifications.getAllQualifications();
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const session = await getSession({ req });
+  const principal = await dbClinics.getPrincipalClinic();
+  const clinics = await dbClinics.getPrincipalsClinics();
+  const comments = await dbComments.getCommentsByParentId(principal[0]._id || "");
+  const like = await dbLikes.getLikeByParentIdAndUserId(
+    principal[0]._id || "",
+    session?.user?._id || ""
+  );
+  const likeLength = await dbLikes.getLikeLengthByParentId(
+    principal[0]?._id || ""
+  );
 
-  if (!clinic) {
+  if (!clinics) {
     return {
       redirect: {
         destination: "/",
@@ -123,11 +111,11 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
   return {
     props: {
-      answer: [answer],
-      certification: [certification],
-      clinic: [clinic],
-      comment: [comment],
-      qualification: [qualification],
+      principal: [principal],
+      clinics: [clinics],
+      comments: [comments],
+      like: [like],
+      likeLength: [likeLength],
     },
   };
 };

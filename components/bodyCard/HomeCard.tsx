@@ -1,6 +1,5 @@
-import { FC, useState, useContext } from "react";
+import { FC, useContext } from "react";
 import * as React from "react";
-
 import {
   Card,
   CardHeader,
@@ -8,7 +7,6 @@ import {
   CardMedia,
   Avatar,
   Typography,
-  Skeleton,
   CardActionArea,
 } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
@@ -20,211 +18,112 @@ import {
   ReadMore,
   SeeComments,
 } from "../ui";
-import Carousel from "react-material-ui-carousel";
-import { getPrincipalClinics } from "../../utils/arrayFunctions";
-import { ClinicDetails } from "../clinic";
 import { WindowSize, UseWindowSize } from "../../utils";
-import { QualificationContext } from "../../context/qualification";
 import { ClinicContext } from "../../context/clinic";
-
 import { AuthContext } from "../../context/auth";
-import { SingInUi, ShareMediaUi } from "../ui";
 import { UIContext } from "../../context/ui";
+import { SingInUi, ShareMediaUi } from "../ui";
+import { useRouter } from "next/router";
 
 interface Props {}
 
 export const HomeCard: FC<Props> = () => {
-
-  const [index, setIndex] = useState<number>(0);
+  const router = useRouter();
   const { isLoggedIn } = useContext(AuthContext);
-  const { loading } = useContext(UIContext);
   const mobile = UseWindowSize();
   const height = WindowSize().height;
-  const [toogle, setToogle] = useState(true);
-  const { principals } = useContext(ClinicContext);
-
-  const handleThrough = () => {
-    setToogle(!toogle);
-  };
-
-  const getIndex = (index: number) => {
-    setIndex(index);
-  };
+  const { principal } = useContext(ClinicContext);
+  const { loading } = useContext(UIContext);
 
   return (
     <>
-      {toogle ? (
-        <>
-          <SeeComments parent_id={principals[index]?._id || ""}>
-            <Carousel
-              stopAutoPlayOnHover
-              autoPlay={false}
-              fullHeightHover={false}
-              onChange={(now?: number) =>
-                getIndex(now || 0)
-              }
-              indicators={false}
-              swipe={false}
-            >
-              {principals.map((item, n) => (
-                <div key={n}>
-                  <Card
-                    sx={{
-                      width: "100%",
-                      height: height - 219,
-                    }}
-                    elevation={0}
-                  >
-                    <GuideBar />
-                    <CardHeader
-                      avatar={
-                        !loading ? (
-                          <Skeleton
-                            animation="wave"
-                            variant="circular"
-                            width={40}
-                            height={40}
-                          />
-                        ) : (
-                          <Avatar alt={item?.name} src={item?.avatar} />
-                        )
-                      }
-                      action={
-                        loading ? (
-                          <ShareMediaUi
-                            name={item?.name}
-                            description={
-                              item?.finantial +
-                              ". " +
-                              item?.speciality +
-                              ". " +
-                              item?.technology
-                            }
-                          />
-                        ) : null
-                      }
-                      title={
-                        loading ? (
-                          <Typography
-                            sx={{ fontSize: 15, textTransform: "capitalize" }}
-                            variant="subtitle2"
-                          >
-                            {item?.name + " "}{" "}
-                            {item?.certified ? (
-                              <CheckCircleIcon
-                                sx={{ color: "blue", fontSize: "15px" }}
-                              />
-                            ) : (
-                              <CheckCircleOutlineIcon
-                                fontSize="small"
-                                sx={{ color: "gray", fontSize: "15px" }}
-                              />
-                            )}
-                          </Typography>
-                        ) : (
-                          <Skeleton
-                            animation="wave"
-                            height={10}
-                            width="80%"
-                            style={{ marginBottom: 6 }}
-                          />
-                        )
-                      }
-                      subheader={
-                        loading ? (
-                          item?.province + ", " + item?.country
-                        ) : (
-                          <Skeleton animation="wave" height={10} width="40%" />
-                        )
-                      }
+      <SeeComments parent_id={principal[0]?._id || ""}>
+        <Card
+          sx={{
+            width: "100%",
+            height: height - (!isLoggedIn ? 230 : 270),
+          }}
+          elevation={0}
+        >
+          <GuideBar />
+          <CardHeader
+            avatar={
+              loading && (
+                <Avatar alt={principal[0]?.name} src={principal[0]?.avatar} />
+              )
+            }
+            action={
+              loading && (
+                <ShareMediaUi
+                  name={principal[0]?.name}
+                  description={
+                    principal[0]?.finantial +
+                    ". " +
+                    principal[0]?.speciality +
+                    ". " +
+                    principal[0]?.technology
+                  }
+                />
+              )
+            }
+            title={
+              loading && (
+                <Typography
+                  sx={{ fontSize: 15, fontWeight: 500 }}
+                      >
+                  {principal[0]?.name + " "}
+                  {principal[0]?.certified ? (
+                    <CheckCircleIcon sx={{ color: "blue", fontSize: "15px" }} />
+                  ) : (
+                    <CheckCircleOutlineIcon
+                      fontSize="small"
+                      sx={{ color: "gray", fontSize: "15px" }}
                     />
-                    <CardActionArea onClick={() => setToogle(!toogle)}>
-                      {loading ? (
-                        <CardMedia
-                          component="img"
-                          height={height - 500}
-                          image={item?.photo}
-                          alt="Clinic"
-                          sx={{ maxHeight: "330px" }}
-                        />
-                      ) : (
-                        <Skeleton
-                          height={170}
-                          animation="wave"
-                          variant="rectangular"
-                        />
-                      )}
-                    </CardActionArea>
-                    {loading ? (
-                      <CardActionsUi parent_id={principals[index]?._id || ""}/>
+                  )}
+                </Typography>
+              )
+            }
+            subheader={
+              loading && (
+                principal[0]?.province + ", " + principal[0]?.country
+              )
+            }
+          />
+          <CardActionArea
+            onClick={() => router.push(`/clinic/${principal[0]?._id}`)}
+          >
+            {loading && (
+              <CardMedia
+                component="img"
+                height={height - 500}
+                image={principal[0]?.photo}
+                alt="Clinic"
+                sx={{ maxHeight: "330px" }}
+              />
+            )}
+          </CardActionArea>
+          { loading && <CardActionsUi parent_id={principal[0]?._id || ""} />
+          }
+          <CardContent>
+            { loading && (
+              <>
+                <CardDetailUi
+                  author=""
+                  comment={
+                    mobile ? (
+                      <ReadMore text={principal[0]?.finantial+ ". " + principal[0]?.speciality + ". " + principal[0]?.technology} />
                     ) : (
-                      <Skeleton
-                        animation="wave"
-                        height={20}
-                        width="10%"
-                        sx={{ marginTop: 2 }}
-                      />
-                    )}
-                    <CardContent>
-                      {loading ? (
-                        <CardDetailUi
-                          author="Finantial"
-                          comment={
-                            mobile ? (
-                              <ReadMore text={item?.finantial} />
-                            ) : (
-                              item?.finantial
-                            )
-                          }
-                          info={true && !isLoggedIn}
-                        ></CardDetailUi>
-                      ) : (
-                        <Skeleton animation="wave" height={20} width="50%" />
-                      )}
-                      {loading ? (
-                        <CardDetailUi
-                          author="Speciality"
-                          comment={
-                            mobile ? (
-                              <ReadMore text={item?.speciality} />
-                            ) : (
-                              item?.speciality
-                            )
-                          }
-                          info={true && !isLoggedIn}
-                        ></CardDetailUi>
-                      ) : (
-                        <Skeleton animation="wave" height={20} width="60%" />
-                      )}
-                      {loading ? (
-                        <CardDetailUi
-                          author="Technology"
-                          comment={
-                            mobile ? (
-                              <ReadMore text={item?.technology} />
-                            ) : (
-                              item?.technology
-                            )
-                          }
-                          info={true && !isLoggedIn}
-                        ></CardDetailUi>
-                      ) : (
-                        <Skeleton animation="wave" height={20} width="80%" />
-                      )}
-                    </CardContent>
-                  </Card>
-                </div>
-              ))}
-            </Carousel>
-          </SeeComments>
-          <SingInUi />
-        </>
-      ) : (
-        <ClinicDetails
-          handleThrough={handleThrough}
-          index={index}
-        ></ClinicDetails>
-      )}
+                      principal[0]?.finantial+ ". " + principal[0]?.speciality + ". " + principal[0]?.technology
+                    )
+                  }
+                  info={true && !isLoggedIn}
+                ></CardDetailUi>
+              </>
+            )}
+          </CardContent>
+        </Card>
+      </SeeComments>
+      <SingInUi />
     </>
   );
 };

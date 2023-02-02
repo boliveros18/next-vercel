@@ -14,10 +14,25 @@ export const getCommentById = async (id: string): Promise<IComment | null> => {
   return JSON.parse(JSON.stringify(comment));
 };
 
-export const getAllComments = async (): Promise<IComment> => {
+export const getAllComments = async (): Promise<IComment[]> => {
   await db.connect();
   const comments = await Comment.find().lean();
   await db.disconnect();
 
   return JSON.parse(JSON.stringify(comments));
 };
+
+export const getCommentsByParentId = async (
+  parent_id: string
+): Promise<IComment | {}> => {
+  await db.connect();
+  const comments = await Comment.find({
+    parent_id: parent_id 
+  })
+  await db.disconnect();
+  if (comments[0] === undefined) {
+    return { _id: "" };
+  }
+  return JSON.parse(JSON.stringify(comments));
+};
+

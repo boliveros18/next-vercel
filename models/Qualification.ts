@@ -7,9 +7,7 @@ const entrySchema = new Schema({
   parent_id: { type: String, require: true },
   user_id: { type: String, require: true },
   user_name: { type: String, require: true },
-  approved: { type: Boolean},
-  stars: { type: Number},
-  average: { type: Number},
+  stars: { type: Number, require: true }
 });
 
 const QualificationModel: Model<IQualification> =

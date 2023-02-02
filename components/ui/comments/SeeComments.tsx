@@ -59,7 +59,7 @@ export const SeeComments: FC<Props> = ({ children, parent_id }) => {
                 <ArrowBackIosIcon />
               </IconButton>
             ) : (
-              "See the " + comments?.filter(i=>i.parent_id===parent_id).length + " comments"
+              "See the " + comments?.length + " comments"
             )}
           </Typography>
         </AccordionSummary>

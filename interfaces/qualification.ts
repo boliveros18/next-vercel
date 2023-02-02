@@ -4,5 +4,4 @@ export interface Qualification {
     user_id: string;
     user_name: string;
     stars: number;
-    average: number;
   };

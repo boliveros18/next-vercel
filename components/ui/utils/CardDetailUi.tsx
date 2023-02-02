@@ -15,15 +15,15 @@ export const CardDetailUi: FC<Props> = ({ author, comment, link, info }) => {
         href={link}
         style={{
           fontSize: 14,
-          fontWeight: "500",
-          cursor: "pointer",
+          fontWeight: 500,
+          cursor: info ? "pointer" : "auto",
           textDecoration: "none",
           color: "black",
         }}
       >
         {author + " "}
       </a>
-      <span style={{ fontSize: 14 }}>{comment}</span>
+      <span style={{ fontSize: 14, textTransform: "lowercase"  }}>{comment}</span>
     </div>
   );
 };

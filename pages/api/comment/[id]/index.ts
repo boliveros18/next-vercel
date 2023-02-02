@@ -69,9 +69,6 @@ const updateModel = async (
   }
 
   const {
-    user_photo = modelToUpdate.user_photo,
-    user_name = modelToUpdate.user_name,
-    user_id = modelToUpdate.user_id,
     description = modelToUpdate.description,
     updatedAt = modelToUpdate.updatedAt
   } = req.body;
@@ -80,9 +77,6 @@ const updateModel = async (
     const updatedModel = await Comment.findByIdAndUpdate(
       id,
       {
-        user_photo,
-        user_name,
-        user_id,
         description,
         updatedAt
       },

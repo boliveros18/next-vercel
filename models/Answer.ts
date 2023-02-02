@@ -9,8 +9,8 @@ const entrySchema = new Schema({
   user_name: { type: String, require: true },
   user_id: { type: String, require: true },
   description: { type: String, require: true },
-  user_tag_id: { type: String, require: true },
-  user_tag_name: { type: String, require: true },
+  user_tag_id: { type: String },
+  user_tag_name: { type: String },
   createdAt: { type: Number },
   updatedAt: { type: Number },
 });

@@ -14,10 +14,25 @@ export const getQualificationById = async (id: string): Promise<IQualification |
   return JSON.parse(JSON.stringify(qualification));
 };
 
-export const getAllQualifications = async (): Promise<IQualification> => {
+export const getAllQualifications = async (): Promise<IQualification[]> => {
   await db.connect();
   const qualifications = await Qualification.find().lean();
   await db.disconnect();
 
   return JSON.parse(JSON.stringify(qualifications));
+};
+
+export const getQualificationByParentId = async (
+  id: string
+): Promise<IQualification [] | null> => {
+  if (!isValidObjectId(id)) {
+    return null;
+  }
+
+  await db.connect();
+  const qualification = await Qualification.find({
+    parent_id: { $eq: id },
+  });
+  await db.disconnect();
+  return JSON.parse(JSON.stringify(qualification));
 };

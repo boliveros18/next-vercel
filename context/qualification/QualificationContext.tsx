@@ -1,10 +1,11 @@
-import { createContext, Dispatch, SetStateAction } from "react";
+import { createContext } from "react";
 import { Qualification } from "../../interfaces";
 
 interface ContextProps {
   qualifications: Qualification[];
   qualification: Qualification;
-  setQualifications: Dispatch<SetStateAction<Qualification[]>>;
+  createQualification: (payload: Qualification) => Promise<void>;
+  getQualification: (id: string) => Promise<void>;
   updateQualification: (id: string, payload: Qualification) => Promise<void>;
 }
 
