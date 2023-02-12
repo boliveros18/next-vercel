@@ -25,7 +25,7 @@ export const getAllLikes = async (): Promise<ILike[]> => {
 export const getLikeByParentIdAndUserId = async (
   parent_id: string,
   user_id: string
-): Promise<ILike | {}> => {
+): Promise<ILike | null> => {
   await db.connect();
   const like = await await Like.find({
     parent_id: parent_id,
@@ -33,7 +33,7 @@ export const getLikeByParentIdAndUserId = async (
   });
   await db.disconnect();
   if (like[0] === undefined) {
-    return { _id: "" };
+    return null
   }
   return JSON.parse(JSON.stringify(like[0]));
 };
@@ -47,4 +47,18 @@ export const getLikeLengthByParentId = async (
   }).count()
   await db.disconnect();
   return JSON.parse(JSON.stringify(like));
+};
+
+export const getLikesByParentId = async (
+  parent_id: string
+): Promise<ILike | null> => {
+  await db.connect();
+  const like = await await Like.find({
+    parent_id: parent_id
+  });
+  await db.disconnect();
+  if (like[0] === undefined) {
+    return null
+  }
+  return JSON.parse(JSON.stringify(like[0]));
 };

@@ -24,15 +24,16 @@ export const getAllComments = async (): Promise<IComment[]> => {
 
 export const getCommentsByParentId = async (
   parent_id: string
-): Promise<IComment | {}> => {
+): Promise<IComment[] | null> => {
   await db.connect();
-  const comments = await Comment.find({
+  const comments =  await Comment.find({
     parent_id: parent_id 
   })
   await db.disconnect();
-  if (comments[0] === undefined) {
-    return { _id: "" };
+  if (comments === undefined) {
+    return null
   }
   return JSON.parse(JSON.stringify(comments));
 };
 
+ 

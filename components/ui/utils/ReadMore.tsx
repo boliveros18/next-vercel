@@ -1,6 +1,5 @@
 import { FC, ReactNode, useState } from "react";
 import * as React from "react";
-import { Typography, Grid } from "@mui/material";
 
 interface Props {
   children?: ReactNode;
@@ -8,24 +7,24 @@ interface Props {
 }
 
 export const ReadMore: FC<Props> = ({ text }) => {
-  const letters: number = 150;
+  const letters: number = 120;
   const [isReadMore, setIsReadMore] = useState(true);
   const toggleReadMore = () => {
     setIsReadMore(!isReadMore);
   };
 
   return (
-    <Grid sx={{ fontSize: 13}}>
+    <>
       {isReadMore && text ? text.slice(0, letters) : text}
       {text && (
-        <Typography
+        <span
           hidden={text.length < letters}
           onClick={toggleReadMore}
-          sx={{ color: "rgb(192,192,192)", cursor: "pointer", fontSize: 13 }}
+          style={{ color: "rgb(192,192,192)", cursor: "pointer", fontSize: 13 }}
         >
           {isReadMore ? "...more" : " less"}
-        </Typography>
+        </span>
       )}
-    </Grid>
+    </>
   );
 };

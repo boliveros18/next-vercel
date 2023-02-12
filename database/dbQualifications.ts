@@ -28,7 +28,6 @@ export const getQualificationByParentId = async (
   if (!isValidObjectId(id)) {
     return null;
   }
-
   await db.connect();
   const qualification = await Qualification.find({
     parent_id: { $eq: id },

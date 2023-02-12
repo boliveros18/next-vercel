@@ -33,6 +33,9 @@ export const getCertificationByParentId = async (
   const certification = await Certification.find({
     parent_id: parent_id,
   });
+  if (certification[0] === undefined) {
+    return null
+  }
   await db.disconnect();
 
   return JSON.parse(JSON.stringify(certification[0]));

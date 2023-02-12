@@ -17,22 +17,30 @@ interface Props {
 
 export const CardActionsUi: FC<Props> = ({ parent_id }) => {
   const { setOnFocus } = useContext(UIContext);
-  const { createLike, deleteLike, principalLike, likeLength, setLikeLength } =
+  const { createLike, deleteLike, length, setLength, likes } =
     useContext(LikeContext);
   const { isLoggedIn, user } = useContext(AuthContext);
 
+
+
   const handleLike = () => {
-    if (principalLike[0]?._id !== "") {
-      deleteLike(principalLike[0]._id || "");
-      setLikeLength(likeLength - 1);
-      principalLike[0]._id = "";
+    if (
+      likes.filter((i) => i.parent_id === parent_id && i.user_id === user?._id)
+        .length === 1
+    ) {
+      deleteLike(likes[0]._id || "");
+      setLength(length - 1);
+      const index = likes.findIndex(
+        (i) => i.parent_id === parent_id && i.user_id === user?._id
+      );
+      likes.splice(index, 1);
     } else {
       createLike({
         user_id: user?._id || "",
         user_name: user?.name || "",
         parent_id: parent_id,
       });
-      setLikeLength(likeLength + 1);
+      setLength(length + 1);
     }
   };
 
@@ -53,7 +61,9 @@ export const CardActionsUi: FC<Props> = ({ parent_id }) => {
               disabled={!isLoggedIn}
               onClick={handleLike}
             >
-              {principalLike[0]?._id !== "" ? (
+              {likes.filter(
+                (i) => i.parent_id === parent_id && i.user_id === user?._id
+              ).length === 1 ? (
                 <CheckCircleIcon sx={{ color: "blue" }} fontSize="medium" />
               ) : (
                 <CheckCircleOutlineIcon fontSize="medium" />
@@ -89,8 +99,8 @@ export const CardActionsUi: FC<Props> = ({ parent_id }) => {
       <Typography
         sx={{ fontSize: 14, fontWeight: 500, mt: 1.5, ml: 2, mb: -1 }}
       >
-        {likeLength === 0 ? "" : likeLength}
-        {likeLength === 0 ? "" : likeLength > 1 ? " Likes" : " Like"}
+        {length === 0 ? "" : length}
+        {length === 0 ? "" : length > 1 ? " Likes" : " Like"}
       </Typography>
     </>
   );

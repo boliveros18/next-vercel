@@ -8,30 +8,23 @@ interface ProviderProps {
 }
 
 export interface State {
-  likes: Like[];
   like: Like;
 }
 
 const INITIAL_STATE: State = {
-  likes: [],
   like: {} as Like,
 };
 
 export const LikeProvider: FC<ProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(likesReducer, INITIAL_STATE);
 
-  const [principalLike, setPrincipalLike] = useState<Like[]>([]);
-  const [likeLength, setLikeLength] = useState<number>(0);
-
-  const getLikes = async () => {
-    const data = await LikeService.getLikes();
-    dispatch({ type: "LIKE_LIST", payload: data });
-  };
+  const [likes, setLikes] = useState<Like[]>([]);
+  const [length, setLength] = useState<number>(0);
 
   const createLike = async (payload: Like) => {
     const data = await LikeService.createOne(payload);
-    dispatch({ type: "LIKE_CREATE", payload: data });
-    setPrincipalLike([data])
+    dispatch({ type: "LIKE_GET", payload: data });
+    setLikes([...likes, data])
     return data
   };
 
@@ -43,13 +36,13 @@ export const LikeProvider: FC<ProviderProps> = ({ children }) => {
 
   const deleteLike = async (id: string) => {
     const data = await LikeService.deleteOne(id);
-    dispatch({ type: "LIKE_DELETED", payload: id });
+    dispatch({ type: "LIKE_GET", payload: id });
     return data
   };
 
   return (
     <LikeContext.Provider
-      value={{ ...state, createLike, getLikes, getLike, deleteLike, principalLike, setPrincipalLike, likeLength, setLikeLength }}
+      value={{ ...state, createLike, getLike, deleteLike, length, setLength, setLikes, likes }}
     >
       {children}
     </LikeContext.Provider>

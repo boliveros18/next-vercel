@@ -41,7 +41,7 @@ export const HomeCard: FC<Props> = () => {
         <Card
           sx={{
             width: "100%",
-            height: height - (!isLoggedIn ? 230 : 270),
+            minHeight: height - (!isLoggedIn ? 230 : 270),
           }}
           elevation={0}
         >

@@ -9,7 +9,7 @@ import {
   Divider,
   Grid,
 } from "@mui/material";
-import { ReadMore, SeeComments } from "../../components/ui";
+import { ReadMore } from "../../components/ui";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { WindowSize, UseWindowSize } from "../../utils";
@@ -31,7 +31,7 @@ const ClinicPage: NextPage<Props> = ({
   qualifications,
 }) => {
   const mobile = UseWindowSize();
-  const size = WindowSize(); 
+  const size = WindowSize();
 
   return (
     <Layout>
@@ -50,14 +50,11 @@ const ClinicPage: NextPage<Props> = ({
           <Card
             sx={{
               width: "100%",
-              height: size.height - 219,
+              minHeight: size.height - 219,
             }}
             elevation={0}
           >
-            <Typography
-              align="center"
-              sx={{ fontWeight: "medium", mt: 1 }}
-            >
+            <Typography align="center" sx={{ fontWeight: "medium", mt: 1 }}>
               {clinic.name + " "}
               {clinic.certified ? (
                 <CheckCircleIcon sx={{ color: "blue", fontSize: "15px" }} />
@@ -76,33 +73,36 @@ const ClinicPage: NextPage<Props> = ({
             />
             <CardContent>
               {
-                <ItemQualification qualifications={qualifications} Qualification={clinic.qualification} />
+                <ItemQualification
+                  qualifications={qualifications}
+                  Qualification={clinic.qualification}
+                />
               }
               <Divider sx={{ mt: 1 }} />
               <Card sx={{ display: "flex" }} elevation={0}>
                 <Box sx={{ display: "flex", flexDirection: "column" }}>
                   <CardContent sx={{ flex: "1 0 auto" }}>
                     <Typography sx={{ fontSize: 15, fontWeight: "500" }}>
-                      {certification.name || ""}
+                      {certification?.name || ""}
                     </Typography>
-                    <Typography sx={{ fontSize: 14 }}>
+                    <Grid sx={{ fontSize: 14 }}>
                       {mobile ? (
-                        <ReadMore text={certification.description || ""} />
+                        <ReadMore text={certification?.description || ""} />
                       ) : (
-                        certification.description || ""
+                        certification?.description || ""
                       )}
-                    </Typography>
+                    </Grid>
                   </CardContent>
                 </Box>
                 <Box sx={{ flexGrow: 1 }} />
                 <CardMedia
                   component="img"
                   sx={{
-                    width: certification.logo ? 70 : 0,
+                    width: certification?.logo ? 70 : 0,
                     m: 1,
                     border: 0,
                   }}
-                  image={certification.logo}
+                  image={certification?.logo}
                   alt=""
                 />
               </Card>

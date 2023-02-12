@@ -21,3 +21,17 @@ export const getAllAnswers = async (): Promise<IAnswer[]> => {
 
   return JSON.parse(JSON.stringify(answers));
 };
+
+export const getAnswersByParentId = async (
+  parent_id: string
+): Promise<IAnswer | null> => {
+  await db.connect();
+  const Answers = await Answer.find({
+    parent_id: parent_id 
+  })
+  await db.disconnect();
+  if (Answers[0] === undefined) {
+    return null;
+  }
+  return JSON.parse(JSON.stringify(Answers));
+};
