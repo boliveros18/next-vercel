@@ -26,7 +26,7 @@ export const CommentUi: FC<Props> = ({parent_id}) => {
       {comments.filter(i=>i.parent_id === parent_id)?.length > 0 ? (
         comments.filter(i=>i.parent_id === parent_id)?.map((item, index) => (
           <div key={index} style={{ marginBottom: -6, marginTop: -2 }}>
-            <CardCommentUi item={item} tag={false} />
+            <CardCommentUi item={item} />
             <Accordion
               elevation={0}
               disableGutters={true}
@@ -78,9 +78,9 @@ export const CommentUi: FC<Props> = ({parent_id}) => {
                 <AccordionDetails sx={{ marginBottom: -2, marginTop: 1 }}>
                   {comments
                     ?.filter((i) => i.parent_id === item._id)
-                    .map((item, index) => (
+                    .map((item2, index) => (
                       <div key={index} style={{ marginLeft: 4, marginTop: -8 }}>
-                        <CardCommentUi item={item} tag={true} />
+                        <CardCommentUi item={item2} parent_id={item._id} />
                       </div>
                     ))}
                 </AccordionDetails>

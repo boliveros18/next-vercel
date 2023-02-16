@@ -11,10 +11,10 @@ import { EditCommentUi } from "../comments/EditCommentUi";
 
 interface Props {
   item: Comment;
-  tag: boolean;
+  parent_id?: string;
 }
 
-export const CardCommentUi: FC<Props> = ({ item, tag }) => {
+export const CardCommentUi: FC<Props> = ({ item, parent_id }) => {
   const { likes, createLike, deleteLike } = useContext(LikeContext);
   const { isLoggedIn, user } = useContext(AuthContext);
 
@@ -33,11 +33,11 @@ export const CardCommentUi: FC<Props> = ({ item, tag }) => {
   };
 
   return (
-    <Card sx={{ maxWidth: "100%"}} elevation={0}>
+    <Card sx={{ maxWidth: "100%" }} elevation={0}>
       <CardHeader
         avatar={<Avatar alt={item.user_name} src={item.user_photo} />}
         title={
-          <Grid container >
+          <Grid container>
             <Grid item xs={10} sm={10} md={10}>
               <Link href={`./user/${item.user_id}`}>
                 <a
@@ -47,7 +47,7 @@ export const CardCommentUi: FC<Props> = ({ item, tag }) => {
                     fontWeight: "500",
                   }}
                 >
-                  {item.user_name + " " }
+                  {item.user_name + " "}
                 </a>
               </Link>
               <span>
@@ -55,7 +55,7 @@ export const CardCommentUi: FC<Props> = ({ item, tag }) => {
                   <a
                     style={{
                       textDecoration: "none",
-                      color: "#001B87"
+                      color: "#001B87",
                     }}
                   >
                     {item.user_tag_name}
@@ -64,12 +64,12 @@ export const CardCommentUi: FC<Props> = ({ item, tag }) => {
                 {" " + item.description}
               </span>
             </Grid>
-            <Grid item xs={1} sm={1} md={1} sx={{mt:-0.5}}>
+            <Grid item xs={1} sm={1} md={1} sx={{ mt: -0.5 }}>
               <IconButton
                 disabled={!isLoggedIn}
                 aria-label="like"
                 style={{
-                  color: "black"
+                  color: "black",
                 }}
                 onClick={() => handleLike(item._id || "")}
               >
@@ -81,12 +81,14 @@ export const CardCommentUi: FC<Props> = ({ item, tag }) => {
                 )}
               </IconButton>
             </Grid>
-            <Grid item  xs={1} sm={1} md={1} >
-            {user?._id === item.user_id || user?.role==="admin" ? (
-                <EditCommentUi item={item}/>
-                 ) : (
-                    null
-                  )}
+            <Grid item xs={1} sm={1} md={1}>
+              {(user?._id === item.user_id &&
+                item.parent_id === parent_id &&
+                isLoggedIn) ||
+              user?.role === "admin" ||
+              user?._id === item.user_id ? (
+                <EditCommentUi item={item} />
+              ) : null}
             </Grid>
           </Grid>
         }
