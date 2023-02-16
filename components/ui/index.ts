@@ -8,14 +8,14 @@ export * from "./bars/SideBar";
 
 export * from "./comments/CommentUi";
 export * from "./comments/SeeComments";
+export * from "./comments/CardCommentUi";
+export * from "./comments/EditCommentUi";
 
 export * from "./styled/Search";
 export * from "./styled/CommentForm";
 
 export * from "./utils/CardActionsUi";
-export * from "./utils/CardCommentUi";
 export * from "./utils/CardDetailUi";
-export * from "./utils/EditCommentUi";
 export * from "./utils/GuideBar";
 export * from "./utils/InstagramLink";
 export * from "./utils/MessageSkeleton";

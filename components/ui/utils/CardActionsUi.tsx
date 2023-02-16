@@ -87,9 +87,7 @@ export const CardActionsUi: FC<Props> = ({ parent_id }) => {
           <Grid item xs={0}>
             <IconButton
               aria-label="comment"
-              color={isLoggedIn ? "primary" : "default"}
-              disabled={!isLoggedIn}
-              onClick={() => setOnFocus(true)}
+              color={"primary"}
             >
               <QueuePlayNextOutlinedIcon fontSize="medium" />
             </IconButton>

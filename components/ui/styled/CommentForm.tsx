@@ -4,7 +4,8 @@ import { WindowSize } from "../../../utils";
 
 export const CommentForm = styled("div")(({ }) => ({
   position: "relative",
-  borderRadius: "16px",
+  borderRadius: "3px",
+  paddingTop: -2,
   backgroundColor: "#e3e3e3",
   "&:hover": {
     backgroundColor: "#e0dede",

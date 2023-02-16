@@ -1,4 +1,3 @@
-export * as AnswerService from "./answer";
 export * as ClinicService from "./clinic";
 export * as AuthService from "./auth";
 export * as CommentService from "./comment";

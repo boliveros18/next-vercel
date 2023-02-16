@@ -24,6 +24,7 @@ export const SingInUi: FC<Props> = ({}) => {
       direction="column"
       justifyContent="center"
       alignItems="center"
+      sx={{pt:1}}
     >
       <Button
         variant="outlined"

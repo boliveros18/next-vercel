@@ -60,14 +60,15 @@ export const SeeComments: FC<Props> = ({ children, parent_id }) => {
   return (
     <>
       {toogle && children}
-      {comments?.length ? (<Accordion elevation={0} disableGutters={true}>
-        <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
+      {comments?.length ? (<Accordion elevation={0} disableGutters={true} >
+        <AccordionSummary aria-controls="panel1a-content" id="panel1a-header" >
           <Typography
             sx={{
               fontSize: 15,
               fontWeight: "500",
               width: "100%",
               height: "100%",
+              mt: -1.5
             }}
             onClick={handleComments}
           >
@@ -83,23 +84,23 @@ export const SeeComments: FC<Props> = ({ children, parent_id }) => {
                 <ArrowBackIosIcon />
               </IconButton>
             ) : (
-              "See the " + comments?.length + " comments"
+              "See the " + comments.filter(i=>i.parent_id === parent_id)?.length + " comments"
             )}
           </Typography>
         </AccordionSummary>
-        <Box sx={{ height: height - 235, overflow: "auto" }}>
+        <Box sx={{ height: height - 240, overflow: "auto" }}>
               <AccordionDetails
-                sx={{ marginBottom: -6, marginTop: -2 }}
+                sx={{ marginBottom: -8, marginTop: -2 }}
               >
-               <CommentUi />
+               <CommentUi parent_id={parent_id}/>
               </AccordionDetails>        
         </Box>
       </Accordion>): (null)}
       {isLoggedIn && (
-        <Toolbar sx={{ mt: -2 }}>
+        <Toolbar>
           <Avatar
             alt="name"
-            src="/static/images/avatar/2.jpg"
+            src={user?.avatar}
             sx={{ marginRight: 1 }}
           />
           <CommentForm style={{ color: "black" }}>

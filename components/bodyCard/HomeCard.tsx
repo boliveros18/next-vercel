@@ -42,11 +42,13 @@ export const HomeCard: FC<Props> = () => {
           sx={{
             width: "100%",
             minHeight: height - (!isLoggedIn ? 230 : 270),
+            mb: -2, pb: -2
           }}
           elevation={0}
         >
           <GuideBar />
           <CardHeader
+          sx={{mt:-1, mb:-1}}
             avatar={
               loading && (
                 <Avatar alt={principal[0]?.name} src={principal[0]?.avatar} />

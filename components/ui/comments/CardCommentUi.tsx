@@ -7,7 +7,7 @@ import { getFormatDistanceToNow } from "../../../utils";
 import { Card, CardHeader, Avatar, IconButton, Grid } from "@mui/material";
 import Link from "next/link";
 import { Comment } from "../../../interfaces";
-import { EditCommentUi } from "./EditCommentUi";
+import { EditCommentUi } from "../comments/EditCommentUi";
 
 interface Props {
   item: Comment;
@@ -37,7 +37,7 @@ export const CardCommentUi: FC<Props> = ({ item, tag }) => {
       <CardHeader
         avatar={<Avatar alt={item.user_name} src={item.user_photo} />}
         title={
-          <Grid container>
+          <Grid container >
             <Grid item xs={10} sm={10} md={10}>
               <Link href={`./user/${item.user_id}`}>
                 <a
@@ -64,7 +64,7 @@ export const CardCommentUi: FC<Props> = ({ item, tag }) => {
                 {" " + item.description}
               </span>
             </Grid>
-            <Grid item xs={1} sm={1} md={1} spacing={0}>
+            <Grid item xs={1} sm={1} md={1} sx={{mt:-0.5}}>
               <IconButton
                 disabled={!isLoggedIn}
                 aria-label="like"
@@ -82,8 +82,8 @@ export const CardCommentUi: FC<Props> = ({ item, tag }) => {
               </IconButton>
             </Grid>
             <Grid item  xs={1} sm={1} md={1} >
-            {isLoggedIn ? (
-                <EditCommentUi/>
+            {user?._id === item.user_id || user?.role==="admin" ? (
+                <EditCommentUi item={item}/>
                  ) : (
                     null
                   )}

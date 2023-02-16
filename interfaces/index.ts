@@ -1,4 +1,3 @@
-export * from "./answer";
 export * from "./certification";
 export * from "./clinic";
 export * from "./comment";

@@ -2,7 +2,6 @@ import type { AppProps } from "next/app";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { UIProvider } from "../context/ui";
 import { SessionProvider } from "next-auth/react";
-import { AnswerProvider } from "../context/answer";
 import { CertificationProvider } from "../context/certification";
 import { ClinicProvider } from "../context/clinic";
 import { CommentProvider } from "../context/comment";
@@ -30,7 +29,6 @@ export default function App({ Component, pageProps }: Props) {
           <UIProvider>
             <ThemeProvider theme={lightTheme}>
               <ClinicProvider>
-                <AnswerProvider>
                   <CertificationProvider>
                     <CommentProvider>
                       <LikeProvider>
@@ -41,7 +39,6 @@ export default function App({ Component, pageProps }: Props) {
                       </LikeProvider>
                     </CommentProvider>
                   </CertificationProvider>
-                </AnswerProvider>
               </ClinicProvider>
             </ThemeProvider>
           </UIProvider>

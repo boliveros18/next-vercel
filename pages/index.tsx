@@ -1,17 +1,16 @@
 import { useContext, useEffect } from "react";
 import { GetServerSideProps, NextPage } from "next";
 import { getSession } from "next-auth/react";
-import { dbClinics, dbComments, dbLikes, dbAnswers } from "../database";
+import { dbClinics, dbComments, dbLikes } from "../database";
 import { Layout } from "../components/layouts";
 import { HomeCard } from "../components/bodyCard";
 import { Grid } from "@mui/material";
 import { BottomBar, SideBar, RightBar } from "../components/ui";
 
-import { Clinic, Comment, Like, Answer } from "../interfaces";
+import { Clinic, Comment, Like } from "../interfaces";
 import { LikeContext } from "../context/like";
 import { ClinicContext } from "../context/clinic";
 import { CommentContext } from "../context/comment";
-import { AnswerContext } from "../context/answer";
 import { UIContext } from "../context/ui/UIContext";
 
 interface Props {
@@ -20,7 +19,6 @@ interface Props {
   comments: Comment[];
   likes: Like[];
   length: number;
-  answers: Answer[];
 }
 
 const HomePage: NextPage<Props> = ({
@@ -29,19 +27,16 @@ const HomePage: NextPage<Props> = ({
   comments,
   likes,
   length,
-  answers,
 }) => {
   const { setPrincipals, setPrincipal } = useContext(ClinicContext);
   const { setLength, setLikes } = useContext(LikeContext);
   const { setComments } = useContext(CommentContext);
-  const { setAnswers } = useContext(AnswerContext);
   const { setLoading } = useContext(UIContext);
 
   useEffect(() => {
     setPrincipal(principal);
     setPrincipals(clinics);
     setComments(comments);
-    setAnswers(answers);
     setLoading(true);
     setLikes(likes);
     setLength(length);
@@ -53,8 +48,6 @@ const HomePage: NextPage<Props> = ({
     principal,
     clinics,
     comments,
-    answers,
-    setAnswers,
     setPrincipal,
     setPrincipals,
     setComments,
@@ -95,6 +88,7 @@ const HomePage: NextPage<Props> = ({
   );
 };
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  
   const session = await getSession({ req });
   const principal = await dbClinics.getPrincipalClinic();
   const clinics = await dbClinics.getPrincipalsClinics();
@@ -105,15 +99,17 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   }
   const ans: any = [];
   for (let i = 0; i < comments.length; i++) {
-    if ((await dbAnswers.getAnswersByParentId(comments[i]?._id)) !== null)
-      ans.push(await dbAnswers.getAnswersByParentId(comments[i]?._id));
+    if ((await dbComments.getCommentsByParentId(comments[i]?._id)) !== null)
+    ans.push(await dbComments.getCommentsByParentId(comments[i]?._id));
   }
-  const answers: any = [];
+
   for (let i = 0; i < ans.length; i++) {
-    for (let n = 0; n < ans[i].length; n++) {
-      answers.push(ans[i][n]);
+    if (ans[i].lenght !== 0)
+    for(let k = 0; k < ans[i].length; k++){
+      comments.push(ans[i][k]);
     }
   }
+
   const likes: any = [];
   const like = await dbLikes.getLikeByParentIdAndUserId(
     principal[0]._id || "",
@@ -126,10 +122,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     if ((await dbLikes.getLikesByParentId(comments[i]?._id)) !== null)
       likes.push(await dbLikes.getLikesByParentId(comments[i]?._id));
   }
-  for (let i = 0; i < answers.length; i++) {
-    if ((await dbLikes.getLikesByParentId(answers[i]?._id)) !== null)
-      likes.push(await dbLikes.getLikesByParentId(answers[i]?._id));
-  }
+
   if (!clinics) {
     return {
       redirect: {
@@ -144,7 +137,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       principal: principal,
       clinics: clinics,
       comments: comments,
-      answers: answers,
       likes: likes,
       length: length,
     },

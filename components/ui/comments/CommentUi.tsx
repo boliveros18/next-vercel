@@ -1,20 +1,20 @@
 import { FC, useContext } from "react";
 import * as React from "react";
 import { CommentContext } from "../../../context/comment";
-import { AnswerContext } from "../../../context/answer";
 import {
   Box,
   Accordion,
   AccordionSummary,
   AccordionDetails,
 } from "@mui/material";
-import { CardCommentUi } from "../utils/CardCommentUi";
+import { CardCommentUi } from "./CardCommentUi";
 
-interface Props {}
+interface Props {
+  parent_id: string
+}
 
-export const CommentUi: FC<Props> = ({}) => {
+export const CommentUi: FC<Props> = ({parent_id}) => {
   const { comments } = useContext(CommentContext);
-  const { answers } = useContext(AnswerContext);
 
   return (
     <Box
@@ -23,8 +23,8 @@ export const CommentUi: FC<Props> = ({}) => {
         bgcolor: "background.paper",
       }}
     >
-      {comments?.length > 0 ? (
-        comments?.map((item, index) => (
+      {comments.filter(i=>i.parent_id === parent_id)?.length > 0 ? (
+        comments.filter(i=>i.parent_id === parent_id)?.map((item, index) => (
           <div key={index} style={{ marginBottom: -6, marginTop: -2 }}>
             <CardCommentUi item={item} tag={false} />
             <Accordion
@@ -36,7 +36,7 @@ export const CommentUi: FC<Props> = ({}) => {
                 },
               }}
             >
-              {answers?.filter((i) => i.parent_id === item._id).length > 0 ? (
+              {comments?.filter((i) => i.parent_id === item._id).length > 0 ? (
                 <AccordionSummary
                   aria-controls="panel1a-content"
                   id="panel1a-header"
@@ -64,9 +64,9 @@ export const CommentUi: FC<Props> = ({}) => {
                       }}
                     >
                       {"See " +
-                        answers?.filter((i) => i.parent_id === item._id)
+                        comments?.filter((i) => i.parent_id === item._id)
                           .length +
-                        (answers?.filter((i) => i.parent_id === item._id)
+                        (comments?.filter((i) => i.parent_id === item._id)
                           .length > 1
                           ? " answers"
                           : " answer")}
@@ -74,9 +74,9 @@ export const CommentUi: FC<Props> = ({}) => {
                   </Box>
                 </AccordionSummary>
               ) : null}
-              {answers?.filter((i) => i.parent_id === item._id).length ? (
+              {comments?.filter((i) => i.parent_id === item._id).length ? (
                 <AccordionDetails sx={{ marginBottom: -2, marginTop: 1 }}>
-                  {answers
+                  {comments
                     ?.filter((i) => i.parent_id === item._id)
                     .map((item, index) => (
                       <div key={index} style={{ marginLeft: 4, marginTop: -8 }}>
