@@ -29,6 +29,7 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   }
 
   const {
+    type = "clinic",
     certified = false,
     finantial = "",
     speciality = "",
@@ -43,12 +44,15 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     address = "",
     instagram = "",
     qualification = 0,
+    comments = 0,
+    likes = 0,
     createdAt = Date.now(),
     updatedAt = 0,
   } = req.body
   await db.connect();
 
   const newModel = new Clinic({
+    type,
     certified,
     finantial,
     speciality,
@@ -63,6 +67,8 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     address,
     instagram,
     qualification,
+    comments,
+    likes,
     createdAt,
     updatedAt,
   });

@@ -6,8 +6,12 @@ import {
   CardMedia,
   CardContent,
   Box,
-  Divider,
   Grid,
+  CardHeader,
+  Avatar,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "@mui/material";
 import { ReadMore } from "../../components/ui";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
@@ -18,10 +22,11 @@ import { ItemQualification } from "../../components/ui";
 import { Layout } from "../../components/layouts";
 import { SideBar } from "../../components/ui";
 import { Clinic, Certification, Qualification } from "../../interfaces";
+import { ShareMediaUi, CardActionsUi } from "../../components/ui";
 
 interface Props {
   clinic: Clinic;
-  certification: Certification;
+  certification: Certification[];
   qualifications: Qualification[];
 }
 
@@ -54,59 +59,114 @@ const ClinicPage: NextPage<Props> = ({
             }}
             elevation={0}
           >
-            <Typography align="center" sx={{ fontWeight: "medium", mt: 1 }}>
-              {clinic.name + " "}
-              {clinic.certified ? (
-                <CheckCircleIcon sx={{ color: "blue", fontSize: "15px" }} />
-              ) : (
-                <CheckCircleOutlineIcon
-                  sx={{ color: "gray", fontSize: "15px" }}
+            <CardHeader
+              sx={{ mt: -1, mb: -1 }}
+              avatar={<Avatar alt={clinic?.name} src={clinic?.avatar} />}
+              action={
+                <ShareMediaUi
+                  name={clinic?.name}
+                  description={
+                    clinic?.finantial +
+                    ". " +
+                    clinic?.speciality +
+                    ". " +
+                    clinic?.technology
+                  }
                 />
-              )}
-            </Typography>
+              }
+              title={
+                <Typography sx={{ fontSize: 15, fontWeight: 500 }}>
+                  {clinic?.name + " "}
+                  {clinic?.certified ? (
+                    <CheckCircleIcon sx={{ color: "blue", fontSize: "15px" }} />
+                  ) : (
+                    <CheckCircleOutlineIcon
+                      fontSize="small"
+                      sx={{ color: "gray", fontSize: "15px" }}
+                    />
+                  )}
+                </Typography>
+              }
+              subheader={clinic?.province + ", " + clinic?.country}
+            />
             <CardMedia
               component="img"
               height={size.height - 500}
               image={clinic.photo}
               alt="Clinic"
-              sx={{ marginTop: 1, maxHeight: "330px" }}
+              sx={{ marginTop: 1, maxHeight: "330px", mb: -2.5 }}
             />
             <CardContent>
+              <CardActionsUi parent_id={clinic?._id || ""} reactions={clinic.likes} />
+              <Accordion elevation={0} disableGutters={true} sx={{ mt: 2 }}>
+                <AccordionSummary
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography
+                    sx={{ fontSize: 15, fontWeight: "500", color: "#001B87" }}
+                  >
+                    Finantial, Speciality & Technology
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography sx={{ fontSize: 14 }}>
+                    {clinic?.finantial +
+                      ". " +
+                      clinic?.speciality +
+                      ". " +
+                      clinic?.technology}
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion elevation={0} disableGutters={true}>
+                <AccordionSummary
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography sx={{ fontSize: 15, fontWeight: "500" }}>
+                    See certifications
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  {certification.map((item, index) => (
+                    <Card key={index} sx={{ display: "flex" }} elevation={0}>
+                      <Box sx={{ display: "flex", flexDirection: "column" }}>
+                        <CardContent sx={{ flex: "1 0 auto" }}>
+                          <Typography sx={{ fontSize: 15, fontWeight: "500" }}>
+                            {item?.name || ""}
+                          </Typography>
+                          <Grid sx={{ fontSize: 14 }}>
+                            {mobile ? (
+                              <ReadMore text={item?.description || ""} />
+                            ) : (
+                              item?.description || ""
+                            )}
+                          </Grid>
+                        </CardContent>
+                      </Box>
+                      <Box sx={{ flexGrow: 1 }} />
+                      <CardMedia
+                        component="img"
+                        sx={{
+                          width: item?.logo ? 50 : 0,
+                          m: 1,
+                          border: 0,
+                        }}
+                        image={item?.logo}
+                        alt=""
+                      />
+                    </Card>
+                  ))}
+                </AccordionDetails>
+              </Accordion>
               {
                 <ItemQualification
+                  type={clinic.type}
                   qualifications={qualifications}
                   Qualification={clinic.qualification}
                 />
               }
-              <Divider sx={{ mt: 1 }} />
-              <Card sx={{ display: "flex" }} elevation={0}>
-                <Box sx={{ display: "flex", flexDirection: "column" }}>
-                  <CardContent sx={{ flex: "1 0 auto" }}>
-                    <Typography sx={{ fontSize: 15, fontWeight: "500" }}>
-                      {certification?.name || ""}
-                    </Typography>
-                    <Grid sx={{ fontSize: 14 }}>
-                      {mobile ? (
-                        <ReadMore text={certification?.description || ""} />
-                      ) : (
-                        certification?.description || ""
-                      )}
-                    </Grid>
-                  </CardContent>
-                </Box>
-                <Box sx={{ flexGrow: 1 }} />
-                <CardMedia
-                  component="img"
-                  sx={{
-                    width: certification?.logo ? 70 : 0,
-                    m: 1,
-                    border: 0,
-                  }}
-                  image={certification?.logo}
-                  alt=""
-                />
-              </Card>
-              <Divider />
               <InstagramLink
                 instagram={clinic.instagram}
                 phone={clinic.phone}

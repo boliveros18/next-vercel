@@ -5,8 +5,8 @@ interface ContextProps {
   like: Like;
   likes: Like[];
   setLikes: Dispatch<SetStateAction<Like[]>>;
-  length: number;
-  setLength: Dispatch<SetStateAction<number>>;
+  likesLength: number;
+  setLikesLength: Dispatch<SetStateAction<number>>;
   getLike: (id: string) => Promise<void>;
   createLike: (payload: Like) => Promise<void>;
   deleteLike: (id: string) => Promise<void>;

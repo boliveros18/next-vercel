@@ -11,7 +11,12 @@ export const getComments = async () => {
   return res.data;
 };
 
-export const createOne = async (payload: Comment) => {
+export const getCommentsByParentId = async (parent_id: string) => {
+  const res = await ApiClient.get(`/comment?parent_id=${parent_id}`);
+  return res.data;
+};
+
+export const createOne = async (payload: Comment, type?: string) => {
   const res = await ApiClient.post("/comment", payload);
   return res.data;
 };

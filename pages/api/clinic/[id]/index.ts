@@ -69,6 +69,7 @@ const updateClinic = async (
   }
 
   const {
+    type = clinicToUpdate.type,
     certified = clinicToUpdate.certified,
     finantial = clinicToUpdate.finantial,
     speciality = clinicToUpdate.speciality,
@@ -90,6 +91,7 @@ const updateClinic = async (
     const updatedClinic = await Clinic.findByIdAndUpdate(
       id,
       {
+        type,
         certified,
         finantial,
         speciality,

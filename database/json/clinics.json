@@ -2,6 +2,7 @@
   "_id": {
     "$oid": "63ab77d06d6dc52c56dc662b"
   },
+  "type": "clinic",
   "certified": false,
   "finantial": "8 million US in 2021",
   "speciality": "Plastic and Reconstruction",
@@ -15,7 +16,9 @@
   "country": "Colombia",
   "instagram": "https://www.instagram.com/clinicaportoazulauna/?hl=es",
   "address": "Cra 105#45-265",
-  "qualification": 4.0,
+  "qualification": 4,
+  "comments": 0,
+  "likes": 0,
   "createdAt": {
     "$numberLong": "1672181711974"
   },
@@ -27,6 +30,7 @@
   "_id": {
     "$oid": "63ab77d06d6dc52c56dc662c"
   },
+  "type": "clinic",
   "certified": false,
   "finantial": "8 million US in 2021",
   "speciality": "Plastic and Reconstruction",
@@ -41,6 +45,8 @@
   "instagram": "https://www.instagram.com/clinicaportoazulauna/?hl=es",
   "address": "Cra 105#45-265",
   "qualification": 3.5,
+  "comments": 0,
+  "likes": 0,
   "createdAt": {
     "$numberLong": "1672181711974"
   },
@@ -52,6 +58,7 @@
   "_id": {
     "$oid": "63ab77d06d6dc52c56dc662d"
   },
+  "type": "clinic",
   "certified": false,
   "finantial": "8 million US in 2021",
   "speciality": "Plastic and Reconstruction",
@@ -66,6 +73,8 @@
   "instagram": "https://www.instagram.com/clinicaportoazulauna/?hl=es",
   "address": "Cra 105#45-265",
   "qualification": 3.6,
+  "comments": 0,
+  "likes": 0,
   "createdAt": {
     "$numberLong": "1672181711974"
   },
@@ -77,6 +86,7 @@
   "_id": {
     "$oid": "63ab77d06d6dc52c56dc662e"
   },
+  "type": "clinic",
   "certified": false,
   "finantial": "8 million US in 2021",
   "speciality": "Plastic and Reconstruction",
@@ -91,6 +101,8 @@
   "instagram": "https://www.instagram.com/clinicaportoazulauna/?hl=es",
   "address": "Cra 105#45-265",
   "qualification": 4.15,
+  "comments": 3,
+  "likes": 1,
   "createdAt": {
     "$numberLong": "1672181711974"
   },
@@ -102,6 +114,7 @@
   "_id": {
     "$oid": "63ab77d06d6dc52c56dc662f"
   },
+  "type": "clinic",
   "certified": false,
   "finantial": "8 million US in 2021",
   "speciality": "Plastic and Reconstruction",
@@ -116,6 +129,8 @@
   "instagram": "https://www.instagram.com/clinicaportoazulauna/?hl=es",
   "address": "Cra 105#45-265",
   "qualification": 3.6,
+  "comments": 0,
+  "likes": 0,
   "createdAt": {
     "$numberLong": "1672181711974"
   },
@@ -127,6 +142,7 @@
   "_id": {
     "$oid": "63ab77d06d6dc52c56dc6621"
   },
+  "type": "clinic",
   "certified": false,
   "finantial": "8 million US in 2021",
   "speciality": "Plastic and Reconstruction",
@@ -141,6 +157,8 @@
   "instagram": "https://www.instagram.com/clinicaportoazulauna/?hl=es",
   "address": "Cra 105#45-265",
   "qualification": 3.9,
+  "comments": 0,
+  "likes": 0,
   "createdAt": {
     "$numberLong": "1672181711974"
   },

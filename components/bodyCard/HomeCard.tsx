@@ -3,7 +3,6 @@ import * as React from "react";
 import {
   Card,
   CardHeader,
-  CardContent,
   CardMedia,
   Avatar,
   Typography,
@@ -11,18 +10,12 @@ import {
 } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import {
-  CardActionsUi,
-  CardDetailUi,
-  GuideBar,
-  ReadMore,
-  SeeComments,
-} from "../ui";
+import { CardActionsUi, GuideBar, SeeComments } from "../ui";
 import { WindowSize, UseWindowSize } from "../../utils";
 import { ClinicContext } from "../../context/clinic";
 import { AuthContext } from "../../context/auth";
 import { UIContext } from "../../context/ui";
-import { SingInUi, ShareMediaUi } from "../ui";
+import { SingInUi, ShareMediaUi, CardDetailUi, ReadMore } from "../ui";
 import { useRouter } from "next/router";
 
 interface Props {}
@@ -37,44 +30,43 @@ export const HomeCard: FC<Props> = () => {
 
   return (
     <>
-      <SeeComments parent_id={principal[0]?._id || ""}>
+      <SeeComments parent_id={principal?._id || ""} type={principal.type} remarks={principal.comments}>
         <Card
           sx={{
             width: "100%",
-            minHeight: height - (!isLoggedIn ? 230 : 270),
-            mb: -2, pb: -2
+            minHeight: height - (!isLoggedIn ? 230 : 245),
+            mb: -2,
+            pb: -2,
           }}
           elevation={0}
         >
           <GuideBar />
           <CardHeader
-          sx={{mt:-1, mb:-1}}
+            sx={{ mt: -1, mb: -1 }}
             avatar={
               loading && (
-                <Avatar alt={principal[0]?.name} src={principal[0]?.avatar} />
+                <Avatar alt={principal?.name} src={principal?.avatar} />
               )
             }
             action={
               loading && (
                 <ShareMediaUi
-                  name={principal[0]?.name}
+                  name={principal?.name}
                   description={
-                    principal[0]?.finantial +
+                    principal?.finantial +
                     ". " +
-                    principal[0]?.speciality +
+                    principal?.speciality +
                     ". " +
-                    principal[0]?.technology
+                    principal?.technology
                   }
                 />
               )
             }
             title={
               loading && (
-                <Typography
-                  sx={{ fontSize: 15, fontWeight: 500 }}
-                      >
-                  {principal[0]?.name + " "}
-                  {principal[0]?.certified ? (
+                <Typography sx={{ fontSize: 15, fontWeight: 500 }}>
+                  {principal?.name + " "}
+                  {principal?.certified ? (
                     <CheckCircleIcon sx={{ color: "blue", fontSize: "15px" }} />
                   ) : (
                     <CheckCircleOutlineIcon
@@ -86,43 +78,43 @@ export const HomeCard: FC<Props> = () => {
               )
             }
             subheader={
-              loading && (
-                principal[0]?.province + ", " + principal[0]?.country
-              )
+              loading && principal?.province + ", " + principal?.country
             }
           />
           <CardActionArea
-            onClick={() => router.push(`/clinic/${principal[0]?._id}`)}
+            onClick={() => router.push(`/clinic/${principal?._id}`)}
           >
             {loading && (
               <CardMedia
                 component="img"
                 height={height - 500}
-                image={principal[0]?.photo}
+                image={principal?.photo}
                 alt="Clinic"
                 sx={{ maxHeight: "330px" }}
               />
             )}
           </CardActionArea>
-          { loading && <CardActionsUi parent_id={principal[0]?._id || ""} />
-          }
-          <CardContent>
-            { loading && (
-              <>
+          {loading && <CardActionsUi parent_id={principal?._id || ""} reactions={principal.likes}/>}
+          {loading && (
+            <div style={{ marginLeft: "17px" }}>
+            <Typography
+                  sx={{ fontSize: 15, fontWeight: "500", color: "#001B87", mt: 1.5, mb: 1 }}
+                >
+                  Finantial, Speciality & Technology
+                </Typography>
                 <CardDetailUi
                   author=""
                   comment={
                     mobile ? (
-                      <ReadMore text={principal[0]?.finantial+ ". " + principal[0]?.speciality + ". " + principal[0]?.technology} />
+                      <ReadMore text={principal?.finantial+ ". " + principal?.speciality + ". " + principal?.technology} />
                     ) : (
-                      principal[0]?.finantial+ ". " + principal[0]?.speciality + ". " + principal[0]?.technology
+                      principal?.finantial+ ". " + principal?.speciality + ". " + principal?.technology
                     )
                   }
                   info={true && !isLoggedIn}
                 ></CardDetailUi>
-              </>
-            )}
-          </CardContent>
+            </div>
+          )}
         </Card>
       </SeeComments>
       <SingInUi />

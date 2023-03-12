@@ -14,7 +14,7 @@ import {
 import TrendingUpOutlinedIcon from "@mui/icons-material/TrendingUpOutlined";
 import AirplanemodeActiveOutlinedIcon from "@mui/icons-material/AirplanemodeActiveOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import MedicalServicesOutlinedIcon from "@mui/icons-material/MedicalServicesOutlined";
+import QueuePlayNextOutlinedIcon from "@mui/icons-material/QueuePlayNextOutlined";
 import AccessibilityNewOutlinedIcon from "@mui/icons-material/AccessibilityNewOutlined";
 import RoomServiceOutlinedIcon from "@mui/icons-material/RoomServiceOutlined";
 import { WindowSize } from "../../../utils";
@@ -40,14 +40,14 @@ export const SideBar: FC<Props> = ({ keepOpen = false }) => {
           >
             <MenuList>
               <MenuItem>
-                <ListItemIcon>
+                <ListItemIcon sx={{ ml: -0.25 }}>
                   <HomeOutlinedIcon fontSize="medium" />
                 </ListItemIcon>
-                <ListItemText sx={{ ml: 2 }}>Home</ListItemText>
+                <ListItemText sx={{ ml: 2.25 }}>Home</ListItemText>
               </MenuItem>
               <MenuItem>
                 <ListItemIcon>
-                  <MedicalServicesOutlinedIcon fontSize="medium" />
+                  <QueuePlayNextOutlinedIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText sx={{ ml: 2 }}>
                   Treatment & Surgeries

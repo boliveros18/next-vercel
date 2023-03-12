@@ -1,5 +1,6 @@
 export interface Comment {
-  _id?: string;
+  _id: string;
+  type: string;
   parent_id: string;
   user_photo: string;
   user_name: string;
@@ -7,6 +8,7 @@ export interface Comment {
   description: string;
   user_tag_id: string;
   user_tag_name: string;
+  answers: number;
   createdAt: number;
   updatedAt: number;
 }

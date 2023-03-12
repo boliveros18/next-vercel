@@ -38,5 +38,5 @@ export const getCertificationByParentId = async (
   }
   await db.disconnect();
 
-  return JSON.parse(JSON.stringify(certification[0]));
+  return JSON.parse(JSON.stringify(certification));
 };

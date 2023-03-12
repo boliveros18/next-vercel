@@ -19,7 +19,7 @@ export const LikeProvider: FC<ProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(likesReducer, INITIAL_STATE);
 
   const [likes, setLikes] = useState<Like[]>([]);
-  const [length, setLength] = useState<number>(0);
+  const [likesLength, setLikesLength] = useState<number>(0);
 
   const createLike = async (payload: Like) => {
     const data = await LikeService.createOne(payload);
@@ -37,12 +37,13 @@ export const LikeProvider: FC<ProviderProps> = ({ children }) => {
   const deleteLike = async (id: string) => {
     const data = await LikeService.deleteOne(id);
     dispatch({ type: "LIKE_GET", payload: id });
+    likes.splice(likes.findIndex(i => i._id === id), 1);
     return data
   };
 
   return (
     <LikeContext.Provider
-      value={{ ...state, createLike, getLike, deleteLike, length, setLength, setLikes, likes }}
+      value={{ ...state, createLike, getLike, deleteLike, likesLength, setLikesLength, setLikes, likes }}
     >
       {children}
     </LikeContext.Provider>

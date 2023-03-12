@@ -1,46 +1,42 @@
 import { FC, ReactNode, useContext } from "react";
 import { IconButton, CardActions, Typography, Grid, Box } from "@mui/material";
-
+import { useRouter } from "next/router";
 import CommentIcon from "@mui/icons-material/ChatBubbleOutline";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
-import QueuePlayNextOutlinedIcon from "@mui/icons-material/QueuePlayNextOutlined";
 import { AuthContext } from "../../../context/auth";
 import { LikeContext } from "../../../context/like";
 import { UIContext } from "../../../context/ui";
+import { ClinicContext } from "../../../context/clinic";
 
 interface Props {
   children?: ReactNode;
   parent_id: string;
+  reactions: number;
 }
 
-export const CardActionsUi: FC<Props> = ({ parent_id }) => {
+export const CardActionsUi: FC<Props> = ({ parent_id, reactions }) => {
+  const router = useRouter();
   const { setOnFocus } = useContext(UIContext);
-  const { createLike, deleteLike, length, setLength, likes } =
+  const { createLike, deleteLike, likes } =
     useContext(LikeContext);
   const { isLoggedIn, user } = useContext(AuthContext);
 
-
-
-  const handleLike = () => {
+  const handleLike = (id: string, user_id?: string) => {
     if (
-      likes.filter((i) => i.parent_id === parent_id && i.user_id === user?._id)
+      likes?.filter((i) => i.parent_id === id && i.user_id === user_id)
         .length === 1
     ) {
-      deleteLike(likes[0]._id || "");
-      setLength(length - 1);
-      const index = likes.findIndex(
-        (i) => i.parent_id === parent_id && i.user_id === user?._id
-      );
-      likes.splice(index, 1);
+      deleteLike(likes[likes.findIndex((i) => i.parent_id === id && i.user_id === user_id)]._id || "");
     } else {
       createLike({
         user_id: user?._id || "",
         user_name: user?.name || "",
         parent_id: parent_id,
       });
-      setLength(length + 1);
     }
   };
 
@@ -59,9 +55,9 @@ export const CardActionsUi: FC<Props> = ({ parent_id }) => {
               aria-label="like"
               color={isLoggedIn ? "primary" : "default"}
               disabled={!isLoggedIn}
-              onClick={handleLike}
+              onClick={() => handleLike(parent_id, user?._id)}
             >
-              {likes.filter(
+              {likes?.filter(
                 (i) => i.parent_id === parent_id && i.user_id === user?._id
               ).length === 1 ? (
                 <CheckCircleIcon sx={{ color: "blue" }} fontSize="medium" />
@@ -81,15 +77,16 @@ export const CardActionsUi: FC<Props> = ({ parent_id }) => {
             </IconButton>
           </Grid>
           <Box sx={{ flexGrow: 1 }} />
-          <Grid item sx={{ mt: 1 }}>
-            <ArrowRightOutlinedIcon fontSize="medium" />
-          </Grid>
+          <ArrowRightOutlinedIcon fontSize="medium" sx={{mt: 0.75, mr:-1}}/>
           <Grid item xs={0}>
-            <IconButton
+          <IconButton
               aria-label="comment"
-              color={"primary"}
+              color={isLoggedIn ? "primary" : "default"}
+              disabled={!isLoggedIn}
+              onClick={() => router.push(`/clinic/${parent_id}`)}
             >
-              <QueuePlayNextOutlinedIcon fontSize="medium" />
+              <AccessibilityNewIcon   sx={{fontSize: "26px", mt:-0.5}} />
+              <LocalHospitalIcon sx={{fontSize: "15px", mt:-1.5 }} />
             </IconButton>
           </Grid>
         </Grid>
@@ -97,8 +94,8 @@ export const CardActionsUi: FC<Props> = ({ parent_id }) => {
       <Typography
         sx={{ fontSize: 14, fontWeight: 500, mt: 1.5, ml: 2, mb: -1 }}
       >
-        {length === 0 ? "" : length}
-        {length === 0 ? "" : length > 1 ? " Likes" : " Like"}
+        {reactions === 0 ? "" : reactions}
+        {reactions === 0 ? "" : reactions > 1 ? " Likes" : " Like"}
       </Typography>
     </>
   );

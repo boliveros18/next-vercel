@@ -1,5 +1,6 @@
 export interface Clinic {
   _id?: string;
+  type: string;
   certified: boolean;
   finantial: string;
   speciality: string;
@@ -14,6 +15,8 @@ export interface Clinic {
   address: string;
   instagram: string;
   qualification: number;
+  comments: number;
+  likes: number;
   createdAt: number;
   updatedAt: number;
 }

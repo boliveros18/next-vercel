@@ -1,9 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { db } from "../../../database";
+import { db, dbComments } from "../../../database";
 import { Comment, IComment } from "../../../models";
+import { Clinic } from "../../../models";
 import { getSession } from "next-auth/react";
+import {
+  getCommentsLengthByParentId,
+  getCommentById,
+} from "../../../database/dbComments";
 
-type Data = { message: string } | IComment;
+type Data = { message: string } | IComment | IComment[];
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,7 +18,7 @@ export default async function handler(
     case "POST":
       return createModel(req, res);
     case "GET":
-      return getComments(res);
+      return getComments(req, res);
     default:
       return res.status(400).json({ message: "The endpoint does not exist" });
   }
@@ -28,28 +33,62 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   }
 
   const {
+    type = "",
     parent_id = "",
     user_photo = "",
     user_name = "",
     user_id = "",
     description = "",
+    user_tag_id = "",
+    user_tag_name = "",
+    answers = 0,
     createdAt = Date.now(),
     updatedAt = 0,
-  } = req.body
+  } = req.body;
   await db.connect();
 
   const newModel = new Comment({
+    type,
     parent_id,
     user_photo,
     user_name,
     user_id,
     description,
+    user_tag_id,
+    user_tag_name,
+    answers,
     createdAt,
-    updatedAt
+    updatedAt,
   });
 
   try {
     await newModel.save();
+    switch (type) {
+      case "": {
+        //UPDATING MAIN COMMENTS ANSWERS NUMBER
+        const parent_comment = await getCommentById(parent_id);
+        if (parent_comment) {
+          console.log("entra1");
+          const answers = await getCommentsLengthByParentId(parent_comment._id);
+          await Comment.findByIdAndUpdate(
+            parent_comment._id,
+            { answers },
+            { runValidators: true, new: true }
+          );
+        }
+        break;
+      }
+      //UPDATING MAIN.COMMENTS NUMBER
+      case "clinic": {
+        const comments = await getCommentsLengthByParentId(parent_id);
+        await Clinic.findByIdAndUpdate(
+          parent_id,
+          { comments },
+          { runValidators: true, new: true }
+        );
+        break;
+      }
+    }
     await db.disconnect();
     return res.status(201).json(newModel);
   } catch (error: any) {
@@ -61,11 +100,17 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   }
 };
 
-const getComments = async (res: NextApiResponse<Data>) => {
-  await db.connect();
-  const comments : any = await Comment.find().sort({
-    createdAt: "ascending",
-  });
-  await db.disconnect();
-  return res.status(200).json(comments);
+const getComments = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+  try {
+    const comments = await dbComments.getCommentsByParentId2(
+      req.query.parent_id as string
+    );
+    return res.status(201).json(comments);
+  } catch (error: any) {
+    console.log(error);
+    res.status(400).json({
+      message: error.message || "Check server logs",
+    });
+  }
+  return;
 };

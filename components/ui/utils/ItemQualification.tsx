@@ -9,11 +9,13 @@ import { Qualification } from "../../../interfaces";
 interface Props {
   qualifications: Qualification[];
   Qualification: number;
+  type: string;
 }
 
 export const ItemQualification: FC<Props> = ({
   qualifications,
   Qualification,
+  type,
 }) => {
   const { isLoggedIn, user } = useContext(AuthContext);
   const { updateClinic, clinic } = useContext(ClinicContext);
@@ -21,7 +23,6 @@ export const ItemQualification: FC<Props> = ({
     useContext(QualificationContext);
   const [average, setAverage] = useState(Qualification);
   const [currentValue, setCurrentValue] = useState(0);
-
   useEffect(() => {
     setCurrentValue(Math.round(average));
   }, [average]);
@@ -37,16 +38,29 @@ export const ItemQualification: FC<Props> = ({
     setHoverValue(0);
   };
 
+  const updateSelector = (
+    type: string,
+    parent_id: string,
+    newAverage: number
+  ) => {
+    switch (type) {
+      case "clinic":
+        return updateClinic(parent_id, {
+          ...clinic,
+          ["qualification"]: newAverage,
+        });
+      default:
+        return;
+    }
+  };
+
   const updateItem = (qualifications: Qualification[]) => {
     const newAverage: number =
       qualifications
         .map((item) => item.stars)
         .reduce((previous, current) => previous + current) /
       qualifications.length;
-    updateClinic(qualifications[0].parent_id, {
-      ...clinic,
-      ["qualification"]: newAverage,
-    });
+    updateSelector(type, qualifications[0].parent_id, newAverage);
     setAverage(newAverage);
   };
 
@@ -56,10 +70,13 @@ export const ItemQualification: FC<Props> = ({
       if (index > -1) {
         qualifications[index].stars = value;
         updateItem(qualifications);
-        if(qualification.stars > -1){
-          updateQualification( qualification._id || "" , qualifications[index]);
-        }else{
-          updateQualification( qualifications[index]._id || "" , qualifications[index]);
+        if (qualification.stars > -1) {
+          updateQualification(qualification._id || "", qualifications[index]);
+        } else {
+          updateQualification(
+            qualifications[index]._id || "",
+            qualifications[index]
+          );
         }
       } else {
         const query = {

@@ -1,4 +1,4 @@
-import { FC, ReactNode, useReducer, useState } from "react";
+import { FC, ReactNode, useReducer, useCallback } from "react";
 import { ClinicContext, clinicsReducer } from "./";
 import { Clinic } from "../../interfaces";
 import { ClinicService } from "../../services";
@@ -10,21 +10,21 @@ interface ProviderProps {
 export interface State {
   clinics: Clinic[];
   clinic: Clinic;
-  principals: Clinic[];
+  principal: Clinic;
 }
 
 const INITIAL_STATE: State = {
   clinics: [],
   clinic: {} as Clinic,
-  principals: [],
+  principal: {} as Clinic,
 };
 
 export const ClinicProvider: FC<ProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(clinicsReducer, INITIAL_STATE);
 
-  const [principal, setPrincipal] = useState<Clinic[]>([]);
-  const [principals, setPrincipals] = useState<Clinic[]>([]);
-  const [index, setIndex] = useState<number>(0);
+  const setPrincipal = useCallback((payload: Clinic) => {
+    dispatch({ type: "SET_PRINCIPAL", payload });
+  }, [])
 
   const updateClinic = async (id: string, payload: Clinic) => {
     const data = await ClinicService.updateOne(id, payload);
@@ -42,13 +42,8 @@ export const ClinicProvider: FC<ProviderProps> = ({ children }) => {
     <ClinicContext.Provider
       value={{
         ...state,
-        principal, 
         setPrincipal,
-        principals,
-        setPrincipals,
         updateClinic,
-        index,
-        setIndex,
         getClinic,
       }}
     >

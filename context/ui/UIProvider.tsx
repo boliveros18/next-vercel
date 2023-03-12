@@ -22,7 +22,7 @@ export const UIProvider: FC<ProviderProps> = ({ children }) => {
     dispatch({ type: "UI_OPEN_SIDEBAR" });
   };
   const closeSideMenu = () => {
-    dispatch({ type: "UI-CLOSE_SIDEBAR" });
+    dispatch({ type: "UI_CLOSE_SIDEBAR" });
   };
 
   return (

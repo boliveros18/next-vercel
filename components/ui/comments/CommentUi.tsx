@@ -8,13 +8,22 @@ import {
   AccordionDetails,
 } from "@mui/material";
 import { CardCommentUi } from "./CardCommentUi";
+import { Comment } from "../../../interfaces";
+import { pluralize } from "../../../utils/strings";
 
 interface Props {
-  parent_id: string
+  parent_id: string;
 }
 
-export const CommentUi: FC<Props> = ({parent_id}) => {
-  const { comments } = useContext(CommentContext);
+export const CommentUi: FC<Props> = ({ parent_id }) => {
+  const { comments, commentsByParentId, getCommentsByParentId } =
+    useContext(CommentContext);
+
+  const answers = (comments: Comment[], item: Comment) => {
+    return commentsByParentId(comments, item._id).length === 0
+      ? item.answers
+      : commentsByParentId(comments, item._id).length;
+  };
 
   return (
     <Box
@@ -23,10 +32,10 @@ export const CommentUi: FC<Props> = ({parent_id}) => {
         bgcolor: "background.paper",
       }}
     >
-      {comments.filter(i=>i.parent_id === parent_id)?.length > 0 ? (
-        comments.filter(i=>i.parent_id === parent_id)?.map((item, index) => (
+      {commentsByParentId(comments, parent_id).length > 0 ? (
+        commentsByParentId(comments, parent_id).map((item, index) => (
           <div key={index} style={{ marginBottom: -6, marginTop: -2 }}>
-            <CardCommentUi item={item} />
+            <CardCommentUi item={item} parent_id={item._id} />
             <Accordion
               elevation={0}
               disableGutters={true}
@@ -36,7 +45,7 @@ export const CommentUi: FC<Props> = ({parent_id}) => {
                 },
               }}
             >
-              {comments?.filter((i) => i.parent_id === item._id).length > 0 ? (
+              {answers(comments, item) > 0 ? (
                 <AccordionSummary
                   aria-controls="panel1a-content"
                   id="panel1a-header"
@@ -45,6 +54,7 @@ export const CommentUi: FC<Props> = ({parent_id}) => {
                     mt: -1,
                     mb: -4,
                   }}
+                  onClick={() => getCommentsByParentId(item._id)}
                 >
                   <Box
                     sx={{
@@ -64,25 +74,23 @@ export const CommentUi: FC<Props> = ({parent_id}) => {
                       }}
                     >
                       {"See " +
-                        comments?.filter((i) => i.parent_id === item._id)
-                          .length +
-                        (comments?.filter((i) => i.parent_id === item._id)
-                          .length > 1
-                          ? " answers"
-                          : " answer")}
+                        answers(comments, item) +
+                        pluralize(" answer", answers(comments, item))}
                     </a>
                   </Box>
                 </AccordionSummary>
-              ) : null}
-              {comments?.filter((i) => i.parent_id === item._id).length ? (
+              ) : (
+                <div />
+              )}
+              {commentsByParentId(comments, item._id).length ? (
                 <AccordionDetails sx={{ marginBottom: -2, marginTop: 1 }}>
-                  {comments
-                    ?.filter((i) => i.parent_id === item._id)
-                    .map((item2, index) => (
+                  {commentsByParentId(comments, item._id)?.map(
+                    (item2, index) => (
                       <div key={index} style={{ marginLeft: 4, marginTop: -8 }}>
                         <CardCommentUi item={item2} parent_id={item._id} />
                       </div>
-                    ))}
+                    )
+                  )}
                 </AccordionDetails>
               ) : (
                 <div />

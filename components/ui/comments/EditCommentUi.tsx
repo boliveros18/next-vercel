@@ -13,10 +13,8 @@ import {
   MenuItem,
   ListItemText,
   Dialog,
-  DialogTitle,
-  Avatar,
   DialogContent,
-  Typography
+  Typography,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Comment } from "../../../interfaces";
@@ -33,8 +31,7 @@ export const EditCommentUi: FC<Props> = ({ item }) => {
   const mobile = UseWindowSize();
   const [value, setValue] = useState(item.description);
   const [open, setOpen] = useState(false);
-  const { comments, setComments, updateComment, deleteComment } =
-    useContext(CommentContext);
+  const { updateComment, deleteComment, getCommentsByParentId } = useContext(CommentContext);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [inputs, setInputs] = useState({});
 
@@ -58,11 +55,8 @@ export const EditCommentUi: FC<Props> = ({ item }) => {
   };
 
   const editComment = () => {
-    comments[comments.findIndex((i) => i._id === item._id)].description = value
-    updateComment(
-      item._id || "",
-      comments[comments.findIndex((i) => i._id === item._id)]
-    );
+    item.description = value;
+    updateComment(item._id, item);
     setInputs("");
     setValue("");
     setAnchorEl(null);
@@ -70,8 +64,8 @@ export const EditCommentUi: FC<Props> = ({ item }) => {
   };
 
   const suppressComment = () => {
-    deleteComment( item._id || "")
-    comments.splice(comments.findIndex((i) => i._id === item._id), 1);
+    deleteComment(item._id);
+    getCommentsByParentId(item.parent_id)
   };
 
   const handleInput = ({ target }: ChangeEvent<any>) => {
@@ -84,7 +78,7 @@ export const EditCommentUi: FC<Props> = ({ item }) => {
   const id = openPop ? "simple-popover" : undefined;
 
   return (
-    <div style={{marginTop:-8}}>
+    <div style={{ marginTop: -8 }}>
       <IconButton
         aria-label="edit"
         style={{
@@ -92,7 +86,7 @@ export const EditCommentUi: FC<Props> = ({ item }) => {
         }}
         onClick={handleClickPop}
       >
-        <MoreVertIcon sx={{ fontSize: "22px"}} />
+        <MoreVertIcon sx={{ fontSize: "22px" }} />
       </IconButton>
       <Popover
         id={id}
@@ -119,11 +113,22 @@ export const EditCommentUi: FC<Props> = ({ item }) => {
           </MenuItem>
         </MenuList>
       </Popover>
-      <Dialog open={open} onClose={handleCloseDialog} fullWidth={mobile} sx={{ml:-4, mr: -4}}>
+      <Dialog
+        open={open}
+        onClose={handleCloseDialog}
+        fullWidth={mobile}
+        sx={{ ml: -4, mr: -4 }}
+      >
         <DialogContent sx={{ mt: 1 }}>
-          <CommentForm style={{ color: "black", width: mobile ? 305 : 500, borderRadius: "3px" }}>
+          <CommentForm
+            style={{
+              color: "black",
+              width: mobile ? 305 : 500,
+              borderRadius: "3px",
+            }}
+          >
             <StyledInputComment
-              style={{ width: mobile ? 305 : 500, fontSize: 14}}
+              style={{ width: mobile ? 305 : 500, fontSize: 14 }}
               value={value}
               type="text"
               name="description"

@@ -2,41 +2,47 @@
   "_id": {
     "$oid": "63ddeb68107b09406f3b91a6"
   },
+  "type": "clinic",
   "parent_id": "63ab77d06d6dc52c56dc662e",
   "user_photo": "/static/images/avatar/3.jpg",
   "user_name": "codo",
   "user_id": "63ab286da6e59074d5465dd1",
   "description": "I loved it. Very good attention.",
+  "answers": 2,
   "createdAt": {
     "$numberLong": "1672181711974"
   },
   "updatedAt": {
-    "$numberLong": "1672181711974"
+    "$numberLong": "1677944214208"
   }
 },{
   "_id": {
     "$oid": "63ddec05107b09406f3b91ac"
   },
+  "type": "clinic",
   "parent_id": "63ab77d06d6dc52c56dc662e",
   "user_photo": "/static/images/avatar/4.jpg",
   "user_name": "maria cano",
   "user_id": "63ac7a91454855cff2b9c841",
   "description": "Very good attention.",
+  "answers": 1,
   "createdAt": {
     "$numberLong": "1672181711974"
   },
   "updatedAt": {
-    "$numberLong": "1672181711974"
+    "$numberLong": "1677944235938"
   }
 },{
   "_id": {
     "$oid": "63ea3fd7f07e990059f56bb8"
   },
+  "type": "clinic",
   "parent_id": "63ab77d06d6dc52c56dc662e",
   "user_photo": "",
   "user_name": "Bresneth Oliveros",
   "user_id": "63ab77d06d6dc52c56dc6626",
-  "description": "hola",
+  "description": "Bendecido",
+  "answers": 1,
   "createdAt": {
     "$numberLong": "1676296151910"
   },
@@ -44,22 +50,9 @@
   "__v": 0
 },{
   "_id": {
-    "$oid": "63ec26eaf07e990059f56c5b"
-  },
-  "parent_id": "63ab77d06d6dc52c56dc662e",
-  "user_photo": "",
-  "user_name": "Bresneth Oliveros",
-  "user_id": "63ab77d06d6dc52c56dc6626",
-  "description": "wyw45yw45y",
-  "createdAt": {
-    "$numberLong": "1676420842084"
-  },
-  "updatedAt": 0,
-  "__v": 0
-},{
-  "_id": {
     "$oid": "63ab77d06d6dc52c56dc6645"
   },
+  "type": "",
   "parent_id": "63ddeb68107b09406f3b91a6",
   "user_photo": "/static/images/avatar/2.jpg",
   "user_name": "maria cano",
@@ -67,6 +60,7 @@
   "description": "That's right",
   "user_tag_id": "63ab286da6e59074d5465dd1",
   "user_tag_name": "@codo",
+  "answers": 0,
   "createdAt": {
     "$numberLong": "1672181711974"
   },
@@ -77,13 +71,15 @@
   "_id": {
     "$oid": "63ab77d06d6dc52c56dc6646"
   },
+  "type": "",
   "parent_id": "63ddeb68107b09406f3b91a6",
   "user_photo": "/static/images/avatar/1.jpg",
   "user_name": "Eduardo Rios",
   "user_id": "63ab77d06d6dc52c56dc6627",
-  "description": "Yes, you are in the same move.",
+  "description": "Yes, you are in the same move. 3",
   "user_tag_id": "63ac7a91454855cff2b9c841",
   "user_tag_name": "@maria cano",
+  "answers": 0,
   "createdAt": {
     "$numberLong": "1672181711974"
   },
@@ -94,6 +90,7 @@
   "_id": {
     "$oid": "63ddd86c107b09406f3b91a2"
   },
+  "type": "",
   "parent_id": "63ddec05107b09406f3b91ac",
   "user_photo": "/static/images/avatar/2.jpg",
   "user_name": "maria cano",
@@ -101,10 +98,29 @@
   "description": "Yes is ok, right",
   "user_tag_id": "63ab286da6e59074d5465dd1",
   "user_tag_name": "@codo",
+  "answers": 0,
   "createdAt": {
     "$numberLong": "1672181711974"
   },
   "updatedAt": {
     "$numberLong": "1672181711974"
   }
+},{
+  "_id": {
+    "$oid": "640e18fab894efc1e0532c16"
+  },
+  "type": "",
+  "parent_id": "63ea3fd7f07e990059f56bb8",
+  "user_photo": "",
+  "user_name": "Bresneth Oliveros",
+  "user_id": "63f90961ccd6e21b528f4e50",
+  "description": "1",
+  "user_tag_id": "63ab77d06d6dc52c56dc6626",
+  "user_tag_name": "@Bresneth Oliveros",
+  "answers": 0,
+  "createdAt": {
+    "$numberLong": "1678645498157"
+  },
+  "updatedAt": 0,
+  "__v": 0
 }]

@@ -1,6 +1,6 @@
 import { State } from "./";
 
-type Action = "UI_OPEN_SIDEBAR" | "UI-CLOSE_SIDEBAR";
+type Action = "UI_OPEN_SIDEBAR" | "UI_CLOSE_SIDEBAR" | "UI_RIGTHBAR";
 type ActionType = { type: Action };
 
 export const uiReducer = (state: State, action: ActionType): State => {
@@ -10,7 +10,7 @@ export const uiReducer = (state: State, action: ActionType): State => {
         ...state,
         sidemenuOpen: true,
       };
-    case "UI-CLOSE_SIDEBAR":
+    case "UI_CLOSE_SIDEBAR":
       return {
         ...state,
         sidemenuOpen: false,

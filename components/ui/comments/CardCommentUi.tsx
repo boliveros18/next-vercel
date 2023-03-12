@@ -1,10 +1,20 @@
-import { FC, useContext } from "react";
+import { FC, useContext, useState, FormEvent, ChangeEvent } from "react";
 import { LikeContext } from "../../../context/like";
 import { AuthContext } from "../../../context/auth";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { getFormatDistanceToNow } from "../../../utils";
-import { Card, CardHeader, Avatar, IconButton, Grid } from "@mui/material";
+import { CommentContext } from "../../../context/comment";
+import {
+  Card,
+  CardHeader,
+  Avatar,
+  IconButton,
+  Grid,
+  Box,
+  Typography,
+} from "@mui/material";
+import { CommentForm, StyledInputComment } from "../styled/CommentForm";
 import Link from "next/link";
 import { Comment } from "../../../interfaces";
 import { EditCommentUi } from "../comments/EditCommentUi";
@@ -15,14 +25,20 @@ interface Props {
 }
 
 export const CardCommentUi: FC<Props> = ({ item, parent_id }) => {
+  const { createComment, getCommentsByParentId } =
+    useContext(CommentContext);
+  const [tag, setTag] = useState({ user_name: "", user_id: "" });
+  const [value, setValue] = useState("");
+  const [onFocus, setOnFocus] = useState(false);
   const { likes, createLike, deleteLike } = useContext(LikeContext);
   const { isLoggedIn, user } = useContext(AuthContext);
+  const [inputs, setInputs] = useState({});
 
   const handleLike = (id: string) => {
     if (likes.filter((i) => i.parent_id === id).length === 1) {
-      const i = likes.findIndex((i) => i.parent_id === id);
-      deleteLike(likes[i]._id || "");
-      likes.splice(i, 1);
+      const index = likes.findIndex((i) => i.parent_id === id);
+      deleteLike(likes[index]._id || "");
+      likes.splice(index, 1);
     } else {
       createLike({
         user_id: user?._id || "",
@@ -30,6 +46,35 @@ export const CardCommentUi: FC<Props> = ({ item, parent_id }) => {
         parent_id: id || "",
       });
     }
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    await createComment({
+      ...inputs,
+      parent_id: parent_id,
+      user_photo: user?.avatar,
+      user_name: user?.name,
+      user_id: user?._id,
+      user_tag_name: "@" + tag.user_name,
+      user_tag_id: tag.user_id
+    } as Comment)
+      .then(() => {
+        setInputs("");
+        setValue("");
+        setOnFocus(false);
+        getCommentsByParentId(parent_id || "")
+        getCommentsByParentId(item._id)
+      })
+  };
+
+  const handleInput = ({ target }: ChangeEvent<any>) => {
+    setValue(target.value);
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    setInputs({
+      ...inputs,
+      [target.name]: value.substring(tag.user_name.length + 3),
+    });
   };
 
   return (
@@ -105,12 +150,75 @@ export const CardCommentUi: FC<Props> = ({ item, parent_id }) => {
             </Grid>
             <Grid item xs={2}>
               {isLoggedIn && (
-                <a style={{ fontWeight: "500", cursor: "pointer" }}>Answer</a>
+                <a
+                  style={{ fontWeight: "500", cursor: "pointer" }}
+                  onClick={() => {
+                    setValue(" @" + item.user_name + " ");
+                    setOnFocus(true);
+                    setTag({
+                      user_name: item.user_name,
+                      user_id: item.user_id,
+                    });
+                  }}
+                >
+                  Answer
+                </a>
               )}
             </Grid>
           </Grid>
         }
       />
+      {isLoggedIn && onFocus && (
+        <Grid container sx={{ mb: 1 }}>
+          <Grid item xs={12} sm={12} md={12}>
+            <CommentForm style={{ color: "black" }}>
+              <StyledInputComment
+                value={value}
+                type="text"
+                name="description"
+                inputProps={{ "aria-label": "comment" }}
+                inputRef={(input: any) => onFocus && input?.focus()}
+                onChange={handleInput}
+                autoComplete="off"
+              />
+            </CommentForm>
+          </Grid>
+          <Grid item xs={2} sm={2} md={2}></Grid>
+          <Box sx={{ flexGrow: 1 }} />
+          <Grid item xs={2} sm={2} md={1} sx={{ mr: 2 }}>
+            <IconButton
+              aria-label="settings"
+              style={{
+                color: "black",
+              }}
+              onClick={() => setOnFocus(false)}
+            >
+              <Typography
+                sx={{ fontSize: 15, textTransform: "capitalize" }}
+                variant="subtitle2"
+              >
+                Cancel
+              </Typography>
+            </IconButton>
+          </Grid>
+          <Grid item xs={2} sm={2} md={1} sx={{ mr: 2 }}>
+            <IconButton
+              aria-label="settings"
+              style={{
+                color: "black",
+              }}
+              onClick={handleSubmit}
+            >
+              <Typography
+                sx={{ fontSize: 15, textTransform: "capitalize" }}
+                variant="subtitle2"
+              >
+                Post
+              </Typography>
+            </IconButton>
+          </Grid>
+        </Grid>
+      )}
     </Card>
   );
 };
