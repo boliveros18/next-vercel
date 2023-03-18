@@ -31,7 +31,8 @@ export const EditCommentUi: FC<Props> = ({ item }) => {
   const mobile = UseWindowSize();
   const [value, setValue] = useState(item.description);
   const [open, setOpen] = useState(false);
-  const { updateComment, deleteComment, getCommentsByParentId } = useContext(CommentContext);
+  const { updateComment, deleteComment, getCommentsByParentId } =
+    useContext(CommentContext);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [inputs, setInputs] = useState({});
 
@@ -65,7 +66,7 @@ export const EditCommentUi: FC<Props> = ({ item }) => {
 
   const suppressComment = () => {
     deleteComment(item._id);
-    getCommentsByParentId(item.parent_id)
+    getCommentsByParentId(item.parent_id);
   };
 
   const handleInput = ({ target }: ChangeEvent<any>) => {

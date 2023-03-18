@@ -9,6 +9,7 @@ export interface Comment {
   user_tag_id: string;
   user_tag_name: string;
   answers: number;
+  likes: number;
   createdAt: number;
   updatedAt: number;
 }

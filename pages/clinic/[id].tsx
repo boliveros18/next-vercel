@@ -124,7 +124,7 @@ const ClinicPage: NextPage<Props> = ({
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <Typography sx={{ fontSize: 15, fontWeight: "500" }}>
+                  <Typography sx={{ fontSize: 15, fontWeight: "500", color: "#001B87"  }}>
                     See certifications
                   </Typography>
                 </AccordionSummary>

@@ -15,20 +15,12 @@ export interface State {
 
 const INITIAL_STATE: State = {
   comments: [],
-  comment: {} as Comment
+  comment: {} as Comment,
 };
 
 export const CommentProvider: FC<ProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(commentsReducer, INITIAL_STATE);
 
-  const getCommentsByParentId = async (
-    parent_id: string,
-    pagination?: Pagination
-  ) => {
-    const data: Comment[] = await CommentService.getCommentsByParentId(parent_id);
-    dispatch({ type: "ADD_COMMENTS", payload: data });
-  };
-  
   const createComment = async (payload: Comment) => {
     const data = await CommentService.createOne(payload);
     dispatch({ type: "CREATE_COMMENT", payload: data });
@@ -48,8 +40,18 @@ export const CommentProvider: FC<ProviderProps> = ({ children }) => {
   };
 
   const commentsByParentId = (payload: Comment[], parent_id: string) => {
-    return payload.filter(i=>i.parent_id === parent_id)
-  }
+    return payload.filter((i) => i.parent_id === parent_id);
+  };
+
+  const getCommentsByParentId = async (
+    parent_id: string,
+    pagination?: Pagination
+  ) => {
+    const data: Comment[] = await CommentService.getCommentsByParentId(
+      parent_id
+    );
+    dispatch({ type: "ADD_COMMENTS", payload: data });
+  };
 
   return (
     <CommentContext.Provider

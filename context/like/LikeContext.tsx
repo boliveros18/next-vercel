@@ -1,13 +1,19 @@
-import { createContext,  Dispatch, SetStateAction } from "react";
-import { Like } from '../../interfaces';
+import { createContext } from "react";
+import { Like } from "../../interfaces";
+
+export type Pagination = {
+  [key: string | number]: any;
+  page: number;
+  pageSize: number;
+};
 
 interface ContextProps {
   like: Like;
   likes: Like[];
-  setLikes: Dispatch<SetStateAction<Like[]>>;
-  likesLength: number;
-  setLikesLength: Dispatch<SetStateAction<number>>;
-  getLike: (id: string) => Promise<void>;
+  addLikes: (payload: Like) => void;
+  likeByParentAndUserId: (payload: Like[], parent_id: string, user_id: string) => Like[];
+  likesByParentId: (payload: Like[], parent_id: string) => Like[];
+  getLikesByGrandParentId: (grandparent_id: string, pagination?: Pagination) => void;
   createLike: (payload: Like) => Promise<void>;
   deleteLike: (id: string) => Promise<void>;
 }

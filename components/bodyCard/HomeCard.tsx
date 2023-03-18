@@ -30,7 +30,7 @@ export const HomeCard: FC<Props> = () => {
 
   return (
     <>
-      <SeeComments parent_id={principal?._id || ""} type={principal.type} remarks={principal.comments}>
+      <SeeComments parent_id={principal?._id || ""} type={principal.type} initialAnswers={principal.comments}>
         <Card
           sx={{
             width: "100%",
@@ -94,7 +94,7 @@ export const HomeCard: FC<Props> = () => {
               />
             )}
           </CardActionArea>
-          {loading && <CardActionsUi parent_id={principal?._id || ""} reactions={principal.likes}/>}
+          {loading && <CardActionsUi parent_id={principal?._id || ""} initialLikes={principal.likes}/>}
           {loading && (
             <div style={{ marginLeft: "17px" }}>
             <Typography

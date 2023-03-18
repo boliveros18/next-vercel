@@ -1,10 +1,10 @@
-import { createContext, Dispatch, SetStateAction } from "react";
+import { createContext } from "react";
 import { Certification } from "../../interfaces";
 
 interface ContextProps {
   certifications: Certification[];
   certification: Certification;
-  setCertifications: Dispatch<SetStateAction<Certification[]>>;
+  addCertifications: (payload: Certification[]) => void;
   updateCertification: (id: string, payload: Certification) => Promise<void>;
 }
 

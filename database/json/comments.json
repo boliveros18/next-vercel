@@ -9,6 +9,7 @@
   "user_id": "63ab286da6e59074d5465dd1",
   "description": "I loved it. Very good attention.",
   "answers": 2,
+  "likes": 0,
   "createdAt": {
     "$numberLong": "1672181711974"
   },
@@ -26,6 +27,7 @@
   "user_id": "63ac7a91454855cff2b9c841",
   "description": "Very good attention.",
   "answers": 1,
+  "likes": 0,
   "createdAt": {
     "$numberLong": "1672181711974"
   },
@@ -43,6 +45,7 @@
   "user_id": "63ab77d06d6dc52c56dc6626",
   "description": "Bendecido",
   "answers": 1,
+  "likes": 0,
   "createdAt": {
     "$numberLong": "1676296151910"
   },
@@ -61,6 +64,7 @@
   "user_tag_id": "63ab286da6e59074d5465dd1",
   "user_tag_name": "@codo",
   "answers": 0,
+  "likes": 0,
   "createdAt": {
     "$numberLong": "1672181711974"
   },
@@ -80,6 +84,7 @@
   "user_tag_id": "63ac7a91454855cff2b9c841",
   "user_tag_name": "@maria cano",
   "answers": 0,
+  "likes": 0,
   "createdAt": {
     "$numberLong": "1672181711974"
   },
@@ -99,6 +104,7 @@
   "user_tag_id": "63ab286da6e59074d5465dd1",
   "user_tag_name": "@codo",
   "answers": 0,
+  "likes": 0,
   "createdAt": {
     "$numberLong": "1672181711974"
   },
@@ -118,6 +124,7 @@
   "user_tag_id": "63ab77d06d6dc52c56dc6626",
   "user_tag_name": "@Bresneth Oliveros",
   "answers": 0,
+  "likes": 0,
   "createdAt": {
     "$numberLong": "1678645498157"
   },

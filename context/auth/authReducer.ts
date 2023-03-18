@@ -5,10 +5,7 @@ type ActionType =
   | { type: "AUTH_LOGIN"; payload: User }
   | { type: "AUTH_LOGOUT" };
 
-export const authReducer = (
-  state: State,
-  action: ActionType
-): State => {
+export const authReducer = (state: State, action: ActionType): State => {
   switch (action.type) {
     case "AUTH_LOGIN":
       return {

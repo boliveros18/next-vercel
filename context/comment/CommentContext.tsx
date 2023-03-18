@@ -2,10 +2,10 @@ import { createContext } from "react";
 import { Comment } from "../../interfaces";
 
 export type Pagination = {
-  [key: string | number]: any,
-  page: number,
-  pageSize: number
-}
+  [key: string | number]: any;
+  page: number;
+  pageSize: number;
+};
 
 interface ContextProps {
   comment: Comment;

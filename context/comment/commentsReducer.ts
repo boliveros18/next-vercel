@@ -1,21 +1,14 @@
 import { State } from "./";
 
 type Action =
-  | "ADD_COMMENTS"
   | "CREATE_COMMENT"
   | "UPDATE_COMMENT"
-  | "DELETE_COMMENT";
+  | "DELETE_COMMENT"
+  | "ADD_COMMENTS";
 type ActionType = { type: Action; payload?: any };
 
 export const commentsReducer = (state: State, action: ActionType): State => {
   switch (action.type) {
-    case "ADD_COMMENTS":
-      const attach = state.comments.concat(action.payload);
-      const comments = attach.filter(
-        (object, index) =>
-          attach.findIndex((item) => item._id === object._id) === index
-      );
-      return { ...state, comments: comments };
     case "CREATE_COMMENT":
       return { ...state, comment: action.payload };
     case "UPDATE_COMMENT":
@@ -25,6 +18,13 @@ export const commentsReducer = (state: State, action: ActionType): State => {
         (item) => item._id !== action.payload
       );
       return { ...state, comments: filtered };
+    case "ADD_COMMENTS":
+      const attach = state.comments.concat(action.payload);
+      const comments = attach.filter(
+        (object, index) =>
+          attach.findIndex((item) => item._id === object._id) === index
+      );
+      return { ...state, comments: comments };
     default:
       return state;
   }

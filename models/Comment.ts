@@ -13,6 +13,7 @@ const entrySchema = new Schema({
   user_tag_id: { type: String },
   user_tag_name: { type: String },
   answers: { type: Number},
+  likes: { type: Number},
   createdAt: { type: Number },
   updatedAt: { type: Number },
 });

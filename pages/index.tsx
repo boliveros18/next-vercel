@@ -14,19 +14,19 @@ import { UIContext } from "../context/ui/UIContext";
 
 interface Props {
   principal: Clinic;
-  likes: Like[];
+  like: Like;
 }
 
-const HomePage: NextPage<Props> = ({ principal, likes }) => {
+const HomePage: NextPage<Props> = ({ principal, like }) => {
+  const { addLikes } = useContext(LikeContext);
   const { setPrincipal } = useContext(ClinicContext);
-  const { setLikes } = useContext(LikeContext);
   const { setLoading } = useContext(UIContext);
 
   useEffect(() => {
-     setPrincipal(principal);
-     setLoading(true);
-     setLikes(likes);
-  }, [likes, setLikes, setLoading, principal, setPrincipal]);
+    addLikes(like);
+    setPrincipal(principal);
+    setLoading(true);
+  }, [like, addLikes, setLoading, principal, setPrincipal]);
 
   return (
     <Layout>
@@ -63,14 +63,11 @@ const HomePage: NextPage<Props> = ({ principal, likes }) => {
 };
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
-
   const principal = await dbClinics.getPrincipalClinic();
-  const like =
-    (await dbLikes.getLikeByParentIdAndUserId(
-      principal._id || "",
-      session?.user?._id || ""
-    )) || {};
-
+  const like = await dbLikes.getLikeByParentIdAndUserId(
+    principal._id || "",
+    session?.user?._id || ""
+  );
   if (!principal) {
     return {
       redirect: {
@@ -83,7 +80,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   return {
     props: {
       principal: principal,
-      likes: [like],
+      like: like
     },
   };
 };

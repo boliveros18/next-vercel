@@ -1,6 +1,7 @@
 import { FC, useContext } from "react";
 import * as React from "react";
 import { CommentContext } from "../../../context/comment";
+import { LikeContext } from "../../../context/like";
 import {
   Box,
   Accordion,
@@ -18,7 +19,8 @@ interface Props {
 export const CommentUi: FC<Props> = ({ parent_id }) => {
   const { comments, commentsByParentId, getCommentsByParentId } =
     useContext(CommentContext);
-
+  const { getLikesByGrandParentId } = useContext(LikeContext);
+  
   const answers = (comments: Comment[], item: Comment) => {
     return commentsByParentId(comments, item._id).length === 0
       ? item.answers
@@ -54,7 +56,7 @@ export const CommentUi: FC<Props> = ({ parent_id }) => {
                     mt: -1,
                     mb: -4,
                   }}
-                  onClick={() => getCommentsByParentId(item._id)}
+                  onClick={() => {getCommentsByParentId(item._id); getLikesByGrandParentId(item._id)}}
                 >
                   <Box
                     sx={{

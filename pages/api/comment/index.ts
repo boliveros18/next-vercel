@@ -42,6 +42,7 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     user_tag_id = "",
     user_tag_name = "",
     answers = 0,
+    likes = 0,
     createdAt = Date.now(),
     updatedAt = 0,
   } = req.body;
@@ -57,6 +58,7 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     user_tag_id,
     user_tag_name,
     answers,
+    likes,
     createdAt,
     updatedAt,
   });
@@ -66,12 +68,11 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     switch (type) {
       case "": {
         //UPDATING MAIN COMMENTS ANSWERS NUMBER
-        const parent_comment = await getCommentById(parent_id);
-        if (parent_comment) {
-          console.log("entra1");
-          const answers = await getCommentsLengthByParentId(parent_comment._id);
+        const parent = await getCommentById(parent_id);
+        if (parent) {
+          const answers = await getCommentsLengthByParentId(parent._id);
           await Comment.findByIdAndUpdate(
-            parent_comment._id,
+            parent._id,
             { answers },
             { runValidators: true, new: true }
           );
@@ -102,7 +103,7 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
 const getComments = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   try {
-    const comments = await dbComments.getCommentsByParentId2(
+    const comments = await dbComments.getCommentsByParentId(
       req.query.parent_id as string
     );
     return res.status(201).json(comments);

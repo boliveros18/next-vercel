@@ -1,4 +1,4 @@
-import { FC, ReactNode, useReducer, useState, useMemo } from "react";
+import { FC, ReactNode, useReducer, useCallback } from "react";
 import { CertificationContext, certificationsReducer } from ".";
 import { Certification } from "../../interfaces";
 import { CertificationService } from "../../services";
@@ -20,8 +20,9 @@ const INITIAL_STATE: State = {
 export const CertificationProvider: FC<ProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(certificationsReducer, INITIAL_STATE);
 
-  const [certifications, setCertifications] = useState<Certification[]>([]);
-  useMemo(() => ({ certifications, setCertifications }), [certifications]);
+  const addCertifications = useCallback((payload: Certification[]) => {
+    dispatch({ type: "ADD_CERTIFICATIONS", payload });
+  }, []);
 
   const updateCertification = async (id: string, payload: Certification) => {
     const { status, data } = await CertificationService.updateOne(id, payload);
@@ -31,7 +32,7 @@ export const CertificationProvider: FC<ProviderProps> = ({ children }) => {
 
   return (
     <CertificationContext.Provider
-      value={{ ...state, certifications, setCertifications, updateCertification }}
+      value={{ ...state, addCertifications, updateCertification }}
     >
       {children}
     </CertificationContext.Provider>

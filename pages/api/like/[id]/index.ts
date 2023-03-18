@@ -1,8 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import mongoose from "mongoose";
-
+import { Clinic } from "../../../../models";
 import { db } from "../../../../database";
 import { Like, ILike } from "../../../../models";
+import { Comment } from "../../../../models";
+import { getLikesLengthByParentId } from '../../../../database/dbLikes';
+import { getCommentById } from '../../../../database/dbComments';
 
 type Data = { message: string } | ILike;
 
@@ -17,7 +20,6 @@ export default function handler(
   }
 
   switch (req.method) {
-
     case "GET":
       return getModel(req, res);
 
@@ -25,11 +27,9 @@ export default function handler(
       return deleteModel(req, res);
 
     default:
-      return res
-        .status(400)
-        .json({
-          message: "This method in like/[id] does not exist " + req.method,
-        });
+      return res.status(400).json({
+        message: "This method in like/[id] does not exist " + req.method,
+      });
   }
 }
 
@@ -49,12 +49,7 @@ const getModel = async (req: NextApiRequest, res: NextApiResponse) => {
   return res.status(200).json(modelInDB);
 };
 
-
-
-const deleteModel = async (
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) => {
+const deleteModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
   await db.connect();
@@ -70,6 +65,35 @@ const deleteModel = async (
 
   try {
     const deleteModel = await Like.findByIdAndDelete(id);
+    switch (modelToDelete.grandparent_id) {
+      case "": {
+        //DELETING MAIN.LIKES NUMBER
+        console.log("entra1")
+        const likes = await getLikesLengthByParentId(
+          modelToDelete.parent_id
+        );
+        await Clinic.findByIdAndUpdate(
+          modelToDelete.parent_id,
+          { likes },
+          { runValidators: true, new: true }
+        );
+        break;
+      }
+      //DELETING MAIN COMMENTS LIKES NUMBER
+      default: {
+        if(deleteModel){
+        const parent = await getCommentById(deleteModel.parent_id)
+        if(parent){
+            const likes = await getLikesLengthByParentId(parent._id);
+            await Comment.findByIdAndUpdate(
+              parent._id,
+              { likes },
+              { runValidators: true, new: true }
+            );
+          } 
+        }
+      }
+    }
     await db.disconnect();
     res.status(200).json(deleteModel!);
   } catch (error: any) {

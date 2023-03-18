@@ -51,7 +51,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
         name,
         email,
         password,
-        role
+        role,
       });
       const { token, user } = data;
       Cookies.set("token", token);

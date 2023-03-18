@@ -20,6 +20,7 @@ import {
 import { CommentForm, StyledInputComment } from "../styled/CommentForm";
 import { AuthContext } from "../../../context/auth";
 import { CommentContext } from "../../../context/comment";
+import { LikeContext } from "../../../context/like";
 import { UIContext } from "../../../context/ui";
 import { WindowSize } from "../../../utils";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -31,17 +32,19 @@ interface Props {
   children?: ReactNode;
   parent_id: string;
   type: string;
-  remarks: number;
+  initialAnswers: number;
 }
 
 export const SeeComments: FC<Props> = ({
   children,
   parent_id,
   type,
-  remarks,
+  initialAnswers
 }) => {
   const [value, setValue] = useState("");
   const { onFocus, setOnFocus } = useContext(UIContext);
+  const {  getLikesByGrandParentId } =
+    useContext(LikeContext);
   const { createComment, getCommentsByParentId, commentsByParentId, comments } =
     useContext(CommentContext);
   const { isLoggedIn, user } = useContext(AuthContext);
@@ -53,9 +56,9 @@ export const SeeComments: FC<Props> = ({
     setToogle(!toogle);
   };
 
-  const answers = (comments: Comment[], parent_id: string) => {
+  const answers: any = (comments: Comment[], parent_id: string) => {
     return commentsByParentId(comments, parent_id).length === 0
-      ? remarks
+      ? initialAnswers
       : commentsByParentId(comments, parent_id).length;
   };
 
@@ -89,7 +92,7 @@ export const SeeComments: FC<Props> = ({
           <AccordionSummary
             aria-controls="panel1a-content"
             id="panel1a-header"
-            onClick={() => getCommentsByParentId(parent_id)}
+            onClick={() => {getCommentsByParentId(parent_id); getLikesByGrandParentId(parent_id) }}
           >
             <Typography
               sx={{

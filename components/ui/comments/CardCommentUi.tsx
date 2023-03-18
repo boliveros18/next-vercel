@@ -18,6 +18,8 @@ import { CommentForm, StyledInputComment } from "../styled/CommentForm";
 import Link from "next/link";
 import { Comment } from "../../../interfaces";
 import { EditCommentUi } from "../comments/EditCommentUi";
+import { pluralize } from "../../../utils/strings";
+import { Like } from "../../../interfaces";
 
 interface Props {
   item: Comment;
@@ -25,27 +27,41 @@ interface Props {
 }
 
 export const CardCommentUi: FC<Props> = ({ item, parent_id }) => {
-  const { createComment, getCommentsByParentId } =
-    useContext(CommentContext);
+  const { createComment, getCommentsByParentId } = useContext(CommentContext);
   const [tag, setTag] = useState({ user_name: "", user_id: "" });
   const [value, setValue] = useState("");
   const [onFocus, setOnFocus] = useState(false);
-  const { likes, createLike, deleteLike } = useContext(LikeContext);
+  const {
+    createLike,
+    deleteLike,
+    likes,
+    likeByParentAndUserId,
+    likesByParentId,
+  } = useContext(LikeContext);
   const { isLoggedIn, user } = useContext(AuthContext);
   const [inputs, setInputs] = useState({});
 
-  const handleLike = (id: string) => {
-    if (likes.filter((i) => i.parent_id === id).length === 1) {
-      const index = likes.findIndex((i) => i.parent_id === id);
-      deleteLike(likes[index]._id || "");
-      likes.splice(index, 1);
+  const handleLike = (
+    parent_id: string,
+    user_id: string,
+    grandparent_id?: string
+  ) => {
+    if (likeByParentAndUserId(likes, parent_id, user_id).length === 1) {
+      deleteLike(likeByParentAndUserId(likes, parent_id, user_id)[0]._id || "");
     } else {
       createLike({
         user_id: user?._id || "",
         user_name: user?.name || "",
-        parent_id: id || "",
+        grandparent_id: grandparent_id || "",
+        parent_id: parent_id || "",
       });
     }
+  };
+
+  const reactions: any = (likes: Like[], item: Comment) => {
+    return likesByParentId(likes, item._id).length === 0
+      ? item.likes
+      : likesByParentId(likes, item._id).length;
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -57,15 +73,14 @@ export const CardCommentUi: FC<Props> = ({ item, parent_id }) => {
       user_name: user?.name,
       user_id: user?._id,
       user_tag_name: "@" + tag.user_name,
-      user_tag_id: tag.user_id
-    } as Comment)
-      .then(() => {
-        setInputs("");
-        setValue("");
-        setOnFocus(false);
-        getCommentsByParentId(parent_id || "")
-        getCommentsByParentId(item._id)
-      })
+      user_tag_id: tag.user_id,
+    } as Comment).then(() => {
+      setInputs("");
+      setValue("");
+      setOnFocus(false);
+      getCommentsByParentId(parent_id || "");
+      getCommentsByParentId(item._id);
+    });
   };
 
   const handleInput = ({ target }: ChangeEvent<any>) => {
@@ -116,10 +131,12 @@ export const CardCommentUi: FC<Props> = ({ item, parent_id }) => {
                 style={{
                   color: "black",
                 }}
-                onClick={() => handleLike(item._id || "")}
+                onClick={() =>
+                  handleLike(item._id, user?._id || "", item.parent_id || "")
+                }
               >
-                {likes.filter((i) => i.parent_id === item._id).length === 1 &&
-                isLoggedIn ? (
+                {likeByParentAndUserId(likes, item._id || "", user?._id || "")
+                  .length === 1 && isLoggedIn ? (
                   <CheckCircleIcon sx={{ color: "blue", fontSize: "15px" }} />
                 ) : (
                   <CheckCircleOutlineIcon sx={{ fontSize: "15px" }} />
@@ -144,8 +161,10 @@ export const CardCommentUi: FC<Props> = ({ item, parent_id }) => {
             </Grid>
             <Grid item xs={4}>
               <span>
-                {likes?.filter((i) => i.parent_id === item._id)?.length + " "}
-                Likes
+                {reactions(likes, item) > 0
+                  ? reactions(likes, item) +
+                    pluralize(" like", reactions(likes, item))
+                  : null}
               </span>
             </Grid>
             <Grid item xs={2}>

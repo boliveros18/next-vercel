@@ -4,40 +4,44 @@ import { useRouter } from "next/router";
 import CommentIcon from "@mui/icons-material/ChatBubbleOutline";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
-import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
+import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
 import { AuthContext } from "../../../context/auth";
 import { LikeContext } from "../../../context/like";
 import { UIContext } from "../../../context/ui";
-import { ClinicContext } from "../../../context/clinic";
+import { pluralize } from "../../../utils/strings";
+import { Like } from "../../../interfaces";
 
 interface Props {
   children?: ReactNode;
   parent_id: string;
-  reactions: number;
+  initialLikes: number;
 }
 
-export const CardActionsUi: FC<Props> = ({ parent_id, reactions }) => {
+export const CardActionsUi: FC<Props> = ({ parent_id, initialLikes }) => {
   const router = useRouter();
   const { setOnFocus } = useContext(UIContext);
-  const { createLike, deleteLike, likes } =
-    useContext(LikeContext);
+  const { createLike, deleteLike, likes, likeByParentAndUserId, likesByParentId } = useContext(LikeContext);
   const { isLoggedIn, user } = useContext(AuthContext);
 
-  const handleLike = (id: string, user_id?: string) => {
-    if (
-      likes?.filter((i) => i.parent_id === id && i.user_id === user_id)
-        .length === 1
-    ) {
-      deleteLike(likes[likes.findIndex((i) => i.parent_id === id && i.user_id === user_id)]._id || "");
+  const handleLike = (parent_id: string, user_id: string, grandparent_id?: string ) => {
+    if (likeByParentAndUserId(likes, parent_id, user_id).length === 1) {
+      deleteLike(likeByParentAndUserId(likes, parent_id, user_id)[0]._id || "");
     } else {
       createLike({
         user_id: user?._id || "",
         user_name: user?.name || "",
-        parent_id: parent_id,
+        grandparent_id: "",
+        parent_id: parent_id || "",
       });
     }
+  };
+
+  const reactions: any = (likes: Like[], parent_id: string) => {
+    return likesByParentId(likes, parent_id).length === 0
+      ? initialLikes
+      : likesByParentId(likes, parent_id).length;
   };
 
   return (
@@ -55,11 +59,9 @@ export const CardActionsUi: FC<Props> = ({ parent_id, reactions }) => {
               aria-label="like"
               color={isLoggedIn ? "primary" : "default"}
               disabled={!isLoggedIn}
-              onClick={() => handleLike(parent_id, user?._id)}
+              onClick={() => handleLike(parent_id, user?._id || "")}
             >
-              {likes?.filter(
-                (i) => i.parent_id === parent_id && i.user_id === user?._id
-              ).length === 1 ? (
+              {likeByParentAndUserId(likes, parent_id, user?._id || "").length === 1 ? (
                 <CheckCircleIcon sx={{ color: "blue" }} fontSize="medium" />
               ) : (
                 <CheckCircleOutlineIcon fontSize="medium" />
@@ -77,16 +79,16 @@ export const CardActionsUi: FC<Props> = ({ parent_id, reactions }) => {
             </IconButton>
           </Grid>
           <Box sx={{ flexGrow: 1 }} />
-          <ArrowRightOutlinedIcon fontSize="medium" sx={{mt: 0.75, mr:-1}}/>
+          <ArrowRightOutlinedIcon fontSize="medium" sx={{ mt: 0.75, mr: -1 }} />
           <Grid item xs={0}>
-          <IconButton
+            <IconButton
               aria-label="comment"
               color={isLoggedIn ? "primary" : "default"}
               disabled={!isLoggedIn}
               onClick={() => router.push(`/clinic/${parent_id}`)}
             >
-              <AccessibilityNewIcon   sx={{fontSize: "26px", mt:-0.5}} />
-              <LocalHospitalIcon sx={{fontSize: "15px", mt:-1.5 }} />
+              <AccessibilityNewIcon sx={{ fontSize: "26px", mt: -0.5 }} />
+              <LocalHospitalIcon sx={{ fontSize: "15px", mt: -1.5 }} />
             </IconButton>
           </Grid>
         </Grid>
@@ -94,8 +96,7 @@ export const CardActionsUi: FC<Props> = ({ parent_id, reactions }) => {
       <Typography
         sx={{ fontSize: 14, fontWeight: 500, mt: 1.5, ml: 2, mb: -1 }}
       >
-        {reactions === 0 ? "" : reactions}
-        {reactions === 0 ? "" : reactions > 1 ? " Likes" : " Like"}
+        {reactions(likes, parent_id) > 0 ? (reactions(likes, parent_id) + pluralize(" like", reactions(likes, parent_id))) : null}
       </Typography>
     </>
   );

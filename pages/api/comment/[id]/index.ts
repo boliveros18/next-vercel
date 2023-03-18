@@ -72,6 +72,7 @@ const updateModel = async (
   const {
     description = modelToUpdate.description,
     answers = modelToUpdate.answers,
+    likes = modelToUpdate.likes,
     updatedAt = Date.now()
   } = req.body;
 
@@ -81,6 +82,7 @@ const updateModel = async (
       {
         description,
         answers,
+        likes,
         updatedAt
       },
       { runValidators: true, new: true }
