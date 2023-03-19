@@ -19,7 +19,6 @@ export default async function handler(
   }
 }
 
-
 const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const session: any = await getSession({ req });
   if (!session) {
@@ -48,7 +47,7 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     likes = 0,
     createdAt = Date.now(),
     updatedAt = 0,
-  } = req.body
+  } = req.body;
   await db.connect();
 
   const newModel = new Clinic({
@@ -86,10 +85,9 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   }
 };
 
-
 const getClinics = async (res: NextApiResponse<Data>) => {
   await db.connect();
-  const clinics : any = await Clinic.find().sort({
+  const clinics: any = await Clinic.find().sort({
     createdAt: "ascending",
   });
   await db.disconnect();

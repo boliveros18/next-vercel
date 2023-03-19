@@ -68,10 +68,24 @@ export const EditCommentUi: FC<Props> = ({ item, setOpen }) => {
           sx={{ width: 100, bgcolor: "background.paper", textAlign: "center" }}
         >
           <MenuItem>
-            <ListItemText onClick={() => setOpen(true)}>Edit</ListItemText>
+            <ListItemText
+              onClick={() => {
+                setOpen(true);
+                setAnchorEl(null);
+              }}
+            >
+              Edit
+            </ListItemText>
           </MenuItem>
           <MenuItem>
-            <ListItemText onClick={suppressComment}>Delete</ListItemText>
+            <ListItemText
+              onClick={() => {
+                suppressComment();
+                setAnchorEl(null);
+              }}
+            >
+              Delete
+            </ListItemText>
           </MenuItem>
           <MenuItem>
             <ListItemText>Report</ListItemText>

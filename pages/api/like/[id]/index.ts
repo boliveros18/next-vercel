@@ -4,8 +4,8 @@ import { Clinic } from "../../../../models";
 import { db } from "../../../../database";
 import { Like, ILike } from "../../../../models";
 import { Comment } from "../../../../models";
-import { getLikesLengthByParentId } from '../../../../database/dbLikes';
-import { getCommentById } from '../../../../database/dbComments';
+import { getLikesLengthByParentId } from "../../../../database/dbLikes";
+import { getCommentById } from "../../../../database/dbComments";
 
 type Data = { message: string } | ILike;
 
@@ -68,9 +68,7 @@ const deleteModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     switch (modelToDelete.grandparent_id) {
       case "": {
         //DELETING MAIN.LIKES NUMBER
-        const likes = await getLikesLengthByParentId(
-          modelToDelete.parent_id
-        );
+        const likes = await getLikesLengthByParentId(modelToDelete.parent_id);
         await Clinic.findByIdAndUpdate(
           modelToDelete.parent_id,
           { likes },
@@ -80,16 +78,16 @@ const deleteModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       }
       //DELETING MAIN COMMENTS LIKES NUMBER
       default: {
-        if(deleteModel){
-        const parent = await getCommentById(deleteModel.parent_id)
-        if(parent){
+        if (deleteModel) {
+          const parent = await getCommentById(deleteModel.parent_id);
+          if (parent) {
             const likes = await getLikesLengthByParentId(parent._id);
             await Comment.findByIdAndUpdate(
               parent._id,
               { likes },
               { runValidators: true, new: true }
             );
-          } 
+          }
         }
       }
     }

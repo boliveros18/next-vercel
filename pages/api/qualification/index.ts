@@ -27,19 +27,14 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       .json({ message: "You must be authenticated to do this" });
   }
 
-  const {
-    user_id = "",
-    user_name = "",
-    parent_id = "",
-    stars = 0
-  } = req.body
+  const { user_id = "", user_name = "", parent_id = "", stars = 0 } = req.body;
   await db.connect();
 
   const newModel = new Qualification({
     user_id,
     user_name,
     parent_id,
-    stars
+    stars,
   });
 
   try {
@@ -57,7 +52,7 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
 const getQualifications = async (res: NextApiResponse<Data>) => {
   await db.connect();
-  const qualifications : any = await Qualification.find().sort({
+  const qualifications: any = await Qualification.find().sort({
     createdAt: "ascending",
   });
   await db.disconnect();

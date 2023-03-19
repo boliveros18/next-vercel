@@ -39,12 +39,11 @@ export const SeeComments: FC<Props> = ({
   children,
   parent_id,
   type,
-  initialAnswers
+  initialAnswers,
 }) => {
   const [value, setValue] = useState("");
   const { onFocus, setOnFocus } = useContext(UIContext);
-  const {  getLikesByGrandParentId } =
-    useContext(LikeContext);
+  const { getLikesByGrandParentId } = useContext(LikeContext);
   const { createComment, getCommentsByParentId, commentsByParentId, comments } =
     useContext(CommentContext);
   const { isLoggedIn, user } = useContext(AuthContext);
@@ -92,7 +91,10 @@ export const SeeComments: FC<Props> = ({
           <AccordionSummary
             aria-controls="panel1a-content"
             id="panel1a-header"
-            onClick={() => {getCommentsByParentId(parent_id); getLikesByGrandParentId(parent_id) }}
+            onClick={() => {
+              getCommentsByParentId(parent_id);
+              getLikesByGrandParentId(parent_id);
+            }}
           >
             <Typography
               sx={{

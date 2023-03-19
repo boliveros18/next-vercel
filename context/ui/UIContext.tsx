@@ -6,6 +6,7 @@ export interface tagger {
 }
 
 interface ContextProps {
+  sidemenuOpen: boolean;
   openSideMenu: () => void;
   closeSideMenu: () => void;
   loading: boolean;

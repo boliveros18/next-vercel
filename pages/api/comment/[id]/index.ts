@@ -105,7 +105,7 @@ const deleteModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       .status(400)
       .json({ message: "There is no comment with that ID: " + id });
   }
-  
+
   try {
     const deleteModel = await Comment.findByIdAndDelete(id);
     switch (modelToDelete.type) {
@@ -135,8 +135,8 @@ const deleteModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           { comments },
           { runValidators: true, new: true }
         );
-        await Comment.deleteMany({parent_id: modelToDelete._id})
-        await Like.deleteMany({ parent_id:  modelToDelete._id });
+        await Comment.deleteMany({ parent_id: modelToDelete._id });
+        await Like.deleteMany({ parent_id: modelToDelete._id });
         await Like.deleteMany({ grandparent_id: modelToDelete._id });
         break;
       }

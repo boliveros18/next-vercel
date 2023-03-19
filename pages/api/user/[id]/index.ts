@@ -63,13 +63,13 @@ const updateUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       .json({ message: "There is no user with that ID: " + id });
   }
 
-  const { 
+  const {
     name = userToUpdate.name,
     email = userToUpdate.email,
     password = userToUpdate.password,
     role = userToUpdate.role,
-    updateAt = userToUpdate.updatedAt
-} = req.body;
+    updateAt = userToUpdate.updatedAt,
+  } = req.body;
 
   try {
     const updatedUser = await User.findByIdAndUpdate(
@@ -79,7 +79,7 @@ const updateUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         email,
         password,
         role,
-        updateAt
+        updateAt,
       },
       { runValidators: true, new: true }
     );

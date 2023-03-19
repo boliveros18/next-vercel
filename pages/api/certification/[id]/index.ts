@@ -27,11 +27,10 @@ export default function handler(
       return deleteModel(req, res);
 
     default:
-      return res
-        .status(400)
-        .json({
-          message: "This method in certification/[id] does not exist " + req.method,
-        });
+      return res.status(400).json({
+        message:
+          "This method in certification/[id] does not exist " + req.method,
+      });
   }
 }
 
@@ -51,10 +50,7 @@ const getModel = async (req: NextApiRequest, res: NextApiResponse) => {
   return res.status(200).json(modelInDB);
 };
 
-const updateModel = async (
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) => {
+const updateModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
   await db.connect();
@@ -78,9 +74,9 @@ const updateModel = async (
     const updatedModel = await Certification.findByIdAndUpdate(
       id,
       {
-      name,
-      description,
-      logo
+        name,
+        description,
+        logo,
       },
       { runValidators: true, new: true }
     );
@@ -92,10 +88,7 @@ const updateModel = async (
   }
 };
 
-const deleteModel = async (
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) => {
+const deleteModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
   await db.connect();

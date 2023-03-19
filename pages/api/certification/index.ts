@@ -27,19 +27,14 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       .json({ message: "You must be authenticated to do this" });
   }
 
-  const {
-    parent_id = "",
-    name = "",
-    description = "",
-    logo = ""
-  } = req.body
+  const { parent_id = "", name = "", description = "", logo = "" } = req.body;
   await db.connect();
 
   const newModel = new Certification({
     parent_id,
     name,
     description,
-    logo
+    logo,
   });
 
   try {
@@ -57,7 +52,7 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
 const getCertifications = async (res: NextApiResponse<Data>) => {
   await db.connect();
-  const certifications : any = await Certification.find().sort({
+  const certifications: any = await Certification.find().sort({
     createdAt: "ascending",
   });
   await db.disconnect();

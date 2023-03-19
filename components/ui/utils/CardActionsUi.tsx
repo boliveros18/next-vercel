@@ -22,10 +22,20 @@ interface Props {
 export const CardActionsUi: FC<Props> = ({ parent_id, initialLikes }) => {
   const router = useRouter();
   const { setOnFocus } = useContext(UIContext);
-  const { createLike, deleteLike, likes, likeByParentAndUserId, likesByParentId } = useContext(LikeContext);
+  const {
+    createLike,
+    deleteLike,
+    likes,
+    likeByParentAndUserId,
+    likesByParentId,
+  } = useContext(LikeContext);
   const { isLoggedIn, user } = useContext(AuthContext);
 
-  const handleLike = (parent_id: string, user_id: string, grandparent_id?: string ) => {
+  const handleLike = (
+    parent_id: string,
+    user_id: string,
+    grandparent_id?: string
+  ) => {
     if (likeByParentAndUserId(likes, parent_id, user_id).length === 1) {
       deleteLike(likeByParentAndUserId(likes, parent_id, user_id)[0]._id || "");
     } else {
@@ -61,7 +71,8 @@ export const CardActionsUi: FC<Props> = ({ parent_id, initialLikes }) => {
               disabled={!isLoggedIn}
               onClick={() => handleLike(parent_id, user?._id || "")}
             >
-              {likeByParentAndUserId(likes, parent_id, user?._id || "").length === 1 ? (
+              {likeByParentAndUserId(likes, parent_id, user?._id || "")
+                .length === 1 ? (
                 <CheckCircleIcon sx={{ color: "blue" }} fontSize="medium" />
               ) : (
                 <CheckCircleOutlineIcon fontSize="medium" />
@@ -96,7 +107,10 @@ export const CardActionsUi: FC<Props> = ({ parent_id, initialLikes }) => {
       <Typography
         sx={{ fontSize: 14, fontWeight: 500, mt: 1.5, ml: 2, mb: -1 }}
       >
-        {reactions(likes, parent_id) > 0 ? (reactions(likes, parent_id) + pluralize(" like", reactions(likes, parent_id))) : null}
+        {reactions(likes, parent_id) > 0
+          ? reactions(likes, parent_id) +
+            pluralize(" like", reactions(likes, parent_id))
+          : null}
       </Typography>
     </>
   );

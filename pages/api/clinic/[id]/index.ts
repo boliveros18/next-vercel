@@ -27,11 +27,9 @@ export default function handler(
       return deleteClinic(req, res);
 
     default:
-      return res
-        .status(400)
-        .json({
-          message: "This method in clinic/[id] does not exist " + req.method,
-        });
+      return res.status(400).json({
+        message: "This method in clinic/[id] does not exist " + req.method,
+      });
   }
 }
 
@@ -74,7 +72,7 @@ const updateClinic = async (
     finantial = clinicToUpdate.finantial,
     speciality = clinicToUpdate.speciality,
     technology = clinicToUpdate.technology,
-    phone = clinicToUpdate.phone, 
+    phone = clinicToUpdate.phone,
     avatar = clinicToUpdate.avatar,
     photo = clinicToUpdate.photo,
     name = clinicToUpdate.name,
@@ -84,7 +82,7 @@ const updateClinic = async (
     address = clinicToUpdate.address,
     instagram = clinicToUpdate.instagram,
     qualification = clinicToUpdate.qualification,
-    updatedAt = clinicToUpdate.updatedAt
+    updatedAt = clinicToUpdate.updatedAt,
   } = req.body;
 
   try {
@@ -106,7 +104,7 @@ const updateClinic = async (
         address,
         instagram,
         qualification,
-        updatedAt
+        updatedAt,
       },
       { runValidators: true, new: true }
     );
