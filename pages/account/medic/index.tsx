@@ -2,26 +2,22 @@ import { useContext, useEffect } from "react";
 import { GetServerSideProps, NextPage } from "next";
 import { dbClinics } from "../../../database";
 import { Layout } from "../../../components/layouts";
-import { HomeCard } from "../../../components/bodyCard";
 import { Grid } from "@mui/material";
 import { SideBar } from "../../../components/ui";
-
-import { Clinic } from "../../../interfaces";
-import { ClinicContext } from "../../../context/clinic";
 import { UIContext } from "../../../context/ui/UIContext";
 
 interface Props {
-  clinic: Clinic[];
+
 }
 
-const HomePage: NextPage<Props> = ({ clinic }) => {
-  const { setClinics } = useContext(ClinicContext);
+const HomePage: NextPage<Props> = ({ }) => {
+
   const { setLoading } = useContext(UIContext);
 
   useEffect(() => {
-    setClinics(clinic.flat());
+
     setLoading(true);
-  }, [clinic, setClinics, setLoading]);
+  }, [ setLoading ]);
 
   return (
     <Layout>

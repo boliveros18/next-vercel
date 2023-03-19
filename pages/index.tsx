@@ -6,7 +6,6 @@ import { Layout } from "../components/layouts";
 import { HomeCard } from "../components/bodyCard";
 import { Grid } from "@mui/material";
 import { BottomBar, SideBar, RightBar } from "../components/ui";
-
 import { Clinic, Like } from "../interfaces";
 import { LikeContext } from "../context/like";
 import { ClinicContext } from "../context/clinic";

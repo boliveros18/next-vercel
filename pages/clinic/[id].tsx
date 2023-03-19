@@ -97,7 +97,7 @@ const ClinicPage: NextPage<Props> = ({
               sx={{ marginTop: 1, maxHeight: "330px", mb: -2.5 }}
             />
             <CardContent>
-              <CardActionsUi parent_id={clinic?._id || ""} reactions={clinic.likes} />
+              <CardActionsUi parent_id={clinic?._id || ""} initialLikes={clinic.likes} />
               <Accordion elevation={0} disableGutters={true} sx={{ mt: 2 }}>
                 <AccordionSummary
                   aria-controls="panel1a-content"
