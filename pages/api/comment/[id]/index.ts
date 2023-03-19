@@ -1,9 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import mongoose from "mongoose";
-import { Clinic } from "../../../../models";
 import { db } from "../../../../database";
-import { Comment, IComment } from "../../../../models";
-import { getCommentsLengthByParentId, getCommentById } from '../../../../database/dbComments';
+import { Comment, IComment, Clinic, Like } from "../../../../models";
+import {
+  getCommentsLengthByParentId,
+  getCommentById,
+} from "../../../../database/dbComments";
 
 type Data = { message: string } | IComment;
 
@@ -28,11 +30,9 @@ export default function handler(
       return deleteModel(req, res);
 
     default:
-      return res
-        .status(400)
-        .json({
-          message: "This method in comment/[id] does not exist " + req.method,
-        });
+      return res.status(400).json({
+        message: "This method in comment/[id] does not exist " + req.method,
+      });
   }
 }
 
@@ -52,10 +52,7 @@ const getModel = async (req: NextApiRequest, res: NextApiResponse) => {
   return res.status(200).json(modelInDB);
 };
 
-const updateModel = async (
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) => {
+const updateModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
   await db.connect();
@@ -73,7 +70,7 @@ const updateModel = async (
     description = modelToUpdate.description,
     answers = modelToUpdate.answers,
     likes = modelToUpdate.likes,
-    updatedAt = Date.now()
+    updatedAt = Date.now(),
   } = req.body;
 
   try {
@@ -83,7 +80,7 @@ const updateModel = async (
         description,
         answers,
         likes,
-        updatedAt
+        updatedAt,
       },
       { runValidators: true, new: true }
     );
@@ -95,10 +92,7 @@ const updateModel = async (
   }
 };
 
-const deleteModel = async (
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) => {
+const deleteModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
   await db.connect();
@@ -111,33 +105,39 @@ const deleteModel = async (
       .status(400)
       .json({ message: "There is no comment with that ID: " + id });
   }
-
+  
   try {
     const deleteModel = await Comment.findByIdAndDelete(id);
     switch (modelToDelete.type) {
       case "": {
         //DELETING MAIN COMMENTS ANSWERS NUMBER
-        if(deleteModel){
-          const parent = await getCommentById(deleteModel.parent_id)
-          if(parent){
+        if (deleteModel) {
+          const parent = await getCommentById(deleteModel.parent_id);
+          if (parent) {
             const answers = await getCommentsLengthByParentId(parent._id);
             await Comment.findByIdAndUpdate(
               parent._id,
-              {answers},
+              { answers },
               { runValidators: true, new: true }
             );
+            await Like.deleteMany({ parent_id: modelToDelete._id });
           }
         }
         break;
       }
       //DELETING MAIN.COMMENTS NUMBER
       case "clinic": {
-        const comments = await getCommentsLengthByParentId(modelToDelete.parent_id);
+        const comments = await getCommentsLengthByParentId(
+          modelToDelete.parent_id
+        );
         await Clinic.findByIdAndUpdate(
           modelToDelete.parent_id,
           { comments },
           { runValidators: true, new: true }
         );
+        await Comment.deleteMany({parent_id: modelToDelete._id})
+        await Like.deleteMany({ parent_id:  modelToDelete._id });
+        await Like.deleteMany({ grandparent_id: modelToDelete._id });
         break;
       }
     }

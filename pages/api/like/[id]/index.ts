@@ -68,7 +68,6 @@ const deleteModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     switch (modelToDelete.grandparent_id) {
       case "": {
         //DELETING MAIN.LIKES NUMBER
-        console.log("entra1")
         const likes = await getLikesLengthByParentId(
           modelToDelete.parent_id
         );

@@ -1,7 +1,14 @@
 import { State } from "./";
 
-type Action = "UI_OPEN_SIDEBAR" | "UI_CLOSE_SIDEBAR" | "UI_RIGTHBAR";
-type ActionType = { type: Action };
+type Action =
+  | "UI_OPEN_SIDEBAR"
+  | "UI_CLOSE_SIDEBAR"
+  | "SET_LOADING"
+  | "SET_ONFOCUS"
+  | "SET_TAG"
+  | "SET_VALUE"
+  | "SET_ONCANCEL";
+type ActionType = { type: Action; payload?: any };
 
 export const uiReducer = (state: State, action: ActionType): State => {
   switch (action.type) {
@@ -15,6 +22,16 @@ export const uiReducer = (state: State, action: ActionType): State => {
         ...state,
         sidemenuOpen: false,
       };
+    case "SET_LOADING":
+      return { ...state, loading: action.payload };
+    case "SET_ONFOCUS":
+      return { ...state, onFocus: action.payload };
+    case "SET_TAG":
+      return { ...state, tag: action.payload };
+    case "SET_VALUE":
+      return { ...state, value: action.payload };
+    case "SET_ONCANCEL":
+      return { ...state, onCancel: action.payload };
     default:
       return state;
   }
