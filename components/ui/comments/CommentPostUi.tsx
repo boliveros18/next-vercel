@@ -40,7 +40,7 @@ export const CommentPostUi: FC<Props> = ({
     await createComment({
       ...inputs,
       parent_id: parent_id,
-      user_photo: user?.avatar,
+      user_photo: user?.photo,
       user_name: user?.name,
       user_id: user?._id,
       user_tag_name: "@" + tag.user_name,

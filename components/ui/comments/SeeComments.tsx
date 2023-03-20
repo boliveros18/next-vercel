@@ -67,7 +67,7 @@ export const SeeComments: FC<Props> = ({
       ...inputs,
       type: type,
       parent_id: parent_id,
-      user_photo: user?.avatar,
+      user_photo: user?.photo,
       user_name: user?.name,
       user_id: user?._id,
     } as Comment).then(() => {
@@ -133,7 +133,7 @@ export const SeeComments: FC<Props> = ({
       ) : null}
       {isLoggedIn && (
         <Toolbar>
-          <Avatar alt="name" src={user?.avatar} sx={{ marginRight: 1 }} />
+          <Avatar alt="name" src={user?.photo} sx={{ marginRight: 1 }} />
           <CommentForm style={{ color: "black" }}>
             <StyledInputComment
               value={value}

@@ -1,43 +1,43 @@
 [{
   "_id": {
-    "$oid": "63ab77d06d6dc52c56dc6626"
+    "$oid": "63f90961ccd6e21b528f4e50"
   },
   "name": "Bresneth Oliveros",
   "email": "boliveros@google.com",
-  "password": "$2a$10$I2MnKH/NHnhxlfbu1DQfYuGUI7LWmERbG398YWwWkUCBW2menhMSO",
+  "password": "$2a$10$miEHz5dG4TzOYv2URvcL5.LuWypA1sl9QBjtx3C5DB1ex54TQvyZm",
   "role": "admin",
+  "photo": "",
   "__v": 0,
   "createdAt": {
     "$date": {
-      "$numberLong": "1672181712481"
+      "$numberLong": "1677265249936"
     }
   },
   "updatedAt": {
     "$date": {
-      "$numberLong": "1672181712481"
+      "$numberLong": "1677265249936"
     }
-  },
-  "avatar": "/static/images/avatar/2.jpg"
+  }
 },{
   "_id": {
-    "$oid": "63ab77d06d6dc52c56dc6627"
+    "$oid": "63f90961ccd6e21b528f4e51"
   },
   "name": "Eduardo Rios",
   "email": "eduardo@google.com",
-  "password": "$2a$10$WEf8g752n5XbdSg6I1svKumk5oslDcZPCYncz/avnWI2ssWSiRCGC",
+  "password": "$2a$10$UcCDfLXL0DFfa6MI5POQOuMnTFJ5JtDMX2UN4zB/gPb9FVDxc4Phm",
   "role": "client",
+  "photo": "",
   "__v": 0,
   "createdAt": {
     "$date": {
-      "$numberLong": "1672181712481"
+      "$numberLong": "1677265249938"
     }
   },
   "updatedAt": {
     "$date": {
-      "$numberLong": "1672181712481"
+      "$numberLong": "1677265249938"
     }
-  },
-  "avatar": "/static/images/avatar/3.jpg"
+  }
 },{
   "_id": {
     "$oid": "63ac76f9454855cff2b9c81c"
@@ -46,6 +46,7 @@
   "email": "codo@google.com",
   "password": "$2a$10$BLb.tOlhwgZpxgqGjfbENeyPAPJZ2Ovj7OJdFrAXsUlu6D3GWruQK",
   "role": "client",
+  "photo": "/static/images/avatar/1.jpg",
   "createdAt": {
     "$date": {
       "$numberLong": "1672247033521"
@@ -56,8 +57,8 @@
       "$numberLong": "1672247033521"
     }
   },
-  "__v": 0,
-  "avatar": "/static/images/avatar/1.jpg"
+  "__v": 0
+ 
 },{
   "_id": {
     "$oid": "63ac7798454855cff2b9c823"
@@ -66,6 +67,7 @@
   "email": "melissa@google.com",
   "password": "$2a$10$qezuLEY/121.hmjTSGkIRuAo174Nxn4m9e2omZJaoV26rfGBk/esC",
   "role": "client",
+  "photo": "/static/images/avatar/2.jpg",
   "createdAt": {
     "$date": {
       "$numberLong": "1672247192158"
@@ -76,8 +78,7 @@
       "$numberLong": "1672247192158"
     }
   },
-  "__v": 0,
-  "avatar": "/static/images/avatar/2.jpg"
+  "__v": 0
 },{
   "_id": {
     "$oid": "63ac7a91454855cff2b9c841"
@@ -86,6 +87,7 @@
   "email": "maria@google.com",
   "password": "$2a$10$V0Dp/q8CrlJrAwE6G4hgk.Gv/w8ffVX4i0jCQOnZxIjllGMSOlhRa",
   "role": "client",
+  "photo": "/static/images/avatar/2.jpg",
   "createdAt": {
     "$date": {
       "$numberLong": "1672247953766"
@@ -96,6 +98,25 @@
       "$numberLong": "1672247953766"
     }
   },
-  "__v": 0,
-  "avatar": "/static/images/avatar/2.jpg"
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64186c646f64d98532cd8372"
+  },
+  "name": "Mariana gutierrez",
+  "email": "mariana25@gmail.com",
+  "password": "$2a$10$ebh3RhRH7yk4YvA09uWP/OEuZ0UlWfDim17C7do9WU.HxgcWRAMt6",
+  "role": "medic",
+  "photo": "",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1679322212555"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1679322212555"
+    }
+  },
+  "__v": 0
 }]

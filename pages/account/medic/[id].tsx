@@ -1,23 +1,22 @@
 import { useContext, useEffect } from "react";
 import { GetServerSideProps, NextPage } from "next";
-import { dbClinics } from "../../../database";
+import { dbUsers } from "../../../database";
 import { Layout } from "../../../components/layouts";
 import { Grid } from "@mui/material";
 import { SideBar } from "../../../components/ui";
 import { UIContext } from "../../../context/ui/UIContext";
+import { User } from "../../../interfaces";
 
 interface Props {
-
+  medic: User;
 }
 
-const HomePage: NextPage<Props> = ({ }) => {
-
+const HomePage: NextPage<Props> = ({}) => {
   const { setLoading } = useContext(UIContext);
 
   useEffect(() => {
-
     setLoading(true);
-  }, [ setLoading ]);
+  }, [setLoading]);
 
   return (
     <Layout>
@@ -37,11 +36,10 @@ const HomePage: NextPage<Props> = ({ }) => {
   );
 };
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const { id } = params as { id: string };
+  const medic = await dbMedics.getMedicById(id);   //TODO: create dbMedics, etc...
 
-    const { id } = params as { id: string }
-    const clinic = await dbClinics.getClinicById("63ab77d06d6dc52c56dc662b");
-
-  if (!clinic) {
+  if (!medic) {
     return {
       redirect: {
         destination: "/",
@@ -52,7 +50,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
   return {
     props: {
-      clinic: [clinic],
+      medic: [medic],
     },
   };
 };

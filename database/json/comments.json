@@ -6,7 +6,7 @@
   "parent_id": "63ab77d06d6dc52c56dc662e",
   "user_photo": "/static/images/avatar/3.jpg",
   "user_name": "codo",
-  "user_id": "63ab286da6e59074d5465dd1",
+  "user_id": "63ac76f9454855cff2b9c81c",
   "description": "I loved it. Very good attention.",
   "answers": 2,
   "likes": 0,
@@ -34,23 +34,6 @@
   "updatedAt": {
     "$numberLong": "1677944235938"
   }
-},{
-  "_id": {
-    "$oid": "63ea3fd7f07e990059f56bb8"
-  },
-  "type": "clinic",
-  "parent_id": "63ab77d06d6dc52c56dc662e",
-  "user_photo": "",
-  "user_name": "Bresneth Oliveros",
-  "user_id": "63ab77d06d6dc52c56dc6626",
-  "description": "Bendecido",
-  "answers": 1,
-  "likes": 0,
-  "createdAt": {
-    "$numberLong": "1676296151910"
-  },
-  "updatedAt": 0,
-  "__v": 0
 },{
   "_id": {
     "$oid": "63ab77d06d6dc52c56dc6645"
@@ -111,23 +94,4 @@
   "updatedAt": {
     "$numberLong": "1672181711974"
   }
-},{
-  "_id": {
-    "$oid": "640e18fab894efc1e0532c16"
-  },
-  "type": "",
-  "parent_id": "63ea3fd7f07e990059f56bb8",
-  "user_photo": "",
-  "user_name": "Bresneth Oliveros",
-  "user_id": "63f90961ccd6e21b528f4e50",
-  "description": "1",
-  "user_tag_id": "63ab77d06d6dc52c56dc6626",
-  "user_tag_name": "@Bresneth Oliveros",
-  "answers": 0,
-  "likes": 0,
-  "createdAt": {
-    "$numberLong": "1678645498157"
-  },
-  "updatedAt": 0,
-  "__v": 0
 }]

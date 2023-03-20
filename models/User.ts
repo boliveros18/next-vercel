@@ -1,11 +1,14 @@
-import mongoose, { Schema, model, Model } from "mongoose";
+import mongoose, { Schema, Model } from "mongoose";
 import { User } from "../interfaces";
+
+export interface IUser extends User {}
 
 const userSchema = new Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    photo: {type: String},
     role: {
       type: String,
       enum: {
@@ -20,6 +23,7 @@ const userSchema = new Schema(
   }
 );
 
-const User: Model<User> = mongoose.models.User || model("User", userSchema);
+const UserModel: Model<IUser> =
+  mongoose.models.User || mongoose.model("User", userSchema);
 
-export default User;
+export default UserModel;

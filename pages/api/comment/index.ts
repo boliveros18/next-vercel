@@ -25,7 +25,7 @@ export default async function handler(
 }
 
 const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const session: any = await getSession({ req });
+  const session = await getSession({ req });
   if (!session) {
     return res
       .status(401)
@@ -35,9 +35,9 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const {
     type = "",
     parent_id = "",
-    user_photo = "",
-    user_name = "",
     user_id = "",
+    user_name = "",
+    user_photo = "",
     description = "",
     user_tag_id = "",
     user_tag_name = "",
@@ -51,9 +51,9 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const newModel = new Comment({
     type,
     parent_id,
-    user_photo,
-    user_name,
     user_id,
+    user_name,
+    user_photo,
     description,
     user_tag_id,
     user_tag_name,

@@ -230,8 +230,8 @@ export const getServerSideProps: GetServerSideProps = async ({
   query,
 }) => {
   const session = await getSession({ req });
-
-  const { m = "/account/medic" } = query;
+//TODO: create a medic collection with de collection _id equal to session.user._id
+  const { m = `account/medic/${session?.user?._id}` } = query;
   const { p = "/" } = query;
 
   if (session) {

@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import mongoose from "mongoose";
 
-import { db } from "../../../../database";
-import { User } from "../../../../models";
+import { db, dbUsers } from "../../../../database";
+import { User, IUser } from "../../../../models";
 
-type Data = { message: string } | User;
+type Data = { message: string } | IUser | IUser[] | null;
 
 export default function handler(
   req: NextApiRequest,
@@ -32,7 +32,7 @@ export default function handler(
       });
   }
 }
-
+/*
 const getUser = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
 
@@ -47,6 +47,21 @@ const getUser = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   return res.status(200).json(userInDB);
+};
+*/
+
+const getUser = async (req: NextApiRequest, res: NextApiResponse) => {
+  const { id } = req.query;
+    try {
+      const user = await dbUsers.getUserNameAndPhotoById(id);
+      return res.status(201).json(user);
+    } catch (error: any) {
+      console.log(error);
+      res.status(400).json({
+        message: error.message || "Check server logs",
+      });
+    }
+  return;
 };
 
 const updateUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
