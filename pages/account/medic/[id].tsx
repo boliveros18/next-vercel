@@ -1,17 +1,17 @@
 import { useContext, useEffect } from "react";
 import { GetServerSideProps, NextPage } from "next";
-import { dbUsers } from "../../../database";
+import { getSession } from "next-auth/react";
+import { dbMedics } from "../../../database";
 import { Layout } from "../../../components/layouts";
 import { Grid } from "@mui/material";
-import { SideBar } from "../../../components/ui";
 import { UIContext } from "../../../context/ui/UIContext";
-import { User } from "../../../interfaces";
+import { Medic } from "../../../interfaces";
 
 interface Props {
-  medic: User;
+  medic: Medic;
 }
 
-const HomePage: NextPage<Props> = ({}) => {
+const HomePage: NextPage<Props> = ({ medic }) => {
   const { setLoading } = useContext(UIContext);
 
   useEffect(() => {
@@ -28,18 +28,22 @@ const HomePage: NextPage<Props> = ({}) => {
           md={3}
           sx={{ display: { xs: "none", sm: "none", md: "block" } }}
           justifyContent="flex-start"
-        >
-          <SideBar keepOpen={true} />
+        ></Grid>
+        <Grid item xs={12} sm={6} md={5} justifyContent="center">
+          {medic.parent_id}
         </Grid>
       </Grid>
     </Layout>
   );
 };
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  req,
+}) => {
+  const session = await getSession({ req });
   const { id } = params as { id: string };
-  const medic = await dbMedics.getMedicById(id);   //TODO: create dbMedics, etc...
-
-  if (!medic) {
+  const medic = await dbMedics.getMedicById(id);
+  if (!medic || !session) {
     return {
       redirect: {
         destination: "/",
@@ -50,7 +54,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
   return {
     props: {
-      medic: [medic],
+      medic: medic,
     },
   };
 };

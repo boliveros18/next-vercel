@@ -67,9 +67,7 @@ export const SeeComments: FC<Props> = ({
       ...inputs,
       type: type,
       parent_id: parent_id,
-      user_photo: user?.photo,
-      user_name: user?.name,
-      user_id: user?._id,
+      user_id: user?._id
     } as Comment).then(() => {
       setInputs("");
       setValue("");

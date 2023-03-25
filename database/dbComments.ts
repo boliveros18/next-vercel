@@ -1,5 +1,5 @@
 import { isValidObjectId } from "mongoose";
-import { db } from ".";
+import { db, dbUsers } from ".";
 import { Comment, IComment } from "../models";
 
 export const getCommentById = async (id: string): Promise<IComment | null> => {
@@ -20,6 +20,13 @@ export const getCommentsByParentId = async (
   const comments: IComment[] = await Comment.find(params).sort({
     createdAt: "ascending",
   });
+  for (let i = 0; i < comments.length; i++) {
+    let user = await dbUsers.getUserNameAndPhotoById(comments[i].user_id)
+    if(user){
+      comments[i].user_name = user.name 
+      comments[i].user_photo = user.photo 
+    }
+  }
   await db.disconnect();
   return comments;
 };

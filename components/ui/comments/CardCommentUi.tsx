@@ -55,7 +55,7 @@ export const CardCommentUi: FC<Props> = ({ item, parent_id }) => {
   };
 
   const reactions: any = (likes: Like[], item: Comment) => {
-    return likesByParentId(likes, item._id).length === 0
+    return likesByParentId(likes, item._id) === null
       ? item.likes
       : likesByParentId(likes, item._id).length;
   };

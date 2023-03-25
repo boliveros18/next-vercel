@@ -48,10 +48,10 @@ export const CardActionsUi: FC<Props> = ({ parent_id, initialLikes }) => {
     }
   };
 
-  const reactions: any = (likes: Like[], parent_id: string) => {
-    return likesByParentId(likes, parent_id).length === 0
+  const reactions: any = (likes: Like[], parent_id: string, user_id: string) => {
+    return likeByParentAndUserId(likes, parent_id, user_id) === null
       ? initialLikes
-      : likesByParentId(likes, parent_id).length;
+      : likeByParentAndUserId(likes, parent_id, user_id).length;
   };
 
   return (
@@ -107,9 +107,9 @@ export const CardActionsUi: FC<Props> = ({ parent_id, initialLikes }) => {
       <Typography
         sx={{ fontSize: 14, fontWeight: 500, mt: 1.5, ml: 2, mb: -1 }}
       >
-        {reactions(likes, parent_id) > 0
-          ? reactions(likes, parent_id) +
-            pluralize(" like", reactions(likes, parent_id))
+        {reactions(likes, parent_id, user?._id || "") > 0
+          ? reactions(likes, parent_id, user?._id || "") +
+            pluralize(" like", reactions(likes, parent_id, user?._id || ""))
           : null}
       </Typography>
     </>

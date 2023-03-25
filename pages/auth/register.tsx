@@ -19,6 +19,9 @@ import { AuthContext } from "../../context/auth";
 import { AuthLayout } from "../../components/layouts";
 import { validations } from "../../utils";
 import { PrivacyPolicy } from "../../components/ui";
+import { MedicService } from "../../services";
+import { Medic } from "../../interfaces";
+import { dbMedics } from "../../database";
 
 type FormData = {
   name: string;
@@ -230,11 +233,12 @@ export const getServerSideProps: GetServerSideProps = async ({
   query,
 }) => {
   const session = await getSession({ req });
-//TODO: create a medic collection with de collection _id equal to session.user._id
-  const { m = `account/medic/${session?.user?._id}` } = query;
-  const { p = "/" } = query;
-
   if (session) {
+    const medic = await dbMedics.createMedic({
+      parent_id: session?.user?._id,
+    } as Medic);
+    const { m = `/account/medic/${medic._id}` } = query;
+    const { p = "/" } = query;
     return {
       redirect: {
         destination:

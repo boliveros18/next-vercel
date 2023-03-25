@@ -3,7 +3,7 @@ import { GetServerSideProps, NextPage } from "next";
 import { getSession } from "next-auth/react";
 import { dbClinics, dbLikes } from "../database";
 import { Layout } from "../components/layouts";
-import { HomeCard } from "../components/bodyCard";
+import { HomeCard } from "../components/home";
 import { Grid } from "@mui/material";
 import { BottomBar, SideBar, RightBar } from "../components/ui";
 import { Clinic, Like } from "../interfaces";
@@ -79,7 +79,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   return {
     props: {
       principal: principal,
-      like: like
+      like: like,
     },
   };
 };

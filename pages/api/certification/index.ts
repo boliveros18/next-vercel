@@ -27,13 +27,16 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       .json({ message: "You must be authenticated to do this" });
   }
 
-  const { parent_id = "", name = "", description = "", logo = "" } = req.body;
+  const { parent_id = "", name = "", approved = false, certificate = "", description = "", to_approve = false, logo = "" } = req.body;
   await db.connect();
 
   const newModel = new Certification({
     parent_id,
     name,
+    approved,
+    certificate,
     description,
+    to_approve,
     logo,
   });
 

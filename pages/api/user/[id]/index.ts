@@ -32,23 +32,6 @@ export default function handler(
       });
   }
 }
-/*
-const getUser = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id } = req.query;
-
-  await db.connect();
-  const userInDB = await User.findById(id);
-  await db.disconnect();
-
-  if (!userInDB) {
-    return res
-      .status(400)
-      .json({ message: "There is no user with that ID: " + id });
-  }
-
-  return res.status(200).json(userInDB);
-};
-*/
 
 const getUser = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;

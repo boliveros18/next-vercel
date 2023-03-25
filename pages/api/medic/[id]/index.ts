@@ -1,10 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import mongoose from "mongoose";
-
 import { db } from "../../../../database";
-import { Certification, ICertification } from "../../../../models";
+import { Medic, IMedic } from "../../../../models";
 
-type Data = { message: string } | ICertification;
+type Data = { message: string } | IMedic;
 
 export default function handler(
   req: NextApiRequest,
@@ -28,8 +27,7 @@ export default function handler(
 
     default:
       return res.status(400).json({
-        message:
-          "This method in certification/[id] does not exist " + req.method,
+        message: "This method in comment/[id] does not exist " + req.method,
       });
   }
 }
@@ -38,13 +36,13 @@ const getModel = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
 
   await db.connect();
-  const modelInDB = await Certification.findById(id);
+  const modelInDB = await Medic.findById(id);
   await db.disconnect();
 
   if (!modelInDB) {
     return res
       .status(400)
-      .json({ message: "There is no certification with that ID: " + id });
+      .json({ message: "There is no comment with that ID: " + id });
   }
 
   return res.status(200).json(modelInDB);
@@ -55,34 +53,46 @@ const updateModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   await db.connect();
 
-  const modelToUpdate = await Certification.findById(id);
+  const modelToUpdate = await Medic.findById(id);
 
   if (!modelToUpdate) {
     await db.disconnect();
     return res
       .status(400)
-      .json({ message: "There is no certification with that ID: " + id });
+      .json({ message: "There is no comment with that ID: " + id });
   }
 
   const {
-    name = modelToUpdate.name,
-    approved = modelToUpdate.approved,
-    certificate = modelToUpdate.certificate,
-    description = modelToUpdate.description,
+    card_id = modelToUpdate.card_id,
     to_approve = modelToUpdate.to_approve,
-    logo = modelToUpdate.logo,
+    contract_signature = modelToUpdate.contract_signature,
+    available_days = modelToUpdate.available_days,
+    curriculum = modelToUpdate.curriculum,
+    qualification = modelToUpdate.qualification,
+    comments = modelToUpdate.comments,
+    instagram = modelToUpdate.instagram,
+    country = modelToUpdate.country,
+    state = modelToUpdate.state,
+    province = modelToUpdate.province,
+    updatedAt = Date.now(),
   } = req.body;
 
   try {
-    const updatedModel = await Certification.findByIdAndUpdate(
+    const updatedModel = await Medic.findByIdAndUpdate(
       id,
       {
-        name,
-        approved,
-        certificate,
-        description,
+        card_id,
         to_approve,
-        logo
+        contract_signature,
+        available_days,
+        curriculum,
+        qualification,
+        comments,
+        instagram,
+        country,
+        state,
+        province,
+        updatedAt,
       },
       { runValidators: true, new: true }
     );
@@ -99,17 +109,17 @@ const deleteModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   await db.connect();
 
-  const modelToDelete = await Certification.findById(id);
+  const modelToDelete = await Medic.findById(id);
 
   if (!modelToDelete) {
     await db.disconnect();
     return res
       .status(400)
-      .json({ message: "There is no certification with that ID: " + id });
+      .json({ message: "There is no comment with that ID: " + id });
   }
 
   try {
-    const deleteModel = await Certification.findByIdAndDelete(id);
+    const deleteModel = await Medic.findByIdAndDelete(id);
     await db.disconnect();
     res.status(200).json(deleteModel!);
   } catch (error: any) {

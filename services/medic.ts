@@ -21,7 +21,6 @@ export const updateOne = async (id: string, payload: Medic) => {
   return res.data;
 };
 
-
 export const deleteOne = async (id: string) => {
   const res = await ApiClient.delete(`/medic/${id}`);
   return res.data;

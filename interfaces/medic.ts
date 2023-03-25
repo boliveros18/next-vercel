@@ -1,15 +1,17 @@
 export interface Medic {
-    _id?: string;
-    user_id: string;
-    user_name: string;
-    user_photo: string;
-    university_degree?: string;
-    instagram: string;
-    country: string;
-    state: string;
-    province: string;
-    certificated: boolean;
-    createdAt: string;
-    updatedAt: string;
-  }
-  
+  _id?: string;
+  parent_id: string;
+  card_id: string;
+  to_approve: boolean;
+  contract_signature: string;
+  available_days: string;
+  curriculum: string;
+  qualification: number;
+  comments: number;
+  instagram: string;
+  country: string;
+  state: string;
+  province: string;
+  createdAt: number;
+  updatedAt: number;
+}

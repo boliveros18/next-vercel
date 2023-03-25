@@ -134,7 +134,7 @@ const deleteModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           modelToDelete.parent_id,
           { comments },
           { runValidators: true, new: true }
-        );
+        )
         await Comment.deleteMany({ parent_id: modelToDelete._id });
         await Like.deleteMany({ parent_id: modelToDelete._id });
         await Like.deleteMany({ grandparent_id: modelToDelete._id });

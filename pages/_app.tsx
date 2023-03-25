@@ -6,7 +6,7 @@ import { CertificationProvider } from "../context/certification";
 import { ClinicProvider } from "../context/clinic";
 import { CommentProvider } from "../context/comment";
 import { LikeProvider } from "../context/like";
-import { UserProvider } from "../context/user";
+import { MedicProvider } from "../context/medic";
 import { QualificationProvider } from "../context/qualification";
 import { SWRConfig } from "swr";
 import { AuthProvider } from "../context/auth";
@@ -33,12 +33,12 @@ export default function App({ Component, pageProps }: Props) {
                   <CertificationProvider>
                     <CommentProvider>
                       <LikeProvider>
-                        <UserProvider>
+                        <MedicProvider>
                         <QualificationProvider>
                           <CssBaseline />
                           <Component {...pageProps} />
                           </QualificationProvider>
-                        </UserProvider>
+                        </MedicProvider>
                       </LikeProvider>
                     </CommentProvider>
                   </CertificationProvider>

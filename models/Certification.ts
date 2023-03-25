@@ -6,8 +6,12 @@ export interface ICertification extends Certification {}
 const entrySchema = new Schema({
   parent_id: { type: String, require: true },
   name: { type: String, require: true },
+  approved: { type: Boolean },
+  certificate: { type: String, require: true },
   description: { type: String, require: true },
-  logo: { type: String, require: true }
+  to_approve: { type: String },
+  logo: { type: String }
+  
 });
 
 const CertificationModel: Model<ICertification> =
