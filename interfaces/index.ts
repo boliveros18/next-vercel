@@ -10,7 +10,7 @@ export * from "./order";
 export * from "./medic";
 export * from "./degree";
 export * from "./product";
-export * from "./quantity";
+export * from "./quote";
 export * from "./procedure";
 export * from "./payout";
 export * from "./client";

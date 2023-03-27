@@ -23,7 +23,7 @@ export const CommentUi: FC<Props> = ({ parent_id }) => {
   
   const answers = (comments: Comment[], item: Comment) => {
     return commentsByParentId(comments, item._id).length === 0
-      ? item.answers
+      ? item.comments
       : commentsByParentId(comments, item._id).length;
   };
 

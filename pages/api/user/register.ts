@@ -13,6 +13,7 @@ type Data =
         email: string;
         name: string;
         role: string;
+        photo: string;
       };
     };
 
@@ -40,11 +41,13 @@ const registerUser = async (
     password = "",
     name = "",
     role = "",
+    photo = ""
   } = req.body as {
     email: string;
     password: string;
     name: string;
     role: string;
+    photo: string;
   };
 
   if (password.length < 6) {
@@ -79,6 +82,7 @@ const registerUser = async (
     password: bcrypt.hashSync(password),
     name,
     role,
+    photo
   });
 
   try {
@@ -100,6 +104,7 @@ const registerUser = async (
       email,
       role,
       name,
+      photo
     },
   });
 };

@@ -1,11 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import mongoose from "mongoose";
 import { db, dbComments } from "../../../database";
 import { Comment, IComment } from "../../../models";
-import { Clinic } from "../../../models";
 import { getSession } from "next-auth/react";
 import {
-  getCommentsLengthByParentId,
-  getCommentById,
+  getCommentsLengthByParentId
 } from "../../../database/dbComments";
 
 type Data = { message: string } | IComment | IComment[];
@@ -36,12 +35,10 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     type = "",
     parent_id = "",
     user_id = "",
-    user_name = "",
-    user_photo = "",
     description = "",
     user_tag_id = "",
     user_tag_name = "",
-    answers = 0,
+    comments = 0,
     likes = 0,
     createdAt = Date.now(),
     updatedAt = 0,
@@ -52,12 +49,10 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     type,
     parent_id,
     user_id,
-    user_name,
-    user_photo,
     description,
     user_tag_id,
     user_tag_name,
-    answers,
+    comments,
     likes,
     createdAt,
     updatedAt,
@@ -65,31 +60,12 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   try {
     await newModel.save();
-    switch (type) {
-      case "": {
-        //UPDATING MAIN COMMENTS ANSWERS NUMBER
-        const parent = await getCommentById(parent_id);
-        if (parent) {
-          const answers = await getCommentsLengthByParentId(parent._id);
-          await Comment.findByIdAndUpdate(
-            parent._id,
-            { answers },
-            { runValidators: true, new: true }
-          );
-        }
-        break;
-      }
-      //UPDATING MAIN.COMMENTS NUMBER
-      case "clinic": {
-        const comments = await getCommentsLengthByParentId(parent_id);
-        await Clinic.findByIdAndUpdate(
-          parent_id,
-          { comments },
-          { runValidators: true, new: true }
-        );
-        break;
-      }
-    }
+    const comments = await getCommentsLengthByParentId(parent_id);
+    await mongoose.model(type).findByIdAndUpdate(
+      parent_id,
+      { comments },
+      { runValidators: true, new: true }
+    )
     await db.disconnect();
     return res.status(201).json(newModel);
   } catch (error: any) {

@@ -26,8 +26,7 @@ export const CardActionsUi: FC<Props> = ({ parent_id, initialLikes }) => {
     createLike,
     deleteLike,
     likes,
-    likeByParentAndUserId,
-    likesByParentId,
+    likeByParentAndUserId
   } = useContext(LikeContext);
   const { isLoggedIn, user } = useContext(AuthContext);
 

@@ -44,6 +44,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
     name: string,
     email: string,
     password: string,
+    photo: string,
     role: string
   ): Promise<{ hasError: boolean; message?: string }> => {
     try {
@@ -51,6 +52,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
         name,
         email,
         password,
+        photo,
         role,
       });
       const { token, user } = data;

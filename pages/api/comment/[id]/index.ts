@@ -1,11 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import mongoose from "mongoose";
-import { db } from "../../../../database";
-import { Comment, IComment, Clinic, Like } from "../../../../models";
-import {
-  getCommentsLengthByParentId,
-  getCommentById,
-} from "../../../../database/dbComments";
+import { db, dbComments } from "../../../../database";
+import { Comment, IComment } from "../../../../models";
+import { getCommentsLengthByParentId } from "../../../../database/dbComments";
 
 type Data = { message: string } | IComment;
 
@@ -68,7 +65,7 @@ const updateModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   const {
     description = modelToUpdate.description,
-    answers = modelToUpdate.answers,
+    comments = modelToUpdate.comments,
     likes = modelToUpdate.likes,
     updatedAt = Date.now(),
   } = req.body;
@@ -78,7 +75,7 @@ const updateModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       id,
       {
         description,
-        answers,
+        comments,
         likes,
         updatedAt,
       },
@@ -108,39 +105,15 @@ const deleteModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   try {
     const deleteModel = await Comment.findByIdAndDelete(id);
-    switch (modelToDelete.type) {
-      case "": {
-        //DELETING MAIN COMMENTS ANSWERS NUMBER
-        if (deleteModel) {
-          const parent = await getCommentById(deleteModel.parent_id);
-          if (parent) {
-            const answers = await getCommentsLengthByParentId(parent._id);
-            await Comment.findByIdAndUpdate(
-              parent._id,
-              { answers },
-              { runValidators: true, new: true }
-            );
-            await Like.deleteMany({ parent_id: modelToDelete._id });
-          }
-        }
-        break;
-      }
-      //DELETING MAIN.COMMENTS NUMBER
-      case "clinic": {
-        const comments = await getCommentsLengthByParentId(
-          modelToDelete.parent_id
-        );
-        await Clinic.findByIdAndUpdate(
-          modelToDelete.parent_id,
-          { comments },
-          { runValidators: true, new: true }
-        )
-        await Comment.deleteMany({ parent_id: modelToDelete._id });
-        await Like.deleteMany({ parent_id: modelToDelete._id });
-        await Like.deleteMany({ grandparent_id: modelToDelete._id });
-        break;
-      }
-    }
+    if (deleteModel) {
+    const comments = await getCommentsLengthByParentId(modelToDelete.parent_id);
+    await mongoose.model(modelToDelete.type).findByIdAndUpdate(
+      modelToDelete.parent_id,
+      { comments },
+      { runValidators: true, new: true }
+    )
+    await dbComments.deleteCommentLikesAndChildren(modelToDelete._id);
+    } 
     await db.disconnect();
     res.status(200).json(deleteModel!);
   } catch (error: any) {

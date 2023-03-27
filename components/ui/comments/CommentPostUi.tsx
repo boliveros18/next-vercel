@@ -39,6 +39,7 @@ export const CommentPostUi: FC<Props> = ({
     e.preventDefault();
     await createComment({
       ...inputs,
+      type: "Comment",
       parent_id: parent_id,
       user_id: user?._id,
       user_tag_name: "@" + tag.user_name,

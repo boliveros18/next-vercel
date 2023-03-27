@@ -19,7 +19,6 @@ import { AuthContext } from "../../context/auth";
 import { AuthLayout } from "../../components/layouts";
 import { validations } from "../../utils";
 import { PrivacyPolicy } from "../../components/ui";
-import { MedicService } from "../../services";
 import { Medic } from "../../interfaces";
 import { dbMedics } from "../../database";
 
@@ -27,6 +26,7 @@ type FormData = {
   name: string;
   email: string;
   password: string;
+  photo: string;
   role: string;
 };
 
@@ -42,12 +42,13 @@ const RegisterPage = () => {
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const onRegisterForm = async ({ name, email, password }: FormData) => {
+  const onRegisterForm = async ({ name, email, password, photo }: FormData) => {
     setShowError(false);
     const { hasError, message } = await registerUser(
       name,
       email,
       password,
+      photo,
       userRole
     );
 
