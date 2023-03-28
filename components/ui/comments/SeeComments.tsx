@@ -13,11 +13,10 @@ import {
   AccordionSummary,
   AccordionDetails,
   Avatar,
-  Toolbar,
   IconButton,
   Box,
+  Toolbar,
 } from "@mui/material";
-import { CommentForm, StyledInputComment } from "../styled/CommentForm";
 import { AuthContext } from "../../../context/auth";
 import { CommentContext } from "../../../context/comment";
 import { LikeContext } from "../../../context/like";
@@ -27,6 +26,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { CommentUi } from "./CommentUi";
 import { Comment } from "../../../interfaces";
 import { pluralize } from "../../../utils/strings";
+import { CommentDialogUi } from "../utils/CommentDialogUi";
 
 interface Props {
   children?: ReactNode;
@@ -43,7 +43,7 @@ export const SeeComments: FC<Props> = ({
 }) => {
   const [value, setValue] = useState("");
   const { onFocus, setOnFocus } = useContext(UIContext);
-  const { getLikesByGrandParentId } = useContext(LikeContext);
+  const { getLikesByGrandParentId, likes } = useContext(LikeContext);
   const { createComment, getCommentsByParentId, commentsByParentId, comments } =
     useContext(CommentContext);
   const { isLoggedIn, user } = useContext(AuthContext);
@@ -67,7 +67,7 @@ export const SeeComments: FC<Props> = ({
       ...inputs,
       type: type,
       parent_id: parent_id,
-      user_id: user?._id
+      user_id: user?._id,
     } as Comment).then(() => {
       setInputs("");
       setValue("");
@@ -79,6 +79,10 @@ export const SeeComments: FC<Props> = ({
     setValue(target.value);
     const value = target.type === "checkbox" ? target.checked : target.value;
     setInputs({ ...inputs, [target.name]: value });
+  };
+
+  const OnFocus = () => {
+    setOnFocus(false);
   };
 
   return (
@@ -131,36 +135,17 @@ export const SeeComments: FC<Props> = ({
       ) : null}
       {isLoggedIn && (
         <Toolbar>
-          <Avatar alt="name" src={user?.photo} sx={{ marginRight: 1 }} />
-          <CommentForm style={{ color: "black" }}>
-            <StyledInputComment
-              value={value}
-              type="text"
-              name="description"
-              placeholder="Add a comment…"
-              inputProps={{ "aria-label": "comment" }}
-              inputRef={(input: any) => onFocus && input?.focus()}
-              onBlur={() => setOnFocus(false)}
-              onChange={handleInput}
-              autoComplete="off"
-            />
-          </CommentForm>
-          <IconButton
-            aria-label="settings"
-            style={{
-              color: "black",
-              marginLeft: 8,
-              marginRight: -6,
-            }}
-            onClick={handleSubmit}
+          <CommentDialogUi
+            handleInput={handleInput}
+            handleSubmit={handleSubmit}
+            onCancel={onFocus}
+            value={value}
+            cancel={false}
+            placeholder={"Add a comment…"}
+            OnFocus={OnFocus}
           >
-            <Typography
-              sx={{ fontSize: 15, textTransform: "capitalize" }}
-              variant="subtitle2"
-            >
-              Post
-            </Typography>
-          </IconButton>
+            <Avatar alt="name" src={user?.photo} sx={{ marginRight: 1 }} />
+          </CommentDialogUi>
         </Toolbar>
       )}
     </>

@@ -5,7 +5,6 @@ import { Comment } from "../../../models";
 import { getSession } from "next-auth/react";
 import { getLikesLengthByParentId } from "../../../database/dbLikes";
 import { Clinic } from "../../../models";
-import { getCommentById } from "../../../database/dbComments";
 
 type Data = { message: string } | ILike | ILike[];
 
@@ -61,15 +60,12 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       }
       default: {
         //UPDATING MAIN LIKES ANSWERS NUMBER
-        const parent = await getCommentById(parent_id);
-        if (parent) {
-          const likes = await getLikesLengthByParentId(parent._id);
+          const likes = await getLikesLengthByParentId(parent_id);
           await Comment.findByIdAndUpdate(
-            parent._id,
+            parent_id,
             { likes },
             { runValidators: true, new: true }
           );
-        }
       }
     }
     await db.disconnect();

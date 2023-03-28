@@ -7,7 +7,6 @@ export * from "./bars/SelectUi";
 export * from "./bars/SideBar";
 
 export * from "./comments/CardCommentUi";
-export * from "./comments/CommentPostUi";
 export * from "./comments/CommentUi";
 export * from "./comments/EditCommentUi";
 export * from "./comments/SeeComments";

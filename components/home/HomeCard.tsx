@@ -30,7 +30,11 @@ export const HomeCard: FC<Props> = () => {
 
   return (
     <>
-      <SeeComments parent_id={principal?._id || ""} type={principal.type} initialAnswers={principal.comments}>
+      <SeeComments
+        parent_id={principal?._id || ""}
+        type={principal.type}
+        initialAnswers={principal.comments}
+      >
         <Card
           sx={{
             width: "100%",
@@ -94,25 +98,48 @@ export const HomeCard: FC<Props> = () => {
               />
             )}
           </CardActionArea>
-          {loading && <CardActionsUi parent_id={principal?._id || ""} initialLikes={principal.likes}/>}
+          {loading && (
+            <CardActionsUi
+              parent_id={principal?._id || ""}
+              initialLikes={principal.likes}
+            />
+          )}
           {loading && (
             <div style={{ marginLeft: "17px" }}>
-            <Typography
-                  sx={{ fontSize: 15, fontWeight: "500", color: "#001B87", mt: 1.5, mb: 1 }}
-                >
-                  Finantial, Speciality & Technology
-                </Typography>
-                <CardDetailUi
-                  author=""
-                  comment={
-                    mobile ? (
-                      <ReadMore text={principal?.finantial+ ". " + principal?.speciality + ". " + principal?.technology} />
-                    ) : (
-                      principal?.finantial+ ". " + principal?.speciality + ". " + principal?.technology
-                    )
-                  }
-                  info={true && !isLoggedIn}
-                ></CardDetailUi>
+              <Typography
+                sx={{
+                  fontSize: 15,
+                  fontWeight: "500",
+                  color: "#001B87",
+                  mt: 1.5,
+                  mb: 1,
+                }}
+              >
+                Finantial, Speciality & Technology
+              </Typography>
+              <CardDetailUi
+                author=""
+                comment={
+                  mobile ? (
+                    <ReadMore
+                      text={
+                        principal?.finantial +
+                        ". " +
+                        principal?.speciality +
+                        ". " +
+                        principal?.technology
+                      }
+                    />
+                  ) : (
+                    principal?.finantial +
+                    ". " +
+                    principal?.speciality +
+                    ". " +
+                    principal?.technology
+                  )
+                }
+                info={true && !isLoggedIn}
+              ></CardDetailUi>
             </div>
           )}
         </Card>

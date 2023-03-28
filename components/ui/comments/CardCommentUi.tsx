@@ -1,4 +1,4 @@
-import { FC, useContext, useState, ChangeEvent } from "react";
+import { FC, useContext, useState, ChangeEvent, FormEvent } from "react";
 import { LikeContext } from "../../../context/like";
 import { AuthContext } from "../../../context/auth";
 import { UIContext } from "../../../context/ui";
@@ -14,7 +14,6 @@ import { Comment } from "../../../interfaces";
 import { EditCommentUi } from "../comments/EditCommentUi";
 import { pluralize } from "../../../utils/strings";
 import { Like } from "../../../interfaces";
-import { CommentPostUi } from "../comments/CommentPostUi";
 
 interface Props {
   item: Comment;
@@ -22,12 +21,12 @@ interface Props {
 }
 
 export const CardCommentUi: FC<Props> = ({ item, parent_id }) => {
-  const { setTag, setValue } = useContext(UIContext);
+  const { createComment, getCommentsByParentId } = useContext(CommentContext);
+  const { tag, value, setTag, setValue } = useContext(UIContext);
   const { updateComment } = useContext(CommentContext);
-  const [onCancel, setOnCancel] = useState(false);
   const [inputs, setInputs] = useState({});
-  const [open, setOpen] = useState(false);
-  const [text, setText] = useState(item.description);
+  const [answer, setAnswer] = useState(false);
+  const [edit, setEdit] = useState(false);
   const {
     createLike,
     deleteLike,
@@ -35,6 +34,7 @@ export const CardCommentUi: FC<Props> = ({ item, parent_id }) => {
     likeByParentAndUserId,
     likesByParentId,
   } = useContext(LikeContext);
+
   const { isLoggedIn, user } = useContext(AuthContext);
 
   const handleLike = (
@@ -61,20 +61,50 @@ export const CardCommentUi: FC<Props> = ({ item, parent_id }) => {
   };
 
   const editComment = () => {
-    item.description = text;
-    updateComment(item._id, item);
+    item.description = value;
+    updateComment(item._id, ({...item, description: value}));
+    setValue("");
     setInputs("");
-    setOpen(false);
+    setEdit(false);
+    setAnswer(false);
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    await createComment({
+      ...inputs,
+      type: "Comment",
+      parent_id: parent_id,
+      user_id: user?._id,
+      user_tag_name: "@" + tag.user_name,
+      user_tag_id: tag.user_id,
+    } as Comment).then(() => {
+      setValue("");
+      setInputs("");
+      setEdit(false);
+      setAnswer(false);
+      getCommentsByParentId(parent_id || "");
+      getCommentsByParentId(item._id);
+    });
   };
 
   const handleInput = ({ target }: ChangeEvent<any>) => {
-    setText(target.value);
+    setValue(target.value);
     const value = target.type === "checkbox" ? target.checked : target.value;
-    setInputs({ ...inputs, [target.name]: value });
+    console.log(value);
+    setInputs({
+      ...inputs,
+      [target.name]: answer
+        ? value.substring(tag.user_name.length + 3)
+        : edit
+        ? value
+        : null,
+    });
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setEdit(false);
+    setAnswer(false);
   };
 
   return (
@@ -134,7 +164,7 @@ export const CardCommentUi: FC<Props> = ({ item, parent_id }) => {
                 isLoggedIn) ||
               user?.role === "admin" ||
               user?._id === item.user_id ? (
-                <EditCommentUi item={item} setOpen={setOpen} />
+                <EditCommentUi item={item} setEdit={setEdit} />
               ) : null}
             </Grid>
           </Grid>
@@ -158,7 +188,7 @@ export const CardCommentUi: FC<Props> = ({ item, parent_id }) => {
                   style={{ fontWeight: "500", cursor: "pointer" }}
                   onClick={() => {
                     setValue(" @" + item.user_name + " ");
-                    setOnCancel(true);
+                    setAnswer(true);
                     setTag({
                       user_name: item.user_name,
                       user_id: item.user_id,
@@ -172,23 +202,25 @@ export const CardCommentUi: FC<Props> = ({ item, parent_id }) => {
           </Grid>
         }
       />
-      {isLoggedIn && onCancel && (
-        <CommentPostUi
-          parent_id={parent_id || ""}
-          item={item}
-          onCancel={onCancel}
-          setOnCancel={setOnCancel}
+      {isLoggedIn && answer ? (
+        <CommentDialogUi
+          handleInput={handleInput}
+          handleSubmit={handleSubmit}
+          onCancel={answer}
+          value={value}
+          handleClose={handleClose}
+          cancel={true}
         />
-      )}
-      {open && (
+      ) : edit ? (
         <CommentDialogUi
           handleInput={handleInput}
           handleSubmit={editComment}
-          onCancel={open}
-          value={text}
+          onCancel={edit}
+          value={value}
           handleClose={handleClose}
+          cancel={true}
         />
-      )}
+      ) : null}
     </Card>
   );
 };

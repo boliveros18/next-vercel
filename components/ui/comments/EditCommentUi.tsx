@@ -16,13 +16,15 @@ import {
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Comment } from "../../../interfaces";
 import { CommentContext } from "../../../context/comment";
+import { UIContext } from "../../../context/ui";
 
 interface Props {
   item: Comment;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  setEdit: Dispatch<SetStateAction<boolean>>;
 }
 
-export const EditCommentUi: FC<Props> = ({ item, setOpen }) => {
+export const EditCommentUi: FC<Props> = ({ item, setEdit }) => {
+  const { setValue } = useContext(UIContext);
   const { deleteComment, getCommentsByParentId } = useContext(CommentContext);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
@@ -70,8 +72,9 @@ export const EditCommentUi: FC<Props> = ({ item, setOpen }) => {
           <MenuItem>
             <ListItemText
               onClick={() => {
-                setOpen(true);
+                setEdit(true);
                 setAnchorEl(null);
+                setValue(item.description);
               }}
             >
               Edit

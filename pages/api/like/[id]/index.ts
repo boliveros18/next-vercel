@@ -62,7 +62,6 @@ const deleteModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       .status(400)
       .json({ message: "There is no like with that ID: " + id });
   }
-
   try {
     const deleteModel = await Like.findByIdAndDelete(id);
     switch (modelToDelete.grandparent_id) {
@@ -79,15 +78,12 @@ const deleteModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       //DELETING MAIN COMMENTS LIKES NUMBER
       default: {
         if (deleteModel) {
-          const parent = await getCommentById(deleteModel.parent_id);
-          if (parent) {
-            const likes = await getLikesLengthByParentId(parent._id);
-            await Comment.findByIdAndUpdate(
-              parent._id,
-              { likes },
-              { runValidators: true, new: true }
-            );
-          }
+          const likes = await getLikesLengthByParentId(modelToDelete.parent_id);
+          await Comment.findByIdAndUpdate(
+            modelToDelete.parent_id,
+            { likes },
+            { runValidators: true, new: true }
+          );
         }
       }
     }
