@@ -1,11 +1,9 @@
 export interface Procedure {
     _id: string;
-    medic_id: string;
     product_id: string;
     client_id: string;
-    recovery_days: number;
-    hours: number;
-    contract_signature: string;
+    extra_cost: number;
+    extra_cost_description: string;
     surgical_facility: boolean;
     facility_care: boolean;
     medical_care: boolean;

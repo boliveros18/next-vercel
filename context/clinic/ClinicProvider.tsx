@@ -32,11 +32,11 @@ export const ClinicProvider: FC<ProviderProps> = ({ children }) => {
     return data;
   };
 
-  const getClinic = async (id: string) => {
+  const getClinic = useCallback (async (id: string) => {
     const data = await ClinicService.getClinic(id);
     dispatch({ type: "CLINIC_GET", payload: data });
     return data;
-  };
+  }, []);
 
   return (
     <ClinicContext.Provider

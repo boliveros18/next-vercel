@@ -1,31 +1,49 @@
 import { useContext, useEffect } from "react";
 import { GetServerSideProps, NextPage } from "next";
 import { getSession } from "next-auth/react";
-import { dbClinics, dbLikes } from "../database";
+import { dbClinics, dbLikes, dbMedics, dbUsers } from "../database";
 import { Layout } from "../components/layouts";
 import { HomeCard } from "../components/home";
 import { Grid } from "@mui/material";
 import { BottomBar, SideBar, RightBar } from "../components/ui";
-import { Clinic, Like } from "../interfaces";
+import { Clinic, Like, User, Medic } from "../interfaces";
 import { LikeContext } from "../context/like";
 import { ClinicContext } from "../context/clinic";
 import { UIContext } from "../context/ui/UIContext";
+import { AuthContext } from "../context/auth/AuthContext";
+import { MedicContext } from "../context/medic/MedicContext";
 
 interface Props {
   principal: Clinic;
   like: Like;
+  user: User;
+  medic: Medic;
 }
 
-const HomePage: NextPage<Props> = ({ principal, like }) => {
+const HomePage: NextPage<Props> = ({ principal, like, user, medic }) => {
+  const { setUser } = useContext(AuthContext);
+  const { setMedic } = useContext(MedicContext);
   const { addLikes } = useContext(LikeContext);
   const { setPrincipal } = useContext(ClinicContext);
   const { setLoading } = useContext(UIContext);
 
   useEffect(() => {
+    setUser(user);
+    setMedic(medic);
     addLikes(like);
     setPrincipal(principal);
     setLoading(true);
-  }, [like, addLikes, setLoading, principal, setPrincipal]);
+  }, [
+    user,
+    setUser,
+    medic,
+    setMedic,
+    like,
+    addLikes,
+    setLoading,
+    principal,
+    setPrincipal,
+  ]);
 
   return (
     <Layout>
@@ -63,10 +81,13 @@ const HomePage: NextPage<Props> = ({ principal, like }) => {
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
   const principal = await dbClinics.getPrincipalClinic();
+  const user = await dbUsers.getUserNameAndPhotoById(session?.user?._id || "");
+  const medic = await dbMedics.getMedicByUserId(user?._id || "");
   const like = await dbLikes.getLikeByParentIdAndUserId(
     principal._id || "",
     session?.user?._id || ""
   );
+
   if (!principal) {
     return {
       redirect: {
@@ -78,6 +99,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
   return {
     props: {
+      user: user,
+      medic: medic,
       principal: principal,
       like: like,
     },

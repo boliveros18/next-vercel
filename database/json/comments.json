@@ -1,87 +1,86 @@
 [{
   "_id": {
-    "$oid": "63ddeb68107b09406f3b91a6"
+    "$oid": "6429cc14bb97595abe63182e"
   },
-  "type": "clinic",
+  "type": "Clinic",
   "parent_id": "63ab77d06d6dc52c56dc662e",
-  "user_id": "63ac76f9454855cff2b9c81c",
+  "user_id": "63ac7a91454855cff2b9c841",
   "description": "I loved it. Very good attention.",
-  "answers": 2,
+  "user_tag_id": "",
+  "user_tag_name": "",
+  "comments": 2,
   "likes": 0,
   "createdAt": {
-    "$numberLong": "1672181711974"
+    "$numberLong": "1680460820444"
   },
-  "updatedAt": {
-    "$numberLong": "1677944214208"
-  }
+  "updatedAt": 0,
+  "__v": 0
 },{
   "_id": {
-    "$oid": "63ddec05107b09406f3b91ac"
+    "$oid": "6429cc23bb97595abe631837"
   },
-  "type": "clinic",
+  "type": "Clinic",
   "parent_id": "63ab77d06d6dc52c56dc662e",
-  "user_id": "63ac7a91454855cff2b9c841",
+  "user_id": "642256af13ce8d575018c3ec",
   "description": "Very good attention.",
-  "answers": 1,
+  "user_tag_id": "",
+  "user_tag_name": "",
+  "comments": 1,
   "likes": 0,
   "createdAt": {
-    "$numberLong": "1672181711974"
+    "$numberLong": "1680460835508"
   },
-  "updatedAt": {
-    "$numberLong": "1677944235938"
-  }
+  "updatedAt": 0,
+  "__v": 0
 },{
   "_id": {
-    "$oid": "63ab77d06d6dc52c56dc6645"
+    "$oid": "6429cd4bbb97595abe631896"
   },
-  "type": "",
-  "parent_id": "63ddeb68107b09406f3b91a6",
-  "user_id": "63ac7a91454855cff2b9c841",
+  "type": "Comment",
+  "parent_id": "6429cc14bb97595abe63182e",
+  "user_id": "63f90961ccd6e21b528f4e51",
   "description": "That's right",
-  "user_tag_id": "63ab286da6e59074d5465dd1",
-  "user_tag_name": "@codo",
-  "answers": 0,
-  "likes": 0,
-  "createdAt": {
-    "$numberLong": "1672181711974"
-  },
-  "updatedAt": {
-    "$numberLong": "1672181711974"
-  }
-},{
-  "_id": {
-    "$oid": "63ab77d06d6dc52c56dc6646"
-  },
-  "type": "",
-  "parent_id": "63ddeb68107b09406f3b91a6",
-  "user_id": "63ab77d06d6dc52c56dc6627",
-  "description": "Yes, you are in the same move. 3",
   "user_tag_id": "63ac7a91454855cff2b9c841",
   "user_tag_name": "@maria cano",
-  "answers": 0,
+  "comments": 0,
   "likes": 0,
   "createdAt": {
-    "$numberLong": "1672181711974"
+    "$numberLong": "1680461131924"
   },
-  "updatedAt": {
-    "$numberLong": "1672181711974"
-  }
+  "updatedAt": 0,
+  "__v": 0
 },{
   "_id": {
-    "$oid": "63ddd86c107b09406f3b91a2"
+    "$oid": "6429cd5abb97595abe63189e"
   },
-  "type": "",
-  "parent_id": "63ddec05107b09406f3b91ac",
-  "user_id": "63ac7a91454855cff2b9c841",
-  "description": "Yes is ok, right",
-  "user_tag_id": "63ab286da6e59074d5465dd1",
-  "user_tag_name": "@codo",
-  "answers": 0,
+  "type": "Comment",
+  "parent_id": "6429cc14bb97595abe63182e",
+  "user_id": "63ac76f9454855cff2b9c81c",
+  "description": "Yes, you are in the same move.",
+  "user_tag_id": "63ac7a91454855cff2b9c841",
+  "user_tag_name": "@maria cano",
+  "comments": 0,
   "likes": 0,
   "createdAt": {
-    "$numberLong": "1672181711974"
+    "$numberLong": "1680461146538"
   },
-  "updatedAt": {
-    "$numberLong": "1672181711974"
-  }
+  "updatedAt": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6429cd75bb97595abe6318ac"
+  },
+  "type": "Comment",
+  "parent_id": "6429cc23bb97595abe631837",
+  "user_id": "63ac7798454855cff2b9c823",
+  "description": "Yes is ok, right",
+  "user_tag_id": "642256af13ce8d575018c3ec",
+  "user_tag_name": "@andres parra",
+  "comments": 0,
+  "likes": 0,
+  "createdAt": {
+    "$numberLong": "1680461173690"
+  },
+  "updatedAt": 0,
+  "__v": 0
 }]

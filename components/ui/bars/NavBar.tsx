@@ -25,6 +25,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Logout from "@mui/icons-material/Logout";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { AuthContext } from "../../../context/auth";
+import { MedicContext } from "../../../context/medic";
 
 import { Search, SearchIconWrapper, StyledInputBase } from "../styled/Search";
 
@@ -38,15 +39,17 @@ interface Props {
 
 export const NavBar: FC<Props> = ({}) => {
   const { user, isLoggedIn, logout } = useContext(AuthContext);
+  const { medic } = useContext(MedicContext);
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     useState<null | HTMLElement>(null);
 
-  const navigateTo = (url: string) => {
-    router.push(url);
-  };
 
+  const navigateTo =  (url: string) => {
+     router.push(url);
+  };
+ 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -84,11 +87,11 @@ export const NavBar: FC<Props> = ({}) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose} sx={{ width: 300, maxWidth: "100%" }}>
+      <MenuItem onClick={() =>{handleMenuClose() ; navigateTo(`/account/${user?.role}/${user?.role ==="client" ? null : medic._id }`)}} sx={{ width: 300, maxWidth: "100%" }}>
         <ListItemIcon>
-          <Avatar alt="name" src="/static/images/avatar/2.jpg" sx={{ mr: 1 }} />
+          <Avatar alt="name" src={user?.photo || ""} sx={{ mr: 1 }} />
         </ListItemIcon>{" "}
-        {user?.name}
+        { user?.role === "medic" ? ("Md. " + user?.name) : user?.name }
       </MenuItem>
       <Divider />
       <MenuItem onClick={handleMenuClose}>
@@ -177,9 +180,9 @@ export const NavBar: FC<Props> = ({}) => {
           aria-haspopup="true"
           color="inherit"
         >
-          <Avatar alt="name" src="/static/images/avatar/2.jpg" />
+          <Avatar alt={user?.name || ""} src={user?.photo || ""} />
         </IconButton>
-        <p style={{ paddingRight: 145 }}>{user?.name}</p>
+        <p style={{ paddingRight: 145 }}>{ user?.role === "medic" ? ("Md. " + user?.name) : user?.name }</p>
         <ExpandMoreIcon />
       </MenuItem>
     </Menu>
@@ -243,7 +246,7 @@ export const NavBar: FC<Props> = ({}) => {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <Avatar alt="name" src="/static/images/avatar/2.jpg" />
+              <Avatar alt={user?.name || ""} src={user?.photo || ""} />
             </IconButton>
           </Box>
         ) : (

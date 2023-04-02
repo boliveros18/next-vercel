@@ -1,4 +1,4 @@
-import { FC, ReactNode, useReducer } from "react";
+import { FC, ReactNode, useReducer, useCallback } from "react";
 import { MedicContext, medicReducer } from ".";
 import { Medic } from "../../interfaces";
 import { MedicService } from "../../services";
@@ -21,11 +21,15 @@ const INITIAL_STATE: State = {
 export const MedicProvider: FC<ProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(medicReducer, INITIAL_STATE);
 
-  const getMedic = async (id: string) => {
-    const data = await MedicService.getMedic(id);
-    dispatch({ type: "GET_MEDIC", payload: data });
+  const setMedic = useCallback(async(payload: Medic) =>{
+    dispatch({ type: "UPDATE_MEDIC", payload: payload });
+  }, [])
+
+  const getMedic = useCallback( async (id: string) => {
+    const data = await MedicService.getMedicByUserId(id);
+    dispatch({ type: "GET_MEDIC", payload: data[0] });
     return data;
-  };
+  }, []);
 
   const getMedics = async (pagination?: Pagination) => {
     const data = await MedicService.getMedics();
@@ -47,13 +51,14 @@ export const MedicProvider: FC<ProviderProps> = ({ children }) => {
 
   const deleteMedic = async (id: string) => {
     const data = await MedicService.deleteOne(id);
-    dispatch({ type: "DELETE_MEDIC", payload: id });
+    dispatch({ type: "DELETE_MEDIC", payload: data });
     return data;
   };
   return (
     <MedicContext.Provider
       value={{
         ...state,
+        setMedic,
         getMedic,
         getMedics,
         createMedic,

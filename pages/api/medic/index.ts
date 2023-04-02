@@ -28,6 +28,7 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   }
 
   const {
+    type = "",
     parent_id = "",
     card_id = "",
     to_approve = false,
@@ -46,6 +47,7 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   await db.connect();
 
   const newModel = new Medic({
+    type,
     parent_id,
     card_id,
     to_approve,
@@ -77,8 +79,10 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
 const getMedics = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   try {
-    const medics = await dbMedics.getMedics();
-    return res.status(201).json(medics);
+    const medics = await dbMedics.getMedicByUserId(
+      req.query.parent_id as string
+    );
+    return res.status(201).json(medics); 
   } catch (error: any) {
     console.log(error);
     res.status(400).json({

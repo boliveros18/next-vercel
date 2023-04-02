@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import NextLink from "next/link";
 import { GetServerSideProps } from "next";
 import { signIn, getSession } from "next-auth/react";
+import { capitalize } from "../../utils/strings";
 import {
   Box,
   Button,
@@ -45,7 +46,7 @@ const RegisterPage = () => {
   const onRegisterForm = async ({ name, email, password, photo }: FormData) => {
     setShowError(false);
     const { hasError, message } = await registerUser(
-      name,
+      capitalize(name),
       email,
       password,
       photo,
@@ -95,7 +96,7 @@ const RegisterPage = () => {
             <Grid item xs={12}>
               <Typography variant="h5">{`Create a ${userRole} account`}</Typography>
               <Chip
-                label="We cannot reconize this email address"
+                label="We cannot reconize this email address or is in use."
                 color="error"
                 icon={<ErrorOutline />}
                 className="fadeIn"
@@ -235,18 +236,39 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   const session = await getSession({ req });
   if (session) {
-    const medic = await dbMedics.createMedic({
-      parent_id: session?.user?._id,
-    } as Medic);
-    const { m = `/account/medic/${medic._id}` } = query;
-    const { p = "/" } = query;
-    return {
-      redirect: {
-        destination:
-          session.user?.role === "medic" ? m.toString() : p.toString(),
-        permanent: false,
-      },
-    };
+    if (session.user?.role === "medic") {
+      const medic = await dbMedics.createMedic({
+        parent_id: session?.user?._id,
+        card_id : "",
+        to_approve : false,
+        contract_signature : "",
+        available_days : "",
+        curriculum : "",
+        qualification : 0,
+        comments : 0,
+        instagram : "",
+        country : "",
+        state : "",
+        province : "",
+        createdAt : Date.now(),
+        updatedAt : 0
+      } as Medic);
+      const { m = `/account/medic/${medic._id}` } = query;
+      return {
+        redirect: {
+          destination: m.toString(),
+          permanent: false,
+        },
+      };
+    } else {
+      const { c = "/" } = query;
+      return {
+        redirect: {
+          destination: c.toString(),
+          permanent: false,
+        },
+      };
+    }
   }
 
   return {

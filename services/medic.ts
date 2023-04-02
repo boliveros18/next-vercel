@@ -6,6 +6,11 @@ export const getMedic = async (id: string) => {
   return res.data;
 };
 
+export const getMedicByUserId = async (parent_id: string) => {
+  const res = await ApiClient.get(`/medic?parent_id=${parent_id}`);
+  return res.data;
+};
+
 export const getMedics= async () => {
   const res = await ApiClient.get(`/medic`);
   return res.data;

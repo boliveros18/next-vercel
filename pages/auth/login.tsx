@@ -182,7 +182,6 @@ export const getServerSideProps: GetServerSideProps = async ({
   query,
 }) => {
   const session = await getSession({ req });
-
   const { p = "/" } = query;
 
   if (session) {

@@ -11,12 +11,17 @@ export * from "./comments/CommentUi";
 export * from "./comments/EditCommentUi";
 export * from "./comments/SeeComments";
 
+export * from "./medic/MedicAccountCard"
+export * from "./medic/SelectCategoryAndProcedure"
+
 export * from "./styled/CommentForm";
 export * from "./styled/Search";
 
+export * from "./utils/AccordionUi";
 export * from "./utils/CardActionsUi";
 export * from "./utils/CardDetailUi";
 export * from "./utils/CommentDialogUi";
+export * from "./utils/EditUser";
 export * from "./utils/GuideBar";
 export * from "./utils/InstagramLink";
 export * from "./utils/ItemCounter";

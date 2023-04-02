@@ -1,6 +1,5 @@
 import bcrypt from "bcryptjs";
 import { isValidObjectId } from "mongoose";
-
 import { User, IUser } from "../models";
 import { db } from "./";
 
@@ -66,8 +65,8 @@ export const getUserNameAndPhotoById = async (
   await db.connect();
   const user = await User.find(
     { _id: id },
-    { _id: 0, name: 1, photo: 1 }
+    { name: 1, photo: 1, role: 1 }
   ).lean();
   await db.disconnect();
-  return user[0];
+  return JSON.parse(JSON.stringify(user[0]));
 };

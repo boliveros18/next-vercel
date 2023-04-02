@@ -91,7 +91,6 @@ export const CardCommentUi: FC<Props> = ({ item, parent_id }) => {
   const handleInput = ({ target }: ChangeEvent<any>) => {
     setValue(target.value);
     const value = target.type === "checkbox" ? target.checked : target.value;
-    console.log(value);
     setInputs({
       ...inputs,
       [target.name]: answer

@@ -82,7 +82,7 @@ const updateClinic = async (
     address = clinicToUpdate.address,
     instagram = clinicToUpdate.instagram,
     qualification = clinicToUpdate.qualification,
-    updatedAt = clinicToUpdate.updatedAt,
+    updatedAt = Date.now(),
   } = req.body;
 
   try {

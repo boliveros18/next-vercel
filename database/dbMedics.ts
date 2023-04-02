@@ -2,6 +2,7 @@ import { isValidObjectId } from "mongoose";
 import { db } from ".";
 import { Medic, IMedic } from "../models";
 
+
 export const getMedicById = async (id: string): Promise<IMedic | null> => {
   if (!isValidObjectId(id)) {
     return null;
@@ -10,6 +11,16 @@ export const getMedicById = async (id: string): Promise<IMedic | null> => {
   const medic = await Medic.findById(id).lean();
   await db.disconnect();
   return JSON.parse(JSON.stringify(medic));
+};
+
+export const getMedicByUserId = async (
+  parent_id: string
+): Promise<IMedic> => {
+  const params = parent_id ? { parent_id: parent_id } : {};
+  await db.connect();
+  const medic: IMedic[] = await Medic.find(params).lean()
+  await db.disconnect();
+  return JSON.parse(JSON.stringify(medic[0])); 
 };
 
 export const getMedics = async (): Promise<IMedic[]> => {
@@ -21,9 +32,9 @@ export const getMedics = async (): Promise<IMedic[]> => {
 
 export const createMedic = async (payload: IMedic): Promise<IMedic> => {
   await db.connect();
-  const medic = await Medic.create(payload);
+  const medic: IMedic = await Medic.create(payload);
   await db.disconnect();
-  return JSON.parse(JSON.stringify(medic));
+  return medic;
 };
 
 

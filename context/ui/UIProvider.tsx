@@ -1,6 +1,7 @@
 import { FC, ReactNode, useReducer, useCallback } from "react";
+import { ImageService } from "../../services";
 import { UIContext, uiReducer } from "./";
-import { tagger } from "./UIContext"
+import { tagger } from "./UIContext";
 
 interface ProviderProps {
   children: ReactNode;
@@ -21,7 +22,7 @@ const INITIAL_STATE: State = {
   onFocus: false,
   tag: { user_name: "", user_id: "" },
   value: "",
-  onCancel: false
+  onCancel: false,
 };
 
 export const UIProvider: FC<ProviderProps> = ({ children }) => {
@@ -36,23 +37,23 @@ export const UIProvider: FC<ProviderProps> = ({ children }) => {
 
   const setLoading = useCallback((payload: boolean) => {
     dispatch({ type: "SET_LOADING", payload });
-  }, [])
+  }, []);
 
   const setOnFocus = useCallback((payload: boolean) => {
     dispatch({ type: "SET_ONFOCUS", payload });
-  }, [])
+  }, []);
 
   const setTag = useCallback((payload: tagger) => {
     dispatch({ type: "SET_TAG", payload });
-  }, [])
+  }, []);
 
   const setValue = useCallback((payload: string) => {
     dispatch({ type: "SET_VALUE", payload });
-  }, [])
+  }, []);
 
   const setOnCancel = useCallback((payload: boolean) => {
     dispatch({ type: "SET_ONCANCEL", payload });
-  }, [])
+  }, []);
 
   return (
     <UIContext.Provider

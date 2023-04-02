@@ -7,6 +7,7 @@ import { ClinicProvider } from "../context/clinic";
 import { CommentProvider } from "../context/comment";
 import { LikeProvider } from "../context/like";
 import { MedicProvider } from "../context/medic";
+import { ProductProvider } from "../context/product";
 import { QualificationProvider } from "../context/qualification";
 import { SWRConfig } from "swr";
 import { AuthProvider } from "../context/auth";
@@ -30,18 +31,20 @@ export default function App({ Component, pageProps }: Props) {
           <UIProvider>
             <ThemeProvider theme={lightTheme}>
               <ClinicProvider>
-                  <CertificationProvider>
-                    <CommentProvider>
-                      <LikeProvider>
-                        <MedicProvider>
+                <CertificationProvider>
+                  <CommentProvider>
+                    <LikeProvider>
+                      <MedicProvider>
                         <QualificationProvider>
-                          <CssBaseline />
-                          <Component {...pageProps} />
-                          </QualificationProvider>
-                        </MedicProvider>
-                      </LikeProvider>
-                    </CommentProvider>
-                  </CertificationProvider>
+                          <ProductProvider>
+                            <CssBaseline />
+                            <Component {...pageProps} />
+                          </ProductProvider>
+                        </QualificationProvider>
+                      </MedicProvider>
+                    </LikeProvider>
+                  </CommentProvider>
+                </CertificationProvider>
               </ClinicProvider>
             </ThemeProvider>
           </UIProvider>

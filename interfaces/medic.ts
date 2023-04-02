@@ -1,5 +1,6 @@
 export interface Medic {
-  _id?: string;
+  _id: string;
+  type: string;
   parent_id: string;
   card_id: string;
   to_approve: boolean;

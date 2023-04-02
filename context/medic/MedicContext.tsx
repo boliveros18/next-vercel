@@ -10,6 +10,7 @@ export type Pagination = {
 interface ContextProps {
 medic: Medic;
 medics: Medic[];
+setMedic: (payload: Medic) => Promise<void>;
 getMedic: (id: string) => Promise<void>;
 getMedics: (pagination?: Pagination) => Promise<void>;
 createMedic: (payload: Medic) => Promise<void>;

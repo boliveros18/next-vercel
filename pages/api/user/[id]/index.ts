@@ -35,15 +35,15 @@ export default function handler(
 
 const getUser = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
-    try {
-      const user = await dbUsers.getUserNameAndPhotoById(id);
-      return res.status(201).json(user);
-    } catch (error: any) {
-      console.log(error);
-      res.status(400).json({
-        message: error.message || "Check server logs",
-      });
-    }
+  try {
+    const user = await dbUsers.getUserNameAndPhotoById(id);
+    return res.status(201).json(user);
+  } catch (error: any) {
+    console.log(error);
+    res.status(400).json({
+      message: error.message || "Check server logs",
+    });
+  }
   return;
 };
 
@@ -65,9 +65,18 @@ const updateUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     name = userToUpdate.name,
     email = userToUpdate.email,
     password = userToUpdate.password,
+    photo = userToUpdate.photo,
     role = userToUpdate.role,
-    updateAt = userToUpdate.updatedAt,
+    updateAt = Date.now(),
   } = req.body;
+
+  const user = await User.findOne({ email });  // have the same email and different ID
+
+  if (user) {
+    return res.status(400).json({
+      message: "You can t use that email",
+    });
+  }
 
   try {
     const updatedUser = await User.findByIdAndUpdate(
@@ -76,6 +85,7 @@ const updateUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         name,
         email,
         password,
+        photo,
         role,
         updateAt,
       },

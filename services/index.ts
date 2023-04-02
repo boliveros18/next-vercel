@@ -5,4 +5,4 @@ export * as CommentService from "./comment";
 export * as LikeService from "./like";
 export * as MedicService from "./medic";
 export * as QualificationService from "./qualification";
-export * as UserService from "./user";
+export * as ProductService from "./product";
