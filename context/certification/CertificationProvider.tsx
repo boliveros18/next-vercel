@@ -1,5 +1,5 @@
 import { FC, ReactNode, useReducer, useCallback } from "react";
-import { CertificationContext, certificationsReducer } from ".";
+import { CertificationContext, certificationReducer } from ".";
 import { Certification } from "../../interfaces";
 import { CertificationService } from "../../services";
 
@@ -18,7 +18,7 @@ const INITIAL_STATE: State = {
 };
 
 export const CertificationProvider: FC<ProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(certificationsReducer, INITIAL_STATE);
+  const [state, dispatch] = useReducer(certificationReducer, INITIAL_STATE);
 
   const addCertifications = useCallback((payload: Certification[]) => {
     dispatch({ type: "ADD_CERTIFICATIONS", payload });

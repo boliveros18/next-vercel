@@ -3,7 +3,7 @@ import { State } from "./";
 type Action = "DELETE_LIKE" | "ADD_LIKES";
 type ActionType = { type: Action; payload?: any };
 
-export const likesReducer = (state: State, action: ActionType): State => {
+export const likeReducer = (state: State, action: ActionType): State => {
   switch (action.type) {
     case "DELETE_LIKE":
       const filtered = state.likes.filter(

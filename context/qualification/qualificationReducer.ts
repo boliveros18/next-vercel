@@ -6,7 +6,7 @@ type Action =
   | "QUALIFICATION_GET";
 type ActionType = { type: Action; payload?: any };
 
-export const qualificationsReducer = (
+export const qualificationReducer = (
   state: State,
   action: ActionType
 ): State => {

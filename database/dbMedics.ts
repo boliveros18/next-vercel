@@ -15,7 +15,7 @@ export const getMedicById = async (id: string): Promise<IMedic | null> => {
 
 export const getMedicByUserId = async (
   parent_id: string
-): Promise<IMedic> => {
+): Promise<IMedic[]> => {
   const params = parent_id ? { parent_id: parent_id } : {};
   await db.connect();
   const medic: IMedic[] = await Medic.find(params).lean()

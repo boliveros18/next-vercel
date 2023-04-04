@@ -1,5 +1,5 @@
 import { FC, ReactNode, useReducer, useCallback } from "react";
-import { ClinicContext, clinicsReducer } from "./";
+import { ClinicContext, clinicReducer } from "./";
 import { Clinic } from "../../interfaces";
 import { ClinicService } from "../../services";
 
@@ -20,7 +20,7 @@ const INITIAL_STATE: State = {
 };
 
 export const ClinicProvider: FC<ProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(clinicsReducer, INITIAL_STATE);
+  const [state, dispatch] = useReducer(clinicReducer, INITIAL_STATE);
 
   const setPrincipal = useCallback((payload: Clinic) => {
     dispatch({ type: "SET_PRINCIPAL", payload });

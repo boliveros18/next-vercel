@@ -9,7 +9,7 @@ export * from "./user";
 export * from "./order";
 export * from "./medic";
 export * from "./degree";
-export * from "./formidable/IncomingForm";
+export * from "./image";
 export * from "./product";
 export * from "./quote";
 export * from "./procedure";

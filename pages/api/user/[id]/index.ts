@@ -1,10 +1,24 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 import { db, dbUsers } from "../../../../database";
 import { User, IUser } from "../../../../models";
+import { jwt, validations } from "../../../../utils";
 
-type Data = { message: string } | IUser | IUser[] | null;
+type Data =
+  | { message: string }
+  | {
+      token: string;
+      user: {
+        name: string;
+        email: string;
+        photo: string;
+      };
+    }
+  | IUser
+  | IUser[]
+  | null;
 
 export default function handler(
   req: NextApiRequest,
@@ -70,21 +84,40 @@ const updateUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     updateAt = Date.now(),
   } = req.body;
 
-  const user = await User.findOne({ email });  // have the same email and different ID
-
-  if (user) {
+  if (password.length < 6) {
     return res.status(400).json({
-      message: "You can t use that email",
+      message: "Password must be at least 6 characters",
     });
   }
 
+  if (name.length < 2) {
+    return res.status(400).json({
+      message: "The name must be at least 2 characters",
+    });
+  }
+
+  if (!validations.isValidEmail(email)) {
+    return res.status(400).json({
+      message: "The mail does not have mail format",
+    });
+  }
+
+  const user = await User.findOne({ email });
+
+  if (user && (JSON.parse(JSON.stringify(user?._id)) !== id)) {
+    return res.status(400).json({
+      message: "You can't use that email",
+    });
+
+
+  }
   try {
     const updatedUser = await User.findByIdAndUpdate(
       id,
       {
         name,
-        email,
-        password,
+        email: email.toLocaleLowerCase(),
+        password: bcrypt.hashSync(password),
         photo,
         role,
         updateAt,

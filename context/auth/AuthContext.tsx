@@ -5,7 +5,10 @@ interface ContextProps {
   isLoggedIn: boolean;
   user?: User;
   setUser: (payload: User) => Promise<void>;
-  loginUser: (email: string, password: string) => Promise<boolean>;
+  loginUser: (
+    email: string,
+    password: string
+  ) => Promise<{ hasError: boolean; messageLogin?: string }>;
   registerUser: (
     name: string,
     email: string,
@@ -15,7 +18,10 @@ interface ContextProps {
   ) => Promise<{ hasError: boolean; message?: string }>;
   logout: () => void;
   getUser: (id: string) => Promise<void>;
-  updateUser: (id: string, payload: User) => Promise<{ hasError: boolean; message?: string }>;
+  updateUser: (
+    id: string,
+    payload: User
+  ) => Promise<{ hasError: boolean; messageUpdate?: string }>;
   deleteUser: (id: string) => Promise<void>;
 }
 

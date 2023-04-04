@@ -1,5 +1,5 @@
 import { FC, ReactNode, useReducer } from "react";
-import { QualificationContext, qualificationsReducer } from "./";
+import { QualificationContext, qualificationReducer } from "./";
 import { Qualification } from "../../interfaces";
 import { QualificationService } from "../../services";
 
@@ -18,7 +18,7 @@ const INITIAL_STATE: State = {
 };
 
 export const QualificationProvider: FC<ProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(qualificationsReducer, INITIAL_STATE);
+  const [state, dispatch] = useReducer(qualificationReducer, INITIAL_STATE);
 
   const createQualification = async (payload: Qualification) => {
     const data  = await QualificationService.createOne(payload);

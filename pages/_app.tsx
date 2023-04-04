@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react";
 import { CertificationProvider } from "../context/certification";
 import { ClinicProvider } from "../context/clinic";
 import { CommentProvider } from "../context/comment";
+import { ImageProvider } from "../context/image";
 import { LikeProvider } from "../context/like";
 import { MedicProvider } from "../context/medic";
 import { ProductProvider } from "../context/product";
@@ -37,8 +38,10 @@ export default function App({ Component, pageProps }: Props) {
                       <MedicProvider>
                         <QualificationProvider>
                           <ProductProvider>
+                          <ImageProvider>
                             <CssBaseline />
                             <Component {...pageProps} />
+                            </ImageProvider>
                           </ProductProvider>
                         </QualificationProvider>
                       </MedicProvider>

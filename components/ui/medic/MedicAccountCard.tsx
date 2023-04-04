@@ -1,10 +1,11 @@
 import { FC, ReactNode, useContext, useState } from "react";
 import { CardHeader, Typography, Box, IconButton, Avatar } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
-import { Clinic, Medic } from "../../../interfaces";
+import { Clinic, Medic, Image } from "../../../interfaces";
 import CardActionArea from "@mui/material/CardActionArea";
 import { ApiClient } from "../../../apis";
 import { AuthContext } from "../../../context/auth";
+import { ImageContext } from "../../../context/image";
 
 interface Props {
   children?: ReactNode;
@@ -13,7 +14,8 @@ interface Props {
 }
 
 export const MedicAccountCard: FC<Props> = ({ clinic, medic }) => {
-  const { updateUser, user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+  const { image, updateImage, createImage } = useContext(ImageContext);
   const stars = Array(5).fill(0);
 
   return (
@@ -32,13 +34,18 @@ export const MedicAccountCard: FC<Props> = ({ clinic, medic }) => {
                     const file = target.files[0];
                     const formData = new FormData();
                     formData.append("photo", file);
-                    const { data } = await ApiClient.post("/image", formData);
-                    user?._id
-                      ? await updateUser(user?._id, {
-                          ...user,
-                          photo: data.message,
-                        })
-                      : null;
+                    const { data } = await ApiClient.post("/uploadImage", formData);
+                    if (image) {
+                      await updateImage(image?._id || "", {
+                        ...(image as Image),
+                        ["url"]: data.message,
+                      });
+                    } else {
+                      await createImage({
+                        parent_id: user?._id,
+                        url: data.message,
+                      } as Image);
+                    }
                   } catch (error) {
                     console.log({ error });
                   }
@@ -47,7 +54,7 @@ export const MedicAccountCard: FC<Props> = ({ clinic, medic }) => {
             />
             <Avatar
               alt={user?.name}
-              src={user ? user.photo : ""}
+              src={image ? image.url : ""}
               sx={{ width: 100, height: 120, cursor: "pointer" }}
               variant={"rounded"}
             />

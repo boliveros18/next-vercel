@@ -1,5 +1,5 @@
 import { FC, ReactNode, useReducer } from "react";
-import { CommentContext, commentsReducer } from "./";
+import { CommentContext, commentReducer } from "./";
 import { Comment } from "../../interfaces";
 import { CommentService } from "../../services";
 import { Pagination } from "./CommentContext";
@@ -19,7 +19,7 @@ const INITIAL_STATE: State = {
 };
 
 export const CommentProvider: FC<ProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(commentsReducer, INITIAL_STATE);
+  const [state, dispatch] = useReducer(commentReducer, INITIAL_STATE);
 
   const createComment = async (payload: Comment) => {
     const data = await CommentService.createOne(payload);

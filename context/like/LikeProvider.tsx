@@ -1,5 +1,5 @@
 import { FC, ReactNode, useReducer, useCallback } from "react";
-import { LikeContext, likesReducer } from "./";
+import { LikeContext, likeReducer } from "./";
 import { Like } from "../../interfaces";
 import { LikeService } from "../../services";
 import { Pagination } from "./LikeContext";
@@ -19,7 +19,7 @@ const INITIAL_STATE: State = {
 };
 
 export const LikeProvider: FC<ProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(likesReducer, INITIAL_STATE);
+  const [state, dispatch] = useReducer(likeReducer, INITIAL_STATE);
 
   const createLike = async (payload: Like) => {
     const data = await LikeService.createOne(payload);

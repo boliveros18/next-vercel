@@ -5,8 +5,7 @@ import {
   Card,
   CardContent,
   Grid,
-  Divider,
-  IconButton,
+  Divider
 } from "@mui/material";
 import { getSession } from "next-auth/react";
 import { dbMedics, dbProducts } from "../../../database";
@@ -21,20 +20,25 @@ import {
 } from "../../../components/ui";
 import { ProductContext } from "../../../context/product";
 import { ClinicContext } from "../../../context/clinic";
+import { ImageContext } from "../../../context/image";
 
 interface Props {
+  id: string
   medic: Medic;
   products: Product[];
 }
 
-const AccountMedicPage: NextPage<Props> = ({ medic, products }) => {
+const AccountMedicPage: NextPage<Props> = ({ id, medic, products }) => {
   const { clinic, getClinic } = useContext(ClinicContext);
+  const { image, getImageByParentId } = useContext(ImageContext);
   const { index } = useContext(ProductContext);
-  const { user } = useContext(AuthContext);
+  const { getUser } = useContext(AuthContext);
 
   useEffect(() => {
-    getClinic(products[index].clinic_id);
-  }, [getClinic, index, products]);
+    image ? getImageByParentId(id) : null
+    getUser(id);
+    products.length > 0 ? getClinic(products[index].clinic_id) : null ;
+  }, [id, image, getImageByParentId, getUser, getClinic, index, products]);
 
   return (
     <Layout>
@@ -61,7 +65,7 @@ const AccountMedicPage: NextPage<Props> = ({ medic, products }) => {
             <SelectCategoryAndProcedure products={products} />
             <MedicAccountCard clinic={clinic} medic={medic} />
             <CardContent>
-              <EditUser />
+              <EditUser medic={medic} />
               <AccordionUi summary="Complete your medic profile"></AccordionUi>
             </CardContent>
           </Card>
@@ -77,6 +81,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const session = await getSession({ req });
   const { id } = params as { id: string };
   const medic = await dbMedics.getMedicById(id);
+  const _id = medic?.parent_id;
   const products = await dbProducts.getProductsByMedicId(id);
   if (!medic || !session) {
     return {
@@ -89,6 +94,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
   return {
     props: {
+      id: _id,
       medic: medic,
       products: products,
     },

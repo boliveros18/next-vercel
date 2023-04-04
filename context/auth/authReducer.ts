@@ -2,7 +2,7 @@ import { State } from "./";
 import { User } from "../../interfaces";
 
 type ActionType =
-  | { type: "AUTH_LOGIN"; payload: User }
+  | { type: "AUTH_LOGIN" }
   | { type: "AUTH_LOGOUT" }
   | { type: "GET_USER"; payload: User }
   | { type: "UPDATE_USER"; payload: User }

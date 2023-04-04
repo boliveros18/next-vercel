@@ -65,7 +65,7 @@ export const getUserNameAndPhotoById = async (
   await db.connect();
   const user = await User.find(
     { _id: id },
-    { name: 1, photo: 1, role: 1 }
+    { name: 1, photo: 1, role: 1, email: 1 }
   ).lean();
   await db.disconnect();
   return JSON.parse(JSON.stringify(user[0]));

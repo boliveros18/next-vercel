@@ -3,7 +3,7 @@ import { State } from ".";
 type Action = "ADD_CERTIFICATIONS" | "CERTIFICATION_UPDATED";
 type ActionType = { type: Action; payload?: any };
 
-export const certificationsReducer = (state: State, action: ActionType): State => {
+export const certificationReducer = (state: State, action: ActionType): State => {
   switch (action.type) {
     case "ADD_CERTIFICATIONS":
       return { ...state, certifications: action.payload };

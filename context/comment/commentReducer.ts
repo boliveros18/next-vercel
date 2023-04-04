@@ -7,7 +7,7 @@ type Action =
   | "ADD_COMMENTS";
 type ActionType = { type: Action; payload?: any };
 
-export const commentsReducer = (state: State, action: ActionType): State => {
+export const commentReducer = (state: State, action: ActionType): State => {
   switch (action.type) {
     case "CREATE_COMMENT":
       return { ...state, comment: action.payload };

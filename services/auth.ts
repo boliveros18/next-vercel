@@ -2,7 +2,7 @@ import { ApiClient } from "../apis";
 import { User } from "../interfaces";
 
 export const login = async (email: string, password: string) => {
-  const { data } = await ApiClient.post("/user/login", { email, password });
+  const data = await ApiClient.post("/user/login", { email, password });
   return data;
 };
 

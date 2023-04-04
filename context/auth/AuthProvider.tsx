@@ -30,7 +30,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (status === "authenticated") {
-      dispatch({ type: "AUTH_LOGIN", payload: data?.user as User });
+      dispatch({ type: "AUTH_LOGIN" });
     }
   }, [status, data]);
 
@@ -38,12 +38,30 @@ export const AuthProvider: FC<Props> = ({ children }) => {
     dispatch({ type: "UPDATE_USER", payload: payload });
   }, []);
 
-  const loginUser = async (email: string, password: string) => {
-    const { status, data } = await AuthService.login(email, password);
-    const { token, user } = data;
-    Cookies.set("token", token);
-    if (status) dispatch({ type: "AUTH_LOGIN", payload: user });
-    return data;
+  const loginUser = async (
+    email: string,
+    password: string
+  ): Promise<{ hasError: boolean; message?: string }> => {
+    try {
+      const { status, data } = await AuthService.login(email, password);
+      const { token } = data;
+      Cookies.set("token", token);
+      if (status) dispatch({ type: "AUTH_LOGIN" });
+      return {
+        hasError: false,
+      };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return {
+          hasError: true,
+          message: error.response?.data.message,
+        };
+      }
+      return {
+        hasError: true,
+        message: "Failed to login - Try again",
+      };
+    }
   };
 
   const registerUser = async (
@@ -63,7 +81,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
       });
       const { token, user } = data;
       Cookies.set("token", token);
-      dispatch({ type: "AUTH_LOGIN", payload: user });
+      dispatch({ type: "AUTH_LOGIN" });
       return {
         hasError: false,
       };
@@ -98,8 +116,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
     payload: User
   ): Promise<{ hasError: boolean; message?: string }> => {
     try {
-      const data = await AuthService.updateOne(id, payload);
-      dispatch({ type: "UPDATE_USER", payload: data });
+      await AuthService.updateOne(id, payload);
       return {
         hasError: false,
       };
@@ -110,12 +127,11 @@ export const AuthProvider: FC<Props> = ({ children }) => {
           message: error.response?.data.message,
         };
       }
-       return {
+      return {
         hasError: true,
-        message: "Failed to create user - try again",
+        message: "Failed to update user - try again",
       };
     }
-
   };
 
   const deleteUser = async (id: string) => {
