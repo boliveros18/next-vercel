@@ -20,6 +20,7 @@ interface Props extends AppProps {
 }
 
 export default function App({ Component, pageProps }: Props) {
+
   return (
     <SessionProvider>
       <SWRConfig

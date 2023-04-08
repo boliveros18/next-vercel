@@ -18,9 +18,13 @@ const INITIAL_STATE: State = {
 export const ImageProvider: FC<ProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(imageReducer, INITIAL_STATE);
 
+  const setImage = useCallback(async (payload: Image) => {
+    dispatch({ type: "UPDATE_IMAGE", payload: payload });
+  }, []);
+
   const createImage = async (payload: Image) => {
     const data = await ImageService.createOne(payload);
-    dispatch({ type: "CREATE_IMAGE", payload: data });
+    dispatch({ type: "UPDATE_IMAGE", payload: data });
     return data;
   };
 
@@ -30,15 +34,20 @@ export const ImageProvider: FC<ProviderProps> = ({ children }) => {
     return data;
   };
 
-  const getImageByParentId = useCallback(async (parent_id: string) => {
-    const data: Image[] = await ImageService.getImageByParentId(parent_id);
+  const getImageByParentId = useCallback(async (
+    parent_id: string
+  ) => {
+    const data: Image[] = await ImageService.getImageByParentId(
+      parent_id
+    );
     dispatch({ type: "UPDATE_IMAGE", payload: data });
-  }, []);
+  },[]);
 
   return (
     <ImageContext.Provider
       value={{
         ...state,
+        setImage,
         createImage,
         updateImage,
         getImageByParentId,

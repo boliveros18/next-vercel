@@ -32,10 +32,11 @@ export const MedicAccountCard: FC<Props> = ({ clinic, medic }) => {
                 if (target.files) {
                   try {
                     const file = target.files[0];
+                    Object.defineProperty(file, 'id', { value: user?._id || ""});
                     const formData = new FormData();
                     formData.append("photo", file);
-                    const { data } = await ApiClient.post("/uploadImage", formData);
-                    if (image) {
+                    const { data } = await ApiClient.post("/uploadImage", formData); //Send id with formData
+                    if (image._id) {
                       await updateImage(image?._id || "", {
                         ...(image as Image),
                         ["url"]: data.message,

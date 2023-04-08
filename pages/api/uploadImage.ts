@@ -1,15 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import formidable from "formidable";
-import { getSession } from "next-auth/react";
 import { v2 as cloudinary } from "cloudinary";
-import { getUserNameAndPhotoById } from '../../database/dbUsers';
-import { User } from '../../interfaces';
-import { dbUsers } from "../../database";
+import { dbImages } from "../../database";
 cloudinary.config(process.env.CLOUDINARY_URL || "");
 
-type Data = {
-  message: string;
-};
+type Data =
+  | {
+      message: string;
+    }
+ 
 
 export const config = {
   api: {
@@ -49,11 +48,13 @@ const parseFiles = async (req: NextApiRequest): Promise<string> => {
 };
 
 const uploadImage = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const session = await getSession({ req });
-  const user = await dbUsers.getUserNameAndPhotoById(session?.user?._id || "")
-  if( user ){
-    const [ fileID ]  = user?.photo.substring( user?.photo.lastIndexOf("/") + 1 ).split(".")
-    fileID.length > 0 ? await cloudinary.uploader.destroy(fileID): null
+  //const { id } = req;
+  const image = await dbImages.getImageByParentId("id");
+  if (image) {
+    const [fileID] = image?.url
+      .substring(image?.url.lastIndexOf("/") + 1)
+      .split(".");
+    fileID.length > 0 ? await cloudinary.uploader.destroy(fileID) : null;
   }
   const imageURL = await parseFiles(req);
   return res.status(200).json({ message: imageURL });

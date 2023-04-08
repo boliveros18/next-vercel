@@ -8,11 +8,9 @@ export const getCertificationById = async (
   if (!isValidObjectId(id)) {
     return null;
   }
-
   await db.connect();
   const certification = await Certification.findById(id).lean();
   await db.disconnect();
-
   return JSON.parse(JSON.stringify(certification));
 };
 
@@ -25,18 +23,11 @@ export const getAllCertifications = async (): Promise<ICertification[]> => {
 
 export const getCertificationByParentId = async (
   parent_id: string
-): Promise<ICertification | null> => {
-  if (!isValidObjectId(parent_id)) {
-    return null;
-  }
+): Promise<any> => {
   await db.connect();
   const certification = await Certification.find({
     parent_id: parent_id,
   });
-  if (certification[0] === undefined) {
-    return null
-  }
   await db.disconnect();
-
   return JSON.parse(JSON.stringify(certification));
 };

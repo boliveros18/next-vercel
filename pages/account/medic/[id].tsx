@@ -30,15 +30,15 @@ interface Props {
 
 const AccountMedicPage: NextPage<Props> = ({ id, medic, products }) => {
   const { clinic, getClinic } = useContext(ClinicContext);
-  const { image, getImageByParentId } = useContext(ImageContext);
   const { index } = useContext(ProductContext);
+  const { getImageByParentId } = useContext(ImageContext);
   const { getUser } = useContext(AuthContext);
-
+  
   useEffect(() => {
-    image ? getImageByParentId(id) : null
     getUser(id);
-    products.length > 0 ? getClinic(products[index].clinic_id) : null ;
-  }, [id, image, getImageByParentId, getUser, getClinic, index, products]);
+    getImageByParentId(id || "");
+    getClinic(products[index]?.clinic_id || "") ;
+  }, [id, getUser, getClinic, getImageByParentId, index, products]);
 
   return (
     <Layout>

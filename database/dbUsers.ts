@@ -58,7 +58,7 @@ export const oAUthToDbUser = async (
 
 export const getUserNameAndPhotoById = async (
   id: string | string[] | undefined
-): Promise<IUser | null> => {
+): Promise<any> => {
   if (!isValidObjectId(id)) {
     return null;
   }
@@ -67,6 +67,9 @@ export const getUserNameAndPhotoById = async (
     { _id: id },
     { name: 1, photo: 1, role: 1, email: 1 }
   ).lean();
+  if (user[0] === undefined) {
+    return {} as IUser;
+  }
   await db.disconnect();
   return JSON.parse(JSON.stringify(user[0]));
 };

@@ -1,28 +1,37 @@
 import { useContext, useEffect } from "react";
 import { GetServerSideProps, NextPage } from "next";
 import { getSession } from "next-auth/react";
-import { dbClinics, dbLikes, dbMedics, dbUsers } from "../database";
+import { dbClinics, dbImages, dbLikes, dbMedics, dbUsers } from "../database";
 import { Layout } from "../components/layouts";
 import { HomeCard } from "../components/home";
 import { Grid } from "@mui/material";
 import { BottomBar, SideBar, RightBar } from "../components/ui";
-import { Clinic, Like, User, Medic } from "../interfaces";
+import { Clinic, Like, User, Medic, Image } from "../interfaces";
 import { LikeContext } from "../context/like";
 import { ClinicContext } from "../context/clinic";
-import { UIContext } from "../context/ui/UIContext";
-import { AuthContext } from "../context/auth/AuthContext";
-import { MedicContext } from "../context/medic/MedicContext";
+import { UIContext } from "../context/ui";
+import { AuthContext } from "../context/auth";
+import { MedicContext } from "../context/medic";
+import { ImageContext } from "../context/image";
 
 interface Props {
   principal: Clinic;
   like: Like;
   user: User;
   medic: Medic;
+  userAvatar: Image;
 }
 
-const HomePage: NextPage<Props> = ({ principal, like, user, medic }) => {
+const HomePage: NextPage<Props> = ({
+  principal,
+  like,
+  user,
+  medic,
+  userAvatar,
+}) => {
   const { setUser } = useContext(AuthContext);
   const { setMedic } = useContext(MedicContext);
+  const { setImage } = useContext(ImageContext);
   const { addLikes } = useContext(LikeContext);
   const { setPrincipal } = useContext(ClinicContext);
   const { setLoading } = useContext(UIContext);
@@ -30,6 +39,7 @@ const HomePage: NextPage<Props> = ({ principal, like, user, medic }) => {
   useEffect(() => {
     setUser(user);
     setMedic(medic);
+    setImage(userAvatar);
     addLikes(like);
     setPrincipal(principal);
     setLoading(true);
@@ -38,6 +48,8 @@ const HomePage: NextPage<Props> = ({ principal, like, user, medic }) => {
     setUser,
     medic,
     setMedic,
+    userAvatar,
+    setImage,
     like,
     addLikes,
     setLoading,
@@ -82,6 +94,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
   const principal = await dbClinics.getPrincipalClinic();
   const user = await dbUsers.getUserNameAndPhotoById(session?.user?._id || "");
+  const userAvatar = await dbImages.getImageByParentId(user?._id || "");
   const medic = await dbMedics.getMedicByUserId(user?._id || "");
   const like = await dbLikes.getLikeByParentIdAndUserId(
     principal._id || "",
@@ -100,6 +113,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   return {
     props: {
       user: user,
+      userAvatar: userAvatar,
       medic: medic,
       principal: principal,
       like: like,

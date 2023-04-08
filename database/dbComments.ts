@@ -55,14 +55,11 @@ export const getCommentsLengthByParentId = async (
 
 export const deleteCommentLikesAndChildren = async (comment_id: string) => {
   await db.connect();
-
   await Like.deleteMany({ parent_id: comment_id });
-
   const comments = await getCommentListByParentId(comment_id);
   comments.forEach(async (comment) => {
     await Comment.findByIdAndDelete(comment._id);
     await Like.deleteMany({ parent_id: comment._id });
   });
-
   await db.disconnect();
 };

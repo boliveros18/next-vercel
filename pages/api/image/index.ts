@@ -3,7 +3,7 @@ import { db, dbImages } from "../../../database";
 import { Image, IImage } from "../../../models";
 import { getSession } from "next-auth/react";
 
-type Data = { message: string } | IImage | IImage[];
+type Data = { message: string } | IImage | IImage[] ;
 
 export default async function handler(
   req: NextApiRequest,

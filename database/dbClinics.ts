@@ -19,17 +19,21 @@ export const getAllClinics = async (): Promise<IClinic[]> => {
   return JSON.parse(JSON.stringify(clinics));
 };
 
-
 export const getPrincipalsClinicsId = async (): Promise<IClinic[]> => {
   await db.connect();
-  const clinics = await Clinic.find({}, {"_id": 1}).sort({qualification: -1}).limit(5)
+  const clinics = await Clinic.find({}, { _id: 1 })
+    .sort({ qualification: -1 })
+    .limit(5);
   await db.disconnect();
   return JSON.parse(JSON.stringify(clinics));
 };
 
-export const getPrincipalClinic = async (): Promise<IClinic> => {
+export const getPrincipalClinic = async (): Promise<any> => {
   await db.connect();
-  const clinic = await Clinic.find({}).sort({qualification: -1}).limit(1)
+  const clinic = await Clinic.find({}).sort({ qualification: -1 }).limit(1);
+  if (clinic[0] === undefined) {
+    return {} as IClinic;
+  }
   await db.disconnect();
   return JSON.parse(JSON.stringify(clinic[0]));
 };
