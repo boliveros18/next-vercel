@@ -2,6 +2,8 @@ import { FC, ReactNode, useContext, useState } from "react";
 import { CardHeader, Typography, Box, IconButton, Avatar } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import { Clinic, Medic, Image } from "../../../interfaces";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CardActionArea from "@mui/material/CardActionArea";
 import { ApiClient } from "../../../apis";
 import { AuthContext } from "../../../context/auth";
@@ -32,12 +34,15 @@ export const MedicAccountCard: FC<Props> = ({ clinic, medic }) => {
                 if (target.files) {
                   try {
                     const file = target.files[0];
-                    Object.defineProperty(file, 'id', { value: user?._id || ""});
                     const formData = new FormData();
                     formData.append("photo", file);
-                    const { data } = await ApiClient.post("/uploadImage", formData); //Send id with formData
+                    formData.append("id", user?._id || "");
+                    const { data } = await ApiClient.post(
+                      "/uploadImage",
+                      formData
+                    );
                     if (image._id) {
-                      await updateImage(image?._id || "", {
+                      await updateImage(image?._id, {
                         ...(image as Image),
                         ["url"]: data.message,
                       });
@@ -66,7 +71,15 @@ export const MedicAccountCard: FC<Props> = ({ clinic, medic }) => {
         <>
           <Typography sx={{ fontSize: 15, fontWeight: 400 }}>
             <span style={{ fontWeight: "500" }}>MD.</span>
-            {" " + user?.name}
+            {" " + user?.name + " "}
+            {medic?.certified ? (
+              <CheckCircleIcon sx={{ color: "blue", fontSize: "15px" }} />
+            ) : (
+              <CheckCircleOutlineIcon
+                fontSize="small"
+                sx={{ color: "gray", fontSize: "15px" }}
+              />
+            )}
             <br />
             {clinic.name ? clinic.name : "Clinic name"}
             <br />

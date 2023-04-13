@@ -19,6 +19,12 @@ interface ContextProps {
   setValue: (payload: string) => void;
   onCancel: boolean;
   setOnCancel: (payload: boolean) => void;
+  country: string;
+  setCountry: (payload: string) => void;
+  state: string;
+  setState: (payload: string) => void;
+  city: string;
+  setCity: (payload: string) => void;
 }
 
 export const UIContext = createContext({} as ContextProps);

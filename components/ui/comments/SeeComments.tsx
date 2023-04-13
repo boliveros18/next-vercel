@@ -27,6 +27,7 @@ import { CommentUi } from "./CommentUi";
 import { Comment } from "../../../interfaces";
 import { pluralize } from "../../../utils/strings";
 import { CommentDialogUi } from "../utils/CommentDialogUi";
+import { ImageContext } from "../../../context/image";
 
 interface Props {
   children?: ReactNode;
@@ -42,6 +43,7 @@ export const SeeComments: FC<Props> = ({
   initialAnswers,
 }) => {
   const [value, setValue] = useState("");
+  const { image } = useContext(ImageContext);
   const { onFocus, setOnFocus } = useContext(UIContext);
   const { getLikesByGrandParentId, likes } = useContext(LikeContext);
   const { createComment, getCommentsByParentId, commentsByParentId, comments } =
@@ -144,7 +146,7 @@ export const SeeComments: FC<Props> = ({
             placeholder={"Add a comment…"}
             OnFocus={OnFocus}
           >
-            <Avatar alt="name" src={user?.photo} sx={{ marginRight: 1 }} />
+            <Avatar alt="name" src={ image.url } sx={{ marginRight: 1 }} />
           </CommentDialogUi>
         </Toolbar>
       )}

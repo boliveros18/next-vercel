@@ -7,7 +7,10 @@ type Action =
   | "SET_ONFOCUS"
   | "SET_TAG"
   | "SET_VALUE"
-  | "SET_ONCANCEL";
+  | "SET_ONCANCEL"
+  | "SET_COUNTRY"
+  | "SET_STATE"
+  | "SET_CITY";
 type ActionType = { type: Action; payload?: any };
 
 export const uiReducer = (state: State, action: ActionType): State => {
@@ -32,6 +35,12 @@ export const uiReducer = (state: State, action: ActionType): State => {
       return { ...state, value: action.payload };
     case "SET_ONCANCEL":
       return { ...state, onCancel: action.payload };
+    case "SET_COUNTRY":
+      return { ...state, country: action.payload };
+    case "SET_STATE":
+      return { ...state, state: action.payload };
+    case "SET_CITY":
+      return { ...state, city: action.payload };
     default:
       return state;
   }

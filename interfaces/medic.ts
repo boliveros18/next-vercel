@@ -2,6 +2,7 @@ export interface Medic {
   _id: string;
   type: string;
   parent_id: string;
+  certified: boolean;
   card_id: string;
   to_approve: boolean;
   contract_signature: string;

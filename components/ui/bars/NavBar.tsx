@@ -26,6 +26,7 @@ import Logout from "@mui/icons-material/Logout";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { AuthContext } from "../../../context/auth";
 import { MedicContext } from "../../../context/medic";
+import { ImageContext } from "../../../context/image";
 
 import { Search, SearchIconWrapper, StyledInputBase } from "../styled/Search";
 
@@ -40,6 +41,7 @@ interface Props {
 export const NavBar: FC<Props> = ({}) => {
   const { user, isLoggedIn, logout } = useContext(AuthContext);
   const { medic } = useContext(MedicContext);
+  const { image } = useContext(ImageContext);
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
@@ -89,7 +91,7 @@ export const NavBar: FC<Props> = ({}) => {
     >
       <MenuItem onClick={() =>{handleMenuClose() ; navigateTo(`/account/${user?.role}/${user?.role ==="client" ? null : medic._id }`)}} sx={{ width: 300, maxWidth: "100%" }}>
         <ListItemIcon>
-          <Avatar alt="name" src={user?.photo || ""} sx={{ mr: 1 }} />
+          <Avatar alt="name" src={image.url || ""} sx={{ mr: 1 }} />
         </ListItemIcon>{" "}
         { user?.role === "medic" ? ("Md. " + user?.name) : user?.name }
       </MenuItem>
@@ -180,7 +182,7 @@ export const NavBar: FC<Props> = ({}) => {
           aria-haspopup="true"
           color="inherit"
         >
-          <Avatar alt={user?.name || ""} src={user?.photo || ""} />
+          <Avatar alt={user?.name || ""} src={image.url || ""} />
         </IconButton>
         <p style={{ paddingRight: 145 }}>{ user?.role === "medic" ? ("Md. " + user?.name) : user?.name }</p>
         <ExpandMoreIcon />
@@ -246,7 +248,7 @@ export const NavBar: FC<Props> = ({}) => {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <Avatar alt={user?.name || ""} src={user?.photo || ""} />
+              <Avatar alt={user?.name || ""} src={image.url || ""} />
             </IconButton>
           </Box>
         ) : (

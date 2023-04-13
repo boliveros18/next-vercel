@@ -2,7 +2,7 @@ import { isValidObjectId } from "mongoose";
 import { db } from ".";
 import { Medic, IMedic } from "../models";
 
-export const getMedicById = async (id: string): Promise<IMedic | null> => {
+export const getMedicById = async (id: string | string []): Promise<IMedic | null> => {
   if (!isValidObjectId(id)) {
     return null;
   }

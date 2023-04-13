@@ -239,6 +239,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     if (session.user?.role === "medic") {
       const medic = await dbMedics.createMedic({
         parent_id: session?.user?._id,
+        certified: false,
         card_id : "",
         to_approve : false,
         contract_signature : "",

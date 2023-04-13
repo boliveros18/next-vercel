@@ -6,6 +6,7 @@ export interface IMedic extends Medic {}
 const entrySchema = new Schema({
   type: { type: String, require: true },
   parent_id: { type: String, require: true },
+  certified: { type: Boolean },
   card_id: { type: String },
   to_approve: { type: Boolean },
   contract_signature: { type: String },

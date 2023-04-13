@@ -15,12 +15,13 @@ import { AuthContext } from "../../../context/auth";
 import {
   SelectCategoryAndProcedure,
   MedicAccountCard,
-  AccordionUi,
   EditUser,
 } from "../../../components/ui";
 import { ProductContext } from "../../../context/product";
 import { ClinicContext } from "../../../context/clinic";
 import { ImageContext } from "../../../context/image";
+import { MedicContext } from "../../../context/medic";
+import CompleteMedicProfile from "../../../components/ui/medic/CompleteMedicProfile";
 
 interface Props {
   id: string
@@ -29,6 +30,7 @@ interface Props {
 }
 
 const AccountMedicPage: NextPage<Props> = ({ id, medic, products }) => {
+  const { setMedic } = useContext(MedicContext);
   const { clinic, getClinic } = useContext(ClinicContext);
   const { index } = useContext(ProductContext);
   const { getImageByParentId } = useContext(ImageContext);
@@ -36,9 +38,10 @@ const AccountMedicPage: NextPage<Props> = ({ id, medic, products }) => {
   
   useEffect(() => {
     getUser(id);
+    setMedic(medic);
     getImageByParentId(id || "");
     getClinic(products[index]?.clinic_id || "") ;
-  }, [id, getUser, getClinic, getImageByParentId, index, products]);
+  }, [id, medic, setMedic, getUser, getClinic, getImageByParentId, index, products]);
 
   return (
     <Layout>
@@ -66,7 +69,7 @@ const AccountMedicPage: NextPage<Props> = ({ id, medic, products }) => {
             <MedicAccountCard clinic={clinic} medic={medic} />
             <CardContent>
               <EditUser medic={medic} />
-              <AccordionUi summary="Complete your medic profile"></AccordionUi>
+              <CompleteMedicProfile/>
             </CardContent>
           </Card>
         </Grid>

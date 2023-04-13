@@ -14,6 +14,9 @@ export interface State {
   tag: tagger;
   value: string;
   onCancel: boolean;
+  country: string;
+  state: string;
+  city: string;
 }
 
 const INITIAL_STATE: State = {
@@ -23,6 +26,9 @@ const INITIAL_STATE: State = {
   tag: { user_name: "", user_id: "" },
   value: "",
   onCancel: false,
+  country: "",
+  state: "",
+  city: ""
 };
 
 export const UIProvider: FC<ProviderProps> = ({ children }) => {
@@ -55,6 +61,18 @@ export const UIProvider: FC<ProviderProps> = ({ children }) => {
     dispatch({ type: "SET_ONCANCEL", payload });
   }, []);
 
+  const setCountry = useCallback((payload: string) => {
+    dispatch({ type: "SET_COUNTRY", payload });
+  }, []);
+
+  const setState = useCallback((payload: string) => {
+    dispatch({ type: "SET_STATE", payload });
+  }, []);
+
+  const setCity = useCallback((payload: string) => {
+    dispatch({ type: "SET_CITY", payload });
+  }, []);
+
   return (
     <UIContext.Provider
       value={{
@@ -65,7 +83,10 @@ export const UIProvider: FC<ProviderProps> = ({ children }) => {
         setOnFocus,
         setTag,
         setValue,
-        setOnCancel
+        setOnCancel,
+        setCountry,
+        setState,
+        setCity
       }}
     >
       {children}

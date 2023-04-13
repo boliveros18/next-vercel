@@ -11,6 +11,8 @@ export * from "./comments/CommentUi";
 export * from "./comments/EditCommentUi";
 export * from "./comments/SeeComments";
 
+export * from "./medic/AddDocumentMedicProfile"
+export * from "./medic/CompleteMedicProfile"
 export * from "./medic/MedicAccountCard"
 export * from "./medic/SelectCategoryAndProcedure"
 
@@ -29,6 +31,8 @@ export * from "./utils/ItemQualification";
 export * from "./utils/MessageSkeleton";
 export * from "./utils/PrivacyPolicy";
 export * from "./utils/ReadMore";
+export * from "./utils/SelectUbication";
+export * from "./utils/SelectUbicationUi";
 export * from "./utils/ShareMediaUi";
 export * from "./utils/SingInUi";
 

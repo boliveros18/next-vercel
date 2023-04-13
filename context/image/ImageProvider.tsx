@@ -1,6 +1,7 @@
 import { FC, ReactNode, useReducer, useCallback } from "react";
 import { ImageContext, imageReducer } from "./";
 import { Image } from "../../interfaces";
+import { Pagination } from "./ImageContext";
 import { ImageService } from "../../services";
 
 interface ProviderProps {
@@ -8,11 +9,13 @@ interface ProviderProps {
 }
 
 export interface State {
+  images: Image[];
   image: Image;
 }
 
 const INITIAL_STATE: State = {
-  image: {} as Image,
+  images: [],
+  image: {} as Image
 };
 
 export const ImageProvider: FC<ProviderProps> = ({ children }) => {
@@ -50,7 +53,7 @@ export const ImageProvider: FC<ProviderProps> = ({ children }) => {
         setImage,
         createImage,
         updateImage,
-        getImageByParentId,
+        getImageByParentId
       }}
     >
       {children}
