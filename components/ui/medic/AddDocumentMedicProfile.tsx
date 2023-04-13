@@ -22,7 +22,7 @@ export const AddDocumentMedicProfile: FC<Props> = ({ type, text }) => {
             formData.append("pdf", file);
             formData.append("id", medic._id);
             formData.append("type", type);
-            const { data } = await ApiClient.post("/uploadPDF", formData);
+            const { data } = await ApiClient.post("/upload", formData);
             if (medic._id) {
               await updateMedic(medic?._id, {
                 ...(medic as Medic),

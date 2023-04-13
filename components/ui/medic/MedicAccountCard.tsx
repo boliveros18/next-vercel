@@ -37,8 +37,9 @@ export const MedicAccountCard: FC<Props> = ({ clinic, medic }) => {
                     const formData = new FormData();
                     formData.append("photo", file);
                     formData.append("id", user?._id || "");
+                    formData.append("type", "image");
                     const { data } = await ApiClient.post(
-                      "/uploadImage",
+                      "/upload",
                       formData
                     );
                     if (image._id) {
