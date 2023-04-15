@@ -6,8 +6,8 @@ export const getClinic = async (id: string) => {
   return res.data;
 };
 
-export const getClinics = async () => {
-  const res = await ApiClient.get(`/clinic`);
+export const getClinicsByMedicId = async (medic_id: string) => {
+  const res = await ApiClient.get(`/clinic?medic_id=${medic_id}`);
   return res.data;
 };
 

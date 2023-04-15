@@ -68,6 +68,7 @@ const updateClinic = async (
 
   const {
     type = clinicToUpdate.type,
+    medic_id = clinicToUpdate.medic_id,
     certified = clinicToUpdate.certified,
     finantial = clinicToUpdate.finantial,
     speciality = clinicToUpdate.speciality,
@@ -89,6 +90,7 @@ const updateClinic = async (
       id,
       {
         type,
+        medic_id,
         certified,
         finantial,
         speciality,

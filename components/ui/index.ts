@@ -13,6 +13,7 @@ export * from "./comments/SeeComments";
 
 export * from "./medic/AddDocumentMedicProfile"
 export * from "./medic/CompleteMedicProfile"
+export * from "./medic/ManageClinics"
 export * from "./medic/MedicAccountCard"
 export * from "./medic/SelectCategoryAndProcedure"
 

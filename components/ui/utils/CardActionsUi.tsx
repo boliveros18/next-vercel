@@ -88,19 +88,6 @@ export const CardActionsUi: FC<Props> = ({ parent_id, initialLikes }) => {
               <CommentIcon fontSize="medium" />
             </IconButton>
           </Grid>
-          <Box sx={{ flexGrow: 1 }} />
-          <ArrowRightOutlinedIcon fontSize="medium" sx={{ mt: 0.75, mr: -1 }} />
-          <Grid item xs={0}>
-            <IconButton
-              aria-label="comment"
-              color={isLoggedIn ? "primary" : "default"}
-              disabled={!isLoggedIn}
-              onClick={() => router.push(`/clinic/${parent_id}`)}
-            >
-              <AccessibilityNewIcon sx={{ fontSize: "26px", mt: -0.5 }} />
-              <LocalHospitalIcon sx={{ fontSize: "15px", mt: -1.5 }} />
-            </IconButton>
-          </Grid>
         </Grid>
       </CardActions>
       <Typography

@@ -8,6 +8,7 @@ import {
   Typography,
   CardActionArea,
 } from "@mui/material";
+import AddModeratorIcon from "@mui/icons-material/AddModerator";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { CardActionsUi, GuideBar, SeeComments } from "../ui";
 import { WindowSize, UseWindowSize } from "../../utils";
@@ -48,7 +49,17 @@ export const HomeCard: FC<Props> = () => {
             sx={{ mt: -1, mb: -1 }}
             avatar={
               loading && (
-                <Avatar alt={principal?.name}>C</Avatar>
+                <Avatar
+                  alt={principal?.name}
+                  sx={{
+                    fontWeight: "bold",
+                    color: "white",
+                    backgroundColor: "#c9daff",
+                    fontSize: 12,
+                  }}
+                >
+                  <AddModeratorIcon />
+                </Avatar>
               )
             }
             action={

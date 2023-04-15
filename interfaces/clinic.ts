@@ -1,6 +1,7 @@
 export interface Clinic {
   _id?: string;
   type: string;
+  medic_id: string;
   certified: boolean;
   finantial: string;
   speciality: string;

@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { WindowSize, UseWindowSize } from "../../utils";
+import AddModeratorIcon from "@mui/icons-material/AddModerator";
 import {
   ReadMore,
   ShareMediaUi,
@@ -69,7 +70,19 @@ const ClinicPage: NextPage<Props> = ({
             >
               <CardHeader
                 sx={{ mt: -1, mb: -1 }}
-                avatar={<Avatar alt={clinic?.name}>C</Avatar>}
+                avatar={
+                  <Avatar
+                    alt={clinic?.name}
+                    sx={{
+                      fontWeight: "bold",
+                      color: "white",
+                      backgroundColor: "#c9daff",
+                      fontSize: 12,
+                    }}
+                  >
+                    <AddModeratorIcon />
+                  </Avatar>
+                }
                 action={
                   <ShareMediaUi
                     name={clinic?.name}

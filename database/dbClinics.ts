@@ -19,6 +19,18 @@ export const getAllClinics = async (): Promise<IClinic[]> => {
   return JSON.parse(JSON.stringify(clinics));
 };
 
+export const getClinicsByMedicId = async (
+  medic_id: string
+): Promise<IClinic[]> => {
+  const params = medic_id ? { medic_id: medic_id } : {};
+  await db.connect();
+  const clinics: IClinic[] = await Clinic.find(params).sort({
+    createdAt: "ascending",
+  });
+  await db.disconnect();
+  return clinics;
+};
+
 export const getPrincipalsClinicsId = async (): Promise<IClinic[]> => {
   await db.connect();
   const clinics = await Clinic.find({}, { _id: 1 })

@@ -25,7 +25,7 @@ export const SelectUi: FC<Props> = ({}) => {
       inputProps={{ "aria-label": "Without label" }}
       onChange={handleChange}
     >
-      <MenuItem>All</MenuItem>
+      <MenuItem value={""}>All</MenuItem>
       {Categories.map((item, index) => (
         <MenuItem key={index} value={item}>
           {item}

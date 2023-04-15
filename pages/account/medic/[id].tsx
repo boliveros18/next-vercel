@@ -3,7 +3,7 @@ import { GetServerSideProps, NextPage } from "next";
 import { Typography, Card, CardContent, Grid, Divider } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { getSession } from "next-auth/react";
-import { dbMedics, dbProducts } from "../../../database";
+import { dbMedics, dbProducts, dbClinics } from "../../../database";
 import { Layout } from "../../../components/layouts";
 import { Medic, Product } from "../../../interfaces";
 import { AuthContext } from "../../../context/auth";
@@ -11,6 +11,7 @@ import {
   SelectCategoryAndProcedure,
   MedicAccountCard,
   EditUser,
+  ManageClinics,
 } from "../../../components/ui";
 import { ProductContext } from "../../../context/product";
 import { ClinicContext } from "../../../context/clinic";
@@ -79,6 +80,7 @@ const AccountMedicPage: NextPage<Props> = ({ id, medic, products }) => {
             <CardContent>
               <EditUser medic={medic} />
               <CompleteMedicProfile />
+              <ManageClinics />
             </CardContent>
           </Card>
         </Grid>

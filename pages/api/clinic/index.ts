@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { db } from "../../../database";
+import { db, dbClinics } from "../../../database";
 import { Clinic, IClinic } from "../../../models";
 import { getSession } from "next-auth/react";
 
-type Data = { message: string } | IClinic;
+type Data = { message: string } | IClinic | IClinic [];
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,7 +13,7 @@ export default async function handler(
     case "POST":
       return createModel(req, res);
     case "GET":
-      return getClinics(res);
+      return getClinics(req, res);
     default:
       return res.status(400).json({ message: "The endpoint does not exist" });
   }
@@ -29,6 +29,7 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   const {
     type = "clinic",
+    medic_id = "",
     certified = false,
     finantial = "",
     speciality = "",
@@ -51,6 +52,7 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   const newModel = new Clinic({
     type,
+    medic_id,
     certified,
     finantial,
     speciality,
@@ -83,11 +85,17 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   }
 };
 
-const getClinics = async (res: NextApiResponse<Data>) => {
-  await db.connect();
-  const clinics: any = await Clinic.find().sort({
-    createdAt: "ascending",
-  });
-  await db.disconnect();
-  return res.status(200).json(clinics);
+const getClinics = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+  try {
+    const clinics = await dbClinics.getClinicsByMedicId(
+      req.query.medic_id as string
+    );
+    return res.status(201).json(clinics);
+  } catch (error: any) {
+    console.log(error);
+    res.status(400).json({
+      message: error.message || "Check server logs",
+    });
+  }
+  return;
 };
