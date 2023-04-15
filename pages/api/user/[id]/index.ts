@@ -13,7 +13,6 @@ type Data =
       user: {
         name: string;
         email: string;
-        photo: string;
       };
     }
   | IUser
@@ -79,7 +78,6 @@ const updateUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     name = userToUpdate.name,
     email = userToUpdate.email,
     password = userToUpdate.password,
-    photo = userToUpdate.photo,
     role = userToUpdate.role,
     updateAt = Date.now(),
   } = req.body;
@@ -104,12 +102,10 @@ const updateUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   const user = await User.findOne({ email });
 
-  if (user && (JSON.parse(JSON.stringify(user?._id)) !== id)) {
+  if (user && JSON.parse(JSON.stringify(user?._id)) !== id) {
     return res.status(400).json({
       message: "You can't use that email",
     });
-
-
   }
   try {
     const updatedUser = await User.findByIdAndUpdate(
@@ -118,7 +114,6 @@ const updateUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         name,
         email: email.toLocaleLowerCase(),
         password: bcrypt.hashSync(password),
-        photo,
         role,
         updateAt,
       },

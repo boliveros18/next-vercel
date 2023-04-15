@@ -8,7 +8,6 @@ import {
   Typography,
   CardActionArea,
 } from "@mui/material";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { CardActionsUi, GuideBar, SeeComments } from "../ui";
 import { WindowSize, UseWindowSize } from "../../utils";
@@ -49,7 +48,7 @@ export const HomeCard: FC<Props> = () => {
             sx={{ mt: -1, mb: -1 }}
             avatar={
               loading && (
-                <Avatar alt={principal?.name} src={principal?.avatar} />
+                <Avatar alt={principal?.name}>C</Avatar>
               )
             }
             action={
@@ -70,14 +69,12 @@ export const HomeCard: FC<Props> = () => {
               loading && (
                 <Typography sx={{ fontSize: 15, fontWeight: 500 }}>
                   {principal?.name + " "}
-                  {principal?.certified ? (
-                    <CheckCircleIcon sx={{ color: "blue", fontSize: "15px" }} />
-                  ) : (
-                    <CheckCircleOutlineIcon
-                      fontSize="small"
-                      sx={{ color: "gray", fontSize: "15px" }}
-                    />
-                  )}
+                  <CheckCircleIcon
+                    sx={{
+                      color: principal?.certified ? "blue" : "lightgray",
+                      fontSize: "15px",
+                    }}
+                  />
                 </Typography>
               )
             }

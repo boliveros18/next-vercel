@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import {  NavBar, SideBar } from "../ui";
+import { NavBar, SideBar } from "../ui";
 
 interface Props {
   children?: ReactNode;

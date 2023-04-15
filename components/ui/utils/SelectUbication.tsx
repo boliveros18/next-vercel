@@ -1,4 +1,4 @@
-import { FC, ReactNode, useState, useContext, useEffect } from 'react';
+import { FC, ReactNode, useState, useContext, useEffect } from "react";
 import { MenuItem, SelectChangeEvent, Grid } from "@mui/material";
 import { UIContext } from "../../../context/ui";
 import { Country, State, City } from "country-state-city";
@@ -19,8 +19,7 @@ export const SelectUbication: FC<Props> = ({ content }) => {
     setCountry(content.country);
     setState(content.state);
     setCity(content.province);
-  }, [setCountry, setState, setCity, content])
-  
+  }, [setCountry, setState, setCity, content]);
 
   const handleChangeCountry = (event: SelectChangeEvent) => {
     addCountry(event.target.value as string);
@@ -46,7 +45,7 @@ export const SelectUbication: FC<Props> = ({ content }) => {
           <MenuItem
             key={index}
             value={item.isoCode || ""}
-            onClick={() =>setCountry(item.name)}
+            onClick={() => setCountry(item.name)}
           >
             <span style={{ fontWeight: "500" }}>{item.name}</span>
           </MenuItem>

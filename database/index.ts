@@ -5,9 +5,9 @@ export * as dbComments from './dbComments'
 export * as dbImages from './dbImages'
 export * as dbLikes from './dbLikes'
 export * as dbMedics from './dbMedics'
+export * as dbProducts from './dbProducts';
 export * as dbQualifications from './dbQualifications'
 export * as dbUsers from './dbUsers';
-export * as dbProducts from './dbProducts';
 export * from './seed-data'
 
 

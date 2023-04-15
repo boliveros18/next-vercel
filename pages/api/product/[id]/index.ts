@@ -71,7 +71,7 @@ const updateModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     facility_care = modelToUpdate.facility_care,
     medical_care = modelToUpdate.medical_care,
     anesthesia_fees = modelToUpdate.anesthesia_fees,
-    medical_tests= modelToUpdate.medical_tests,
+    medical_tests = modelToUpdate.medical_tests,
     post_surgery_garments = modelToUpdate.post_surgery_garments,
     prescription_medication = modelToUpdate.prescription_medication,
     surgeon_fee = modelToUpdate.surgeon_fee,

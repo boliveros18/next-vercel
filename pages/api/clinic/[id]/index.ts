@@ -73,7 +73,6 @@ const updateClinic = async (
     speciality = clinicToUpdate.speciality,
     technology = clinicToUpdate.technology,
     phone = clinicToUpdate.phone,
-    avatar = clinicToUpdate.avatar,
     photo = clinicToUpdate.photo,
     name = clinicToUpdate.name,
     province = clinicToUpdate.province,
@@ -95,7 +94,6 @@ const updateClinic = async (
         speciality,
         technology,
         phone,
-        avatar,
         photo,
         name,
         province,
@@ -132,7 +130,6 @@ const deleteClinic = async (
       .status(400)
       .json({ message: "There is no clinic with that ID: " + id });
   }
-
   try {
     const deleteClinic = await Clinic.findByIdAndDelete(id);
     await db.disconnect();

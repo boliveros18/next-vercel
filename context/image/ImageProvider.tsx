@@ -1,7 +1,6 @@
 import { FC, ReactNode, useReducer, useCallback } from "react";
 import { ImageContext, imageReducer } from "./";
 import { Image } from "../../interfaces";
-import { Pagination } from "./ImageContext";
 import { ImageService } from "../../services";
 
 interface ProviderProps {

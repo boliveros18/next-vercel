@@ -22,12 +22,8 @@ interface Props {
 export const CardActionsUi: FC<Props> = ({ parent_id, initialLikes }) => {
   const router = useRouter();
   const { setOnFocus } = useContext(UIContext);
-  const {
-    createLike,
-    deleteLike,
-    likes,
-    likeByParentAndUserId
-  } = useContext(LikeContext);
+  const { createLike, deleteLike, likes, likeByParentAndUserId } =
+    useContext(LikeContext);
   const { isLoggedIn, user } = useContext(AuthContext);
 
   const handleLike = (
@@ -47,7 +43,11 @@ export const CardActionsUi: FC<Props> = ({ parent_id, initialLikes }) => {
     }
   };
 
-  const reactions: any = (likes: Like[], parent_id: string, user_id: string) => {
+  const reactions: any = (
+    likes: Like[],
+    parent_id: string,
+    user_id: string
+  ) => {
     return likeByParentAndUserId(likes, parent_id, user_id) === null
       ? initialLikes
       : likeByParentAndUserId(likes, parent_id, user_id).length;

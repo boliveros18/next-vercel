@@ -3,9 +3,7 @@ import mongoose from "mongoose";
 import { db, dbComments } from "../../../database";
 import { Comment, IComment } from "../../../models";
 import { getSession } from "next-auth/react";
-import {
-  getCommentsLengthByParentId
-} from "../../../database/dbComments";
+import { getCommentsLengthByParentId } from "../../../database/dbComments";
 
 type Data = { message: string } | IComment | IComment[];
 
@@ -61,11 +59,13 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   try {
     await newModel.save();
     const comments = await getCommentsLengthByParentId(parent_id);
-    await mongoose.model(type).findByIdAndUpdate(
-      parent_id,
-      { comments },
-      { runValidators: true, new: true }
-    )
+    await mongoose
+      .model(type)
+      .findByIdAndUpdate(
+        parent_id,
+        { comments },
+        { runValidators: true, new: true }
+      );
     await db.disconnect();
     return res.status(201).json(newModel);
   } catch (error: any) {

@@ -12,29 +12,29 @@ interface Props {
 }
 
 export const AddDocumentMedicProfile: FC<Props> = ({ type, text }) => {
-    const { medic, updateMedic } = useContext(MedicContext);
+  const { medic, updateMedic } = useContext(MedicContext);
 
-    const upload = async (type: string, target: any) => {
-        if (target.files) {
-          try {
-            const file = target.files[0];
-            const formData = new FormData();
-            formData.append("pdf", file);
-            formData.append("id", medic._id);
-            formData.append("type", type);
-            const { data } = await ApiClient.post("/upload", formData);
-            if (medic._id) {
-              await updateMedic(medic?._id, {
-                ...(medic as Medic),
-                [type]: data.message,
-                ["to_approve"]: true
-              });
-            }
-          } catch (error) {
-            console.log({ error });
-          }
+  const upload = async (type: string, target: any) => {
+    if (target.files) {
+      try {
+        const file = target.files[0];
+        const formData = new FormData();
+        formData.append("pdf", file);
+        formData.append("id", medic._id);
+        formData.append("type", type);
+        const { data } = await ApiClient.post("/upload", formData);
+        if (medic._id) {
+          await updateMedic(medic?._id, {
+            ...(medic as Medic),
+            [type]: data.message,
+            ["to_approve"]: true,
+          });
         }
-      };
+      } catch (error) {
+        console.log({ error });
+      }
+    }
+  };
   return (
     <Grid item xs={12} display="flex" justifyContent="end">
       <label>
@@ -43,8 +43,8 @@ export const AddDocumentMedicProfile: FC<Props> = ({ type, text }) => {
           hidden
           accept="application/pdf"
           onChange={async ({ target }) => {
-             upload(type, target)
-            }}
+            upload(type, target);
+          }}
         />
         <a
           style={{

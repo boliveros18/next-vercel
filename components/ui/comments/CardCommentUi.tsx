@@ -62,7 +62,7 @@ export const CardCommentUi: FC<Props> = ({ item, parent_id }) => {
 
   const editComment = () => {
     item.description = value;
-    updateComment(item._id, ({...item, description: value}));
+    updateComment(item._id, { ...item, description: value });
     setValue("");
     setInputs("");
     setEdit(false);

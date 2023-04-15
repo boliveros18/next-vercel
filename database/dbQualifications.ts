@@ -2,7 +2,9 @@ import { isValidObjectId } from "mongoose";
 import { db } from ".";
 import { Qualification, IQualification } from "../models";
 
-export const getQualificationById = async (id: string): Promise<IQualification | null> => {
+export const getQualificationById = async (
+  id: string
+): Promise<IQualification | null> => {
   if (!isValidObjectId(id)) {
     return null;
   }
@@ -24,7 +26,7 @@ export const getAllQualifications = async (): Promise<IQualification[]> => {
 
 export const getQualificationByParentId = async (
   id: string
-): Promise<IQualification [] | null> => {
+): Promise<IQualification[] | null> => {
   if (!isValidObjectId(id)) {
     return null;
   }

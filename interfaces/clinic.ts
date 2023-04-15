@@ -6,7 +6,6 @@ export interface Clinic {
   speciality: string;
   technology: string;
   phone: string;
-  avatar: string;
   photo: string;
   name: string;
   province: string;
@@ -20,4 +19,3 @@ export interface Clinic {
   createdAt: number;
   updatedAt: number;
 }
-

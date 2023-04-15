@@ -59,7 +59,6 @@ const RegisterPage = () => {
       setTimeout(() => setShowError(false), 3000);
       return;
     }
-
     await signIn("credentials", { email, password });
   };
 
@@ -240,19 +239,19 @@ export const getServerSideProps: GetServerSideProps = async ({
       const medic = await dbMedics.createMedic({
         parent_id: session?.user?._id,
         certified: false,
-        card_id : "",
-        to_approve : false,
-        contract_signature : "",
-        available_days : "",
-        curriculum : "",
-        qualification : 0,
-        comments : 0,
-        instagram : "",
-        country : "",
-        state : "",
-        province : "",
-        createdAt : Date.now(),
-        updatedAt : 0
+        card_id: "",
+        to_approve: false,
+        contract_signature: "",
+        available_days: "",
+        curriculum: "",
+        qualification: 0,
+        comments: 0,
+        instagram: "",
+        country: "",
+        state: "",
+        province: "",
+        createdAt: Date.now(),
+        updatedAt: 0,
       } as Medic);
       const { m = `/account/medic/${medic._id}` } = query;
       return {

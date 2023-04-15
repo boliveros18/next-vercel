@@ -10,8 +10,7 @@ const entrySchema = new Schema({
   certificate: { type: String, require: true },
   description: { type: String, require: true },
   to_approve: { type: String },
-  logo: { type: String }
-  
+  logo: { type: String },
 });
 
 const CertificationModel: Model<ICertification> =

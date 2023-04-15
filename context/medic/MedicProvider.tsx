@@ -2,7 +2,7 @@ import { FC, ReactNode, useReducer, useCallback } from "react";
 import { MedicContext, medicReducer } from ".";
 import { Medic } from "../../interfaces";
 import { MedicService } from "../../services";
-import { Pagination } from "./";
+import { Pagination } from ".";
 
 interface ProviderProps {
   children: ReactNode;
@@ -21,11 +21,11 @@ const INITIAL_STATE: State = {
 export const MedicProvider: FC<ProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(medicReducer, INITIAL_STATE);
 
-  const setMedic = useCallback(async(payload: Medic) =>{
+  const setMedic = useCallback(async (payload: Medic) => {
     dispatch({ type: "UPDATE_MEDIC", payload: payload });
-  }, [])
+  }, []);
 
-  const getMedic = useCallback( async (id: string) => {
+  const getMedic = useCallback(async (id: string) => {
     const data = await MedicService.getMedicByUserId(id);
     dispatch({ type: "GET_MEDIC", payload: data[0] });
     return data;

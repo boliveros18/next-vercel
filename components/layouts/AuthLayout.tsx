@@ -13,7 +13,6 @@ export const AuthLayout: FC<Props> = ({ children, title }) => {
       <Head>
         <title>{title}</title>
       </Head>
-
       <main>
         <Box
           display="flex"

@@ -11,9 +11,16 @@ interface ContextProps {
   like: Like;
   likes: Like[];
   addLikes: (payload: Like) => void;
-  likeByParentAndUserId: (payload: Like[], parent_id: string, user_id: string) => Like[];
+  likeByParentAndUserId: (
+    payload: Like[],
+    parent_id: string,
+    user_id: string
+  ) => Like[];
   likesByParentId: (payload: Like[], parent_id: string) => Like[];
-  getLikesByGrandParentId: (grandparent_id: string, pagination?: Pagination) => void;
+  getLikesByGrandParentId: (
+    grandparent_id: string,
+    pagination?: Pagination
+  ) => void;
   createLike: (payload: Like) => Promise<void>;
   deleteLike: (id: string) => Promise<void>;
 }

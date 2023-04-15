@@ -1,13 +1,14 @@
-import { FC, ReactNode, useContext, useState } from "react";
+import { FC, ReactNode, useContext } from "react";
 import { CardHeader, Typography, Box, IconButton, Avatar } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import { Clinic, Medic, Image } from "../../../interfaces";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CardActionArea from "@mui/material/CardActionArea";
 import { ApiClient } from "../../../apis";
 import { AuthContext } from "../../../context/auth";
+import { UIContext } from "../../../context/ui";
 import { ImageContext } from "../../../context/image";
+import { useSnackbar } from "notistack";
 
 interface Props {
   children?: ReactNode;
@@ -16,6 +17,8 @@ interface Props {
 }
 
 export const MedicAccountCard: FC<Props> = ({ clinic, medic }) => {
+  const { setProgress } = useContext(UIContext);
+  const { enqueueSnackbar } = useSnackbar();
   const { user } = useContext(AuthContext);
   const { image, updateImage, createImage } = useContext(ImageContext);
   const stars = Array(5).fill(0);
@@ -31,6 +34,7 @@ export const MedicAccountCard: FC<Props> = ({ clinic, medic }) => {
               hidden
               accept="image/png, image/jpeg, image/jpg"
               onChange={async ({ target }) => {
+                setProgress(true);
                 if (target.files) {
                   try {
                     const file = target.files[0];
@@ -38,22 +42,35 @@ export const MedicAccountCard: FC<Props> = ({ clinic, medic }) => {
                     formData.append("photo", file);
                     formData.append("id", user?._id || "");
                     formData.append("type", "image");
-                    const { data } = await ApiClient.post(
-                      "/upload",
-                      formData
-                    );
+                    const { data } = await ApiClient.post("/upload", formData);
                     if (image._id) {
                       await updateImage(image?._id, {
                         ...(image as Image),
                         ["url"]: data.message,
-                      });
+                      })
+                        .then(() => setProgress(false))
+                        .then(() =>
+                          enqueueSnackbar(
+                            "Your photo profile has been updated!",
+                            { variant: "success" }
+                          )
+                        );
                     } else {
                       await createImage({
                         parent_id: user?._id,
                         url: data.message,
-                      } as Image);
+                      } as Image)
+                        .then(() => setProgress(false))
+                        .then(() =>
+                          enqueueSnackbar(
+                            "Your photo profile has been updated!",
+                            { variant: "success" }
+                          )
+                        );
                     }
-                  } catch (error) {
+                  } catch (error: any) {
+                    setProgress(false);
+                    enqueueSnackbar("Error, try again!", { variant: "error" });
                     console.log({ error });
                   }
                 }
@@ -73,14 +90,12 @@ export const MedicAccountCard: FC<Props> = ({ clinic, medic }) => {
           <Typography sx={{ fontSize: 15, fontWeight: 400 }}>
             <span style={{ fontWeight: "500" }}>MD.</span>
             {" " + user?.name + " "}
-            {medic?.certified ? (
-              <CheckCircleIcon sx={{ color: "blue", fontSize: "15px" }} />
-            ) : (
-              <CheckCircleOutlineIcon
-                fontSize="small"
-                sx={{ color: "gray", fontSize: "15px" }}
-              />
-            )}
+            <CheckCircleIcon
+              sx={{
+                color: medic?.certified ? "blue" : "lightgray",
+                fontSize: "15px",
+              }}
+            />
             <br />
             {clinic.name ? clinic.name : "Clinic name"}
             <br />

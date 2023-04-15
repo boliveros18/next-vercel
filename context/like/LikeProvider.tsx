@@ -37,9 +37,15 @@ export const LikeProvider: FC<ProviderProps> = ({ children }) => {
     dispatch({ type: "ADD_LIKES", payload: payload });
   }, []);
 
-  const likeByParentAndUserId = (payload: Like[], parent_id: string, user_id: string) =>{
-    return payload.filter((i) => i.parent_id === parent_id && i.user_id === user_id);
-  }
+  const likeByParentAndUserId = (
+    payload: Like[],
+    parent_id: string,
+    user_id: string
+  ) => {
+    return payload.filter(
+      (i) => i.parent_id === parent_id && i.user_id === user_id
+    );
+  };
 
   const likesByParentId = (payload: Like[], parent_id: string) => {
     return payload.filter((i) => i.parent_id === parent_id);
@@ -49,7 +55,9 @@ export const LikeProvider: FC<ProviderProps> = ({ children }) => {
     grandparent_id: string,
     pagination?: Pagination
   ) => {
-    const data: Like[] = await LikeService.getLikesByGrandParentId(grandparent_id);
+    const data: Like[] = await LikeService.getLikesByGrandParentId(
+      grandparent_id
+    );
     dispatch({ type: "ADD_LIKES", payload: data });
   };
 

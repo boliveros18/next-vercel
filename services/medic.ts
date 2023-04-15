@@ -11,10 +11,10 @@ export const getMedicByUserId = async (parent_id: string) => {
   return res.data;
 };
 
-export const getMedics= async () => {
+export const getMedics = async () => {
   const res = await ApiClient.get(`/medic`);
   return res.data;
-}
+};
 
 export const createOne = async (payload: Medic) => {
   const res = await ApiClient.post("/medic", payload);

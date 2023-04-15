@@ -16,7 +16,7 @@ export const SelectCategoryAndProcedure: FC<Props> = ({ products }) => {
   };
 
   useEffect(() => {
-    if ( products.length > 0 ) {
+    if (products.length > 0) {
       setProcedure(products[0].procedure);
     }
   }, [setProcedure, products]);
@@ -37,17 +37,22 @@ export const SelectCategoryAndProcedure: FC<Props> = ({ products }) => {
     >
       {products.length > 0 ? (
         products.map((item, index) => (
-          <MenuItem key={index} value={item.procedure} onClick={()=> setIndex(index)}>
+          <MenuItem
+            key={index}
+            value={item.procedure}
+            onClick={() => setIndex(index)}
+          >
             <span style={{ fontWeight: "500" }}>{item.category + " | "}</span>
-            <span >{item.procedure}</span>
+            <span>{item.procedure}</span>
           </MenuItem>
         ))
       ) : (
-        <MenuItem value={""}><span style={{ fontWeight: "500" }}>Add </span> | Procedure below</MenuItem>
+        <MenuItem value={""}>
+          <span style={{ fontWeight: "500" }}>Add </span> | Procedure below
+        </MenuItem>
       )}
     </Select>
   );
 };
 
-
-export default SelectCategoryAndProcedure
+export default SelectCategoryAndProcedure;

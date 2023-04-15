@@ -3,7 +3,7 @@ import { db, dbImages } from "../../../database";
 import { Image, IImage } from "../../../models";
 import { getSession } from "next-auth/react";
 
-type Data = { message: string } | IImage | IImage[] ;
+type Data = { message: string } | IImage | IImage[];
 
 export default async function handler(
   req: NextApiRequest,
@@ -27,15 +27,12 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       .json({ message: "You must be authenticated to do this" });
   }
 
-  const {
-    parent_id = "",
-    url = "",
-  } = req.body;
+  const { parent_id = "", url = "" } = req.body;
   await db.connect();
 
   const newModel = new Image({
     parent_id,
-    url
+    url,
   });
 
   try {

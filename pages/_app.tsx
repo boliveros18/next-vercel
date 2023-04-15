@@ -1,26 +1,26 @@
 import type { AppProps } from "next/app";
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import { UIProvider } from "../context/ui";
 import { SessionProvider } from "next-auth/react";
-import { CertificationProvider } from "../context/certification";
-import { ClinicProvider } from "../context/clinic";
-import { CommentProvider } from "../context/comment";
-import { ImageProvider } from "../context/image";
-import { LikeProvider } from "../context/like";
-import { MedicProvider } from "../context/medic";
-import { ProductProvider } from "../context/product";
-import { QualificationProvider } from "../context/qualification";
 import { SWRConfig } from "swr";
 import { AuthProvider } from "../context/auth";
-import "../styles/globals.css";
+import { UIProvider } from "../context/ui";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { ClinicProvider } from "../context/clinic";
+import { CertificationProvider } from "../context/certification";
+import { CommentProvider } from "../context/comment";
+import { LikeProvider } from "../context/like";
+import { MedicProvider } from "../context/medic";
+import { QualificationProvider } from "../context/qualification";
+import { ProductProvider } from "../context/product";
+import { ImageProvider } from "../context/image";
+import { SnackbarProvider } from "notistack";
 import { lightTheme } from "../themes";
+import "../styles/globals.css";
 
 interface Props extends AppProps {
   theme: string;
 }
 
 export default function App({ Component, pageProps }: Props) {
-
   return (
     <SessionProvider>
       <SWRConfig
@@ -39,9 +39,11 @@ export default function App({ Component, pageProps }: Props) {
                       <MedicProvider>
                         <QualificationProvider>
                           <ProductProvider>
-                          <ImageProvider>
-                            <CssBaseline />
-                            <Component {...pageProps} />
+                            <ImageProvider>
+                              <CssBaseline />
+                              <SnackbarProvider maxSnack={1}>
+                                <Component {...pageProps} />
+                              </SnackbarProvider>
                             </ImageProvider>
                           </ProductProvider>
                         </QualificationProvider>

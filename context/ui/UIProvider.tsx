@@ -9,6 +9,7 @@ interface ProviderProps {
 
 export interface State {
   sidemenuOpen: boolean;
+  progress: boolean;
   loading: boolean;
   onFocus: boolean;
   tag: tagger;
@@ -21,6 +22,7 @@ export interface State {
 
 const INITIAL_STATE: State = {
   sidemenuOpen: false,
+  progress: false,
   loading: false,
   onFocus: false,
   tag: { user_name: "", user_id: "" },
@@ -28,7 +30,7 @@ const INITIAL_STATE: State = {
   onCancel: false,
   country: "",
   state: "",
-  city: ""
+  city: "",
 };
 
 export const UIProvider: FC<ProviderProps> = ({ children }) => {
@@ -40,6 +42,10 @@ export const UIProvider: FC<ProviderProps> = ({ children }) => {
   const closeSideMenu = () => {
     dispatch({ type: "UI_CLOSE_SIDEBAR" });
   };
+
+  const setProgress = useCallback((payload: boolean) => {
+    dispatch({ type: "SET_PROGRESS", payload });
+  }, []);
 
   const setLoading = useCallback((payload: boolean) => {
     dispatch({ type: "SET_LOADING", payload });
@@ -79,6 +85,7 @@ export const UIProvider: FC<ProviderProps> = ({ children }) => {
         ...state,
         openSideMenu,
         closeSideMenu,
+        setProgress,
         setLoading,
         setOnFocus,
         setTag,
@@ -86,7 +93,7 @@ export const UIProvider: FC<ProviderProps> = ({ children }) => {
         setOnCancel,
         setCountry,
         setState,
-        setCity
+        setCity,
       }}
     >
       {children}

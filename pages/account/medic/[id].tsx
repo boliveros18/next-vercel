@@ -1,12 +1,7 @@
 import { useContext, useEffect } from "react";
 import { GetServerSideProps, NextPage } from "next";
-import {
-  Typography,
-  Card,
-  CardContent,
-  Grid,
-  Divider
-} from "@mui/material";
+import { Typography, Card, CardContent, Grid, Divider } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import { getSession } from "next-auth/react";
 import { dbMedics, dbProducts } from "../../../database";
 import { Layout } from "../../../components/layouts";
@@ -21,30 +16,44 @@ import { ProductContext } from "../../../context/product";
 import { ClinicContext } from "../../../context/clinic";
 import { ImageContext } from "../../../context/image";
 import { MedicContext } from "../../../context/medic";
+import { UIContext } from "../../../context/ui";
 import CompleteMedicProfile from "../../../components/ui/medic/CompleteMedicProfile";
 
 interface Props {
-  id: string
+  id: string;
   medic: Medic;
   products: Product[];
 }
 
 const AccountMedicPage: NextPage<Props> = ({ id, medic, products }) => {
+  const { progress } = useContext(UIContext);
   const { setMedic } = useContext(MedicContext);
   const { clinic, getClinic } = useContext(ClinicContext);
   const { index } = useContext(ProductContext);
   const { getImageByParentId } = useContext(ImageContext);
   const { getUser } = useContext(AuthContext);
-  
+
   useEffect(() => {
     getUser(id);
     setMedic(medic);
     getImageByParentId(id || "");
-    getClinic(products[index]?.clinic_id || "") ;
-  }, [id, medic, setMedic, getUser, getClinic, getImageByParentId, index, products]);
+    getClinic(products[index]?.clinic_id || "");
+  }, [
+    id,
+    medic,
+    setMedic,
+    getUser,
+    getClinic,
+    getImageByParentId,
+    index,
+    products,
+  ]);
 
   return (
     <Layout>
+      {progress && (
+        <CircularProgress sx={{ position: "absolute", marginLeft: "50%" }} />
+      )}
       <Grid container spacing={0} rowSpacing={2}>
         <Grid
           item
@@ -69,7 +78,7 @@ const AccountMedicPage: NextPage<Props> = ({ id, medic, products }) => {
             <MedicAccountCard clinic={clinic} medic={medic} />
             <CardContent>
               <EditUser medic={medic} />
-              <CompleteMedicProfile/>
+              <CompleteMedicProfile />
             </CardContent>
           </Card>
         </Grid>
@@ -94,7 +103,6 @@ export const getServerSideProps: GetServerSideProps = async ({
       },
     };
   }
-
   return {
     props: {
       id: _id,

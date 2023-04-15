@@ -41,8 +41,8 @@ export const CommentDialogUi: FC<Props> = ({
           onChange={handleInput}
           autoComplete="off"
         />
-      </CommentForm>   
-      { cancel ?  (
+      </CommentForm>
+      {cancel ? (
         <Grid container sx={{ mb: 1 }}>
           <Box sx={{ flexGrow: 1 }} />
           <Grid item xs={2} sm={2} md={1} sx={{ mr: 2 }}>
@@ -78,22 +78,24 @@ export const CommentDialogUi: FC<Props> = ({
             </IconButton>
           </Grid>
         </Grid>
-      ) : (<IconButton
-        aria-label="settings"
-        style={{
-          color: "black",
-          marginLeft: 8,
-          marginRight: -6,
-        }}
-        onClick={handleSubmit}
-      >
-        <Typography
-          sx={{ fontSize: 15, textTransform: "capitalize" }}
-          variant="subtitle2"
+      ) : (
+        <IconButton
+          aria-label="settings"
+          style={{
+            color: "black",
+            marginLeft: 8,
+            marginRight: -6,
+          }}
+          onClick={handleSubmit}
         >
-          Post
-        </Typography>
-      </IconButton>)}
+          <Typography
+            sx={{ fontSize: 15, textTransform: "capitalize" }}
+            variant="subtitle2"
+          >
+            Post
+          </Typography>
+        </IconButton>
+      )}
     </>
   );
 };

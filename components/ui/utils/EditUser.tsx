@@ -65,14 +65,14 @@ export const EditUser: FC<Props> = ({ medic }) => {
         setErrorMessage(messageUpdate!);
         setTimeout(() => setShowError(false), 3000);
         return;
-      } 
+      }
       Router.reload();
     } else {
-        setShowError(true);
-        setErrorMessage(messageLogin!);
-        setTimeout(() => setShowError(false), 3000);
-        return;
-      }
+      setShowError(true);
+      setErrorMessage(messageLogin!);
+      setTimeout(() => setShowError(false), 3000);
+      return;
+    }
   };
 
   return (

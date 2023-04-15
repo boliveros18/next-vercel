@@ -3,6 +3,7 @@ import { State } from "./";
 type Action =
   | "UI_OPEN_SIDEBAR"
   | "UI_CLOSE_SIDEBAR"
+  | "SET_PROGRESS"
   | "SET_LOADING"
   | "SET_ONFOCUS"
   | "SET_TAG"
@@ -25,6 +26,8 @@ export const uiReducer = (state: State, action: ActionType): State => {
         ...state,
         sidemenuOpen: false,
       };
+    case "SET_PROGRESS":
+      return { ...state, progress: action.payload };
     case "SET_LOADING":
       return { ...state, loading: action.payload };
     case "SET_ONFOCUS":

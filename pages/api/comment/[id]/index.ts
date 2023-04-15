@@ -106,14 +106,18 @@ const deleteModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   try {
     const deleteModel = await Comment.findByIdAndDelete(id);
     if (deleteModel) {
-    const comments = await getCommentsLengthByParentId(modelToDelete.parent_id);
-    await mongoose.model(modelToDelete.type).findByIdAndUpdate(
-      modelToDelete.parent_id,
-      { comments },
-      { runValidators: true, new: true }
-    )
-    await dbComments.deleteCommentLikesAndChildren(modelToDelete._id);
-    } 
+      const comments = await getCommentsLengthByParentId(
+        modelToDelete.parent_id
+      );
+      await mongoose
+        .model(modelToDelete.type)
+        .findByIdAndUpdate(
+          modelToDelete.parent_id,
+          { comments },
+          { runValidators: true, new: true }
+        );
+      await dbComments.deleteCommentLikesAndChildren(modelToDelete._id);
+    }
     await db.disconnect();
     res.status(200).json(deleteModel!);
   } catch (error: any) {

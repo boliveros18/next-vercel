@@ -17,12 +17,11 @@ export const createOne = async (payload: Qualification) => {
 };
 
 export const updateOne = async (id: string, payload: Qualification) => {
-    const res = await ApiClient.put(`/qualification/${id}`, payload);
-    return res.data;
-  };
+  const res = await ApiClient.put(`/qualification/${id}`, payload);
+  return res.data;
+};
 
-  export const deleteOne = async (id: string) => {
-    const res = await ApiClient.delete(`/qualification/${id}`);
-    return res.data;
-  };
-  
+export const deleteOne = async (id: string) => {
+  const res = await ApiClient.delete(`/qualification/${id}`);
+  return res.data;
+};

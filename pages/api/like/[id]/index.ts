@@ -5,7 +5,6 @@ import { db } from "../../../../database";
 import { Like, ILike } from "../../../../models";
 import { Comment } from "../../../../models";
 import { getLikesLengthByParentId } from "../../../../database/dbLikes";
-import { getCommentById } from "../../../../database/dbComments";
 
 type Data = { message: string } | ILike;
 

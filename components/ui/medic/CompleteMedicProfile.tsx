@@ -12,7 +12,7 @@ import { MedicContext } from "../../../context/medic";
 import { UIContext } from "../../../context/ui";
 import { Medic } from "../../../interfaces";
 import SelectUbication from "../utils/SelectUbication";
-import AddDocumentMedicProfile from './AddDocumentMedicProfile';
+import AddDocumentMedicProfile from "./AddDocumentMedicProfile";
 
 interface Props {
   children?: ReactNode;
@@ -67,8 +67,14 @@ export const CompleteMedicProfile: FC<Props> = ({}) => {
             <SelectUbication content={medic} />
           </Grid>
           <Grid item xs={12} sx={{ mt: -1 }}>
-            <AddDocumentMedicProfile type="card_id" text="Add PDF apostille card id" />
-            <AddDocumentMedicProfile type="curriculum" text="Add PDF curriculum vitae" />
+            <AddDocumentMedicProfile
+              type="card_id"
+              text="Add PDF apostille card id"
+            />
+            <AddDocumentMedicProfile
+              type="curriculum"
+              text="Add PDF curriculum vitae"
+            />
           </Grid>
           <Grid item xs={12} display="flex" justifyContent="center">
             <Button

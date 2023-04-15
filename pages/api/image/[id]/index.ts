@@ -39,15 +39,13 @@ const updateModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       .json({ message: "There is no comment with that ID: " + id });
   }
 
-  const {
-    url = modelToUpdate.url,
-  } = req.body;
+  const { url = modelToUpdate.url } = req.body;
 
   try {
     const updatedModel = await Image.findByIdAndUpdate(
       id,
       {
-       url
+        url,
       },
       { runValidators: true, new: true }
     );
@@ -58,4 +56,3 @@ const updateModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     res.status(400).json({ message: error.errors.status.message });
   }
 };
-

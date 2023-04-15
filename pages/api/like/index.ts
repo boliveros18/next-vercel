@@ -60,12 +60,12 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       }
       default: {
         //UPDATING MAIN LIKES ANSWERS NUMBER
-          const likes = await getLikesLengthByParentId(parent_id);
-          await Comment.findByIdAndUpdate(
-            parent_id,
-            { likes },
-            { runValidators: true, new: true }
-          );
+        const likes = await getLikesLengthByParentId(parent_id);
+        await Comment.findByIdAndUpdate(
+          parent_id,
+          { likes },
+          { runValidators: true, new: true }
+        );
       }
     }
     await db.disconnect();

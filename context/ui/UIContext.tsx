@@ -9,6 +9,8 @@ interface ContextProps {
   sidemenuOpen: boolean;
   openSideMenu: () => void;
   closeSideMenu: () => void;
+  progress: boolean;
+  setProgress: (payload: boolean) => void;
   loading: boolean;
   setLoading: (payload: boolean) => void;
   onFocus: boolean;

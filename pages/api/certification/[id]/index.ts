@@ -82,7 +82,7 @@ const updateModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         certificate,
         description,
         to_approve,
-        logo
+        logo,
       },
       { runValidators: true, new: true }
     );

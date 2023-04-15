@@ -13,7 +13,6 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from "@mui/material";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { WindowSize, UseWindowSize } from "../../utils";
 import {
@@ -70,7 +69,7 @@ const ClinicPage: NextPage<Props> = ({
             >
               <CardHeader
                 sx={{ mt: -1, mb: -1 }}
-                avatar={<Avatar alt={clinic?.name} src={clinic?.avatar} />}
+                avatar={<Avatar alt={clinic?.name}>C</Avatar>}
                 action={
                   <ShareMediaUi
                     name={clinic?.name}
@@ -86,16 +85,12 @@ const ClinicPage: NextPage<Props> = ({
                 title={
                   <Typography sx={{ fontSize: 15, fontWeight: 500 }}>
                     {clinic?.name + " "}
-                    {clinic?.certified ? (
-                      <CheckCircleIcon
-                        sx={{ color: "blue", fontSize: "15px" }}
-                      />
-                    ) : (
-                      <CheckCircleOutlineIcon
-                        fontSize="small"
-                        sx={{ color: "gray", fontSize: "15px" }}
-                      />
-                    )}
+                    <CheckCircleIcon
+                      sx={{
+                        color: clinic?.certified ? "blue" : "lightgray",
+                        fontSize: "15px",
+                      }}
+                    />
                   </Typography>
                 }
                 subheader={clinic?.province + ", " + clinic?.country}

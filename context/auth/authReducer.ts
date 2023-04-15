@@ -6,14 +6,14 @@ type ActionType =
   | { type: "AUTH_LOGOUT" }
   | { type: "GET_USER"; payload: User }
   | { type: "UPDATE_USER"; payload: User }
-  | { type: "DELETE_USER"; payload: any }
+  | { type: "DELETE_USER"; payload: any };
 
 export const authReducer = (state: State, action: ActionType): State => {
   switch (action.type) {
     case "AUTH_LOGIN":
       return {
         ...state,
-        isLoggedIn: true
+        isLoggedIn: true,
       };
     case "AUTH_LOGOUT":
       return {

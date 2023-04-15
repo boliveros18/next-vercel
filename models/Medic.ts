@@ -1,5 +1,5 @@
 import mongoose, { Model, Schema } from "mongoose";
-import { Medic } from '../interfaces';
+import { Medic } from "../interfaces";
 
 export interface IMedic extends Medic {}
 

@@ -69,7 +69,7 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     surgeon_insurance,
     currency,
     updatedAt,
-    createdAt
+    createdAt,
   });
 
   try {

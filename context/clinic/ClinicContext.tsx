@@ -11,4 +11,3 @@ interface ContextProps {
 }
 
 export const ClinicContext = createContext({} as ContextProps);
-

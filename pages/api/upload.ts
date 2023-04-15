@@ -44,10 +44,10 @@ const parseFiles = async (req: NextApiRequest): Promise<string> => {
       }
       id = fields.id;
       type = fields.type;
-      if( type === "image" ){
+      if (type === "image") {
         const filePath = await saveFile(files.photo as formidable.File);
         resolve(filePath);
-      }else{
+      } else {
         const filePath = await saveFile(files.pdf as formidable.File);
         resolve(filePath);
       }

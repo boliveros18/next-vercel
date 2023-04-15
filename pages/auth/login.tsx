@@ -15,7 +15,6 @@ import {
 import { ErrorOutline } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { signIn, getSession, getProviders } from "next-auth/react";
-
 import { AuthLayout } from "../../components/layouts";
 import { validations } from "../../utils";
 import { PrivacyPolicy } from "../../components/ui";
@@ -146,12 +145,7 @@ const LoginPage = () => {
             </Link>
           </NextLink>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          display="flex"
-          flexDirection='column' 
-        >
+        <Grid item xs={12} display="flex" flexDirection="column">
           {Object.values(providers).map((provider: any) => {
             if (provider.id === "credentials")
               return <div key="credentials"></div>;
@@ -171,7 +165,7 @@ const LoginPage = () => {
           })}
         </Grid>
         <Divider sx={{ width: "100%", mt: 2 }} />
-        <PrivacyPolicy/>
+        <PrivacyPolicy />
       </form>
     </AuthLayout>
   );
