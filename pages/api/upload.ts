@@ -58,7 +58,7 @@ const parseFiles = async (req: NextApiRequest): Promise<string> => {
 const upload = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const fileURL = await parseFiles(req);
   const medic = await dbMedics.getMedicById(id);
-  const image = await dbImages.getImageByParentId(id);
+  const image = await dbImages.getImagesByParentId(id);
   switch (type) {
     case "card_id":
       if (medic) {
@@ -79,9 +79,9 @@ const upload = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       }
       break;
     case "image":
-      if (image) {
-        const [fileID] = image?.url
-          .substring(image?.url.lastIndexOf("/") + 1)
+      if (image[0]) {
+        const [fileID] = image[0].url
+          .substring(image[0].url.lastIndexOf("/") + 1)
           .split(".");
         fileID.length > 0 ? await cloudinary.uploader.destroy(fileID) : null;
       }

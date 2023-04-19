@@ -93,9 +93,9 @@ const HomePage: NextPage<Props> = ({
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
   const principal = await dbClinics.getPrincipalClinic();
-  const user = await dbUsers.getUserNameAndPhotoById(session?.user?._id || "");
-  const userAvatar = await dbImages.getImageByParentId(user?._id || "");
-  const medic = await dbMedics.getMedicByUserId(user?._id || "");
+  const user = await dbUsers.getUsersbyId(session?.user?._id || "");
+  const userAvatar = await dbImages.getImagesByParentId(user[0]?._id || "");
+  const medic = await dbMedics.getMedicByUserId(user[0]?._id || "");
   const like = await dbLikes.getLikeByParentIdAndUserId(
     principal._id || "",
     session?.user?._id || ""
@@ -112,8 +112,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
   return {
     props: {
-      user: user,
-      userAvatar: userAvatar,
+      user: session ? user[0] : [], 
+      userAvatar: userAvatar[0] === undefined ? [] : userAvatar[0],
       medic: medic,
       principal: principal,
       like: like,

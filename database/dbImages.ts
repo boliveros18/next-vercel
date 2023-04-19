@@ -1,15 +1,17 @@
 import { db } from ".";
 import { Image, IImage } from "../models";
 
-export const getImageByParentId = async (
+export const getImagesByParentId = async (
   parent_id: string | string[] | undefined
-): Promise<any> => {
+): Promise<IImage[] | []> => {
   const params = parent_id ? { parent_id: parent_id } : {};
   await db.connect();
-  const image = await Image.find(params).lean();
-  if (image[0] === undefined) {
-    return {} as IImage;
+  if(parent_id){
+    const images = await Image.find(params).lean();
+    await db.disconnect();
+    return JSON.parse(JSON.stringify(images))
   }
-  await db.disconnect();
-  return JSON.parse(JSON.stringify(image[0]));
+  return []
 };
+
+

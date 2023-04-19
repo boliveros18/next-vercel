@@ -12,16 +12,17 @@ export const getLikeById = async (id: string): Promise<ILike | null> => {
   return JSON.parse(JSON.stringify(like));
 };
 
-export const getLikesByGrandParentId = async (
-  grandparent_id: string
-): Promise<ILike[]> => {
-  const params = grandparent_id ? { grandparent_id: grandparent_id } : {};
+export const getLikesByParentId = async (
+  parent_id: string | string[] | undefined
+): Promise<ILike[] | []> => {
+  const params = parent_id ? { parent_id: parent_id } : {};
   await db.connect();
-  const likes: ILike[] = await Like.find(params).sort({
-    createdAt: "ascending",
-  });
-  await db.disconnect();
-  return likes;
+  if (parent_id) {
+    const likes = await Like.find(params).lean();
+    await db.disconnect();
+    return JSON.parse(JSON.stringify(likes));
+  }
+  return [];
 };
 
 export const getLikesLengthByParentId = async (

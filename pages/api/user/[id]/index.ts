@@ -49,8 +49,8 @@ export default function handler(
 const getUser = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
   try {
-    const user = await dbUsers.getUserNameAndPhotoById(id);
-    return res.status(201).json(user);
+    const user = await dbUsers.getUsersbyId(id);
+    return res.status(201).json(user[0]);
   } catch (error: any) {
     console.log(error);
     res.status(400).json({

@@ -2,7 +2,7 @@ import { FC, ReactNode, useReducer, useCallback } from "react";
 import { LikeContext, likeReducer } from "./";
 import { Like } from "../../interfaces";
 import { LikeService } from "../../services";
-import { Pagination } from "./LikeContext";
+import { Pagination } from "./";
 
 interface ProviderProps {
   children: ReactNode;
@@ -51,15 +51,15 @@ export const LikeProvider: FC<ProviderProps> = ({ children }) => {
     return payload.filter((i) => i.parent_id === parent_id);
   };
 
-  const getLikesByGrandParentId = async (
-    grandparent_id: string,
+  const getLikesByParentId = useCallback( async (
+    parent_id: string,
     pagination?: Pagination
   ) => {
-    const data: Like[] = await LikeService.getLikesByGrandParentId(
-      grandparent_id
+    const data: Like[] = await LikeService.getLikesByParentId(
+      parent_id
     );
     dispatch({ type: "ADD_LIKES", payload: data });
-  };
+  }, []);
 
   return (
     <LikeContext.Provider
@@ -70,7 +70,7 @@ export const LikeProvider: FC<ProviderProps> = ({ children }) => {
         addLikes,
         likeByParentAndUserId,
         likesByParentId,
-        getLikesByGrandParentId,
+        getLikesByParentId,
       }}
     >
       {children}

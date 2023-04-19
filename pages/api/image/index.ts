@@ -50,10 +50,10 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
 const getImages = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   try {
-    const image = await dbImages.getImageByParentId(
+    const images = await dbImages.getImagesByParentId(
       req.query.parent_id as string
     );
-    return res.status(201).json(image);
+    return res.status(201).json(images[0]);
   } catch (error: any) {
     console.log(error);
     res.status(400).json({

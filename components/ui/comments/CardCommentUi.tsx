@@ -7,7 +7,6 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { getFormatDistanceToNow } from "../../../utils";
 import { CommentDialogUi } from "../utils/CommentDialogUi";
 import { CommentContext } from "../../../context/comment";
-
 import { Card, CardHeader, Avatar, IconButton, Grid } from "@mui/material";
 import Link from "next/link";
 import { Comment } from "../../../interfaces";
@@ -37,19 +36,15 @@ export const CardCommentUi: FC<Props> = ({ item, parent_id }) => {
 
   const { isLoggedIn, user } = useContext(AuthContext);
 
-  const handleLike = (
-    parent_id: string,
-    user_id: string,
-    grandparent_id?: string
-  ) => {
+  const handleLike = (parent_id: string, user_id: string) => {
     if (likeByParentAndUserId(likes, parent_id, user_id).length === 1) {
       deleteLike(likeByParentAndUserId(likes, parent_id, user_id)[0]._id || "");
     } else {
       createLike({
         user_id: user?._id || "",
         user_name: user?.name || "",
-        grandparent_id: grandparent_id || "",
         parent_id: parent_id || "",
+        type: "Comment",
       });
     }
   };
@@ -145,9 +140,7 @@ export const CardCommentUi: FC<Props> = ({ item, parent_id }) => {
                 style={{
                   color: "black",
                 }}
-                onClick={() =>
-                  handleLike(item._id, user?._id || "", item.parent_id || "")
-                }
+                onClick={() => handleLike(item._id, user?._id || "")}
               >
                 {likeByParentAndUserId(likes, item._id || "", user?._id || "")
                   .length === 1 && isLoggedIn ? (

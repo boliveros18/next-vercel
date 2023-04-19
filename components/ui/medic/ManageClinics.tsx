@@ -4,8 +4,7 @@ import {
   useContext,
   useState,
   ChangeEvent,
-  FormEvent,
-  useEffect,
+  FormEvent
 } from "react";
 import AccordionUi from "../utils/AccordionUi";
 import {
@@ -16,38 +15,38 @@ import {
   MenuItem,
   SelectChangeEvent,
 } from "@mui/material";
-import { MedicContext } from "../../../context/medic";
 import { ClinicContext } from "../../../context/clinic";
 import { Clinic } from "../../../interfaces";
 
 interface Props {
   children?: ReactNode;
+  clinics: Clinic[]
 }
 
-export const ManageClinics: FC<Props> = ({}) => {
-  const { medic } = useContext(MedicContext);
-  const { clinics, getClinicsByMedicId, createClinic, updateClinic } =
+export const ManageClinics: FC<Props> = ({ clinics }) => {
+  const { createClinic, updateClinic } =
     useContext(ClinicContext);
   const [index, setIndex] = useState(0);
-  const [value, setValue] = useState("");
+  const [ submit, setSubmit ] = useState("CREATE");
+  const [ select, setSelect ] =useState("");
+  const [value, setValue] = useState(clinics);
   const [inputs, setInputs] = useState({});
-
-  useEffect(() => {
-    getClinicsByMedicId(medic?._id);
-  }, [medic, getClinicsByMedicId]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await updateClinic(clinics[index]._id || "", {
-      ...inputs,
-    } as Clinic).then(() => {
-      setInputs("");
-      setValue("");
-    });
+    if(submit === "SAVE"){
+      await updateClinic(clinics[index]._id || "", {
+        ...inputs,
+      } as Clinic).then(() => {
+        setInputs({});
+      });
+    }else{
+      
+    }
   };
 
   const handleChange = (event: SelectChangeEvent) => {
-    setValue(event.target.value as string);
+    setSelect(event.target.value as string);
   };
 
   const handleInput = ({ target }: ChangeEvent<any>) => {
@@ -72,7 +71,7 @@ export const ManageClinics: FC<Props> = ({}) => {
                 },
                 backgroundColor: "white",
               }}
-              value={value}
+              value={select}
               displayEmpty
               inputProps={{ "aria-label": "Without label" }}
               onChange={handleChange}
@@ -81,8 +80,8 @@ export const ManageClinics: FC<Props> = ({}) => {
               {clinics.map((item, index) => (
                 <MenuItem
                   key={index}
-                  value={item.name || ""}
-                  onClick={() => setIndex(index)}
+                  value={item.name}
+                  onClick={() => {setIndex(index)}}
                 >
                   <span style={{ fontWeight: "500" }}>{item.name}</span>
                 </MenuItem>
@@ -91,26 +90,28 @@ export const ManageClinics: FC<Props> = ({}) => {
           </Grid>
           <Grid item xs={12}>
             <TextField
+              InputLabelProps={{ shrink: true }} 
               type="text"
               name="finantial"
               label="Finantial situation"
               variant="outlined"
               fullWidth
               autoComplete="off"
-              defaultValue={clinics[index]?.finantial || "sdsd"}
+              defaultValue={value[index].finantial}
               onChange={handleInput}
               size="small"
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
+              InputLabelProps={{ shrink: true }} 
               type="text"
               name="instagram"
               label="Instagram link"
               variant="outlined"
               fullWidth
               autoComplete="off"
-              defaultValue={clinics[index]?.instagram || ""}
+              defaultValue={value[index].instagram}
               onChange={handleInput}
               size="small"
             />
@@ -126,7 +127,7 @@ export const ManageClinics: FC<Props> = ({}) => {
                 color: "black",
               }}
             >
-              Save
+              {submit}
             </Button>
           </Grid>
         </Grid>

@@ -11,8 +11,8 @@ export const getLikes = async () => {
   return res.data;
 };
 
-export const getLikesByGrandParentId = async (grandparent_id: string) => {
-  const res = await ApiClient.get(`/like?grandparent_id=${grandparent_id}`);
+export const getLikesByParentId = async (parent_id: string) => {
+  const res = await ApiClient.get(`/like?parent_id=${parent_id}`);
   return res.data;
 };
 

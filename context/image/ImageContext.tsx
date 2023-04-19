@@ -11,7 +11,7 @@ interface ContextProps {
   image: Image;
   images: Image[];
   setImage: (payload: Image) => void;
-  getImageByParentId: (parent_id: string) => void;
+  getImagesByParentId: (parent_id: string, pagination?: Pagination) => void;
   createImage: (payload: Image) => Promise<void>;
   updateImage: (id: string, payload: Image) => Promise<void>;
 }

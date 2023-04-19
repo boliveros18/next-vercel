@@ -2,6 +2,7 @@ import { FC, ReactNode, useReducer, useCallback } from "react";
 import { ImageContext, imageReducer } from "./";
 import { Image } from "../../interfaces";
 import { ImageService } from "../../services";
+import { Pagination } from "./";
 
 interface ProviderProps {
   children: ReactNode;
@@ -36,10 +37,10 @@ export const ImageProvider: FC<ProviderProps> = ({ children }) => {
     return data;
   };
 
-  const getImageByParentId = useCallback(async (
-    parent_id: string
+  const getImagesByParentId = useCallback(async (
+    parent_id: string,  pagination?: Pagination
   ) => {
-    const data: Image[] = await ImageService.getImageByParentId(
+    const data: Image[] = await ImageService.getImagesByParentId(
       parent_id
     );
     dispatch({ type: "UPDATE_IMAGE", payload: data });
@@ -52,7 +53,7 @@ export const ImageProvider: FC<ProviderProps> = ({ children }) => {
         setImage,
         createImage,
         updateImage,
-        getImageByParentId
+        getImagesByParentId
       }}
     >
       {children}

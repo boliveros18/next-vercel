@@ -1,7 +1,7 @@
 import { ApiClient } from "../apis";
 import { Image } from "../interfaces";
 
-export const getImageByParentId = async (parent_id: string) => {
+export const getImagesByParentId = async (parent_id: string) => {
   const res = await ApiClient.get(`/image?parent_id=${parent_id}`);
   return res.data;
 };

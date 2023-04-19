@@ -17,6 +17,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Comment } from "../../../interfaces";
 import { CommentContext } from "../../../context/comment";
 import { UIContext } from "../../../context/ui";
+import { AuthContext } from "../../../context/auth";
 
 interface Props {
   item: Comment;
@@ -24,6 +25,7 @@ interface Props {
 }
 
 export const EditCommentUi: FC<Props> = ({ item, setEdit }) => {
+  const { user } = useContext(AuthContext);
   const { setValue } = useContext(UIContext);
   const { deleteComment, getCommentsByParentId } = useContext(CommentContext);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);

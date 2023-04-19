@@ -1,10 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { db, dbLikes } from "../../../database";
 import { Like, ILike } from "../../../models";
-import { Comment } from "../../../models";
 import { getSession } from "next-auth/react";
 import { getLikesLengthByParentId } from "../../../database/dbLikes";
-import { Clinic } from "../../../models";
+import mongoose from "mongoose";
 
 type Data = { message: string } | ILike | ILike[];
 
@@ -30,44 +29,26 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       .json({ message: "You must be authenticated to do this" });
   }
 
-  const {
-    user_id = "",
-    user_name = "",
-    grandparent_id = "",
-    parent_id = "",
-  } = req.body;
+  const { user_id = "", user_name = "", parent_id = "", type = "" } = req.body;
   await db.connect();
 
   const newModel = new Like({
     user_id,
     user_name,
-    grandparent_id,
     parent_id,
+    type,
   });
 
   try {
     await newModel.save();
-    switch (grandparent_id) {
-      case "": {
-        //UPDATING MAIN.LIKES NUMBER
-        const likes = await getLikesLengthByParentId(parent_id);
-        await Clinic.findByIdAndUpdate(
-          parent_id,
-          { likes },
-          { runValidators: true, new: true }
-        );
-        break;
-      }
-      default: {
-        //UPDATING MAIN LIKES ANSWERS NUMBER
-        const likes = await getLikesLengthByParentId(parent_id);
-        await Comment.findByIdAndUpdate(
-          parent_id,
-          { likes },
-          { runValidators: true, new: true }
-        );
-      }
-    }
+    const likes = await getLikesLengthByParentId(parent_id);
+    await mongoose
+      .model(type)
+      .findByIdAndUpdate(
+        parent_id,
+        { likes },
+        { runValidators: true, new: true }
+      );
     await db.disconnect();
     return res.status(201).json(newModel);
   } catch (error: any) {
@@ -81,8 +62,8 @@ const createModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
 const getLikes = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   try {
-    const likes = await dbLikes.getLikesByGrandParentId(
-      req.query.grandparent_id as string
+    const likes = await dbLikes.getLikesByParentId(
+      req.query.parent_id as string
     );
     return res.status(201).json(likes);
   } catch (error: any) {

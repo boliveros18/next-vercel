@@ -1,12 +1,8 @@
-import { FC, ReactNode, useContext } from "react";
-import { IconButton, CardActions, Typography, Grid, Box } from "@mui/material";
-import { useRouter } from "next/router";
+import { FC, ReactNode, useContext, useEffect } from "react";
+import { IconButton, CardActions, Typography, Grid } from "@mui/material";
 import CommentIcon from "@mui/icons-material/ChatBubbleOutline";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
-import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
-import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
 import { AuthContext } from "../../../context/auth";
 import { LikeContext } from "../../../context/like";
 import { UIContext } from "../../../context/ui";
@@ -17,19 +13,23 @@ interface Props {
   children?: ReactNode;
   parent_id: string;
   initialLikes: number;
+  type: string;
 }
 
-export const CardActionsUi: FC<Props> = ({ parent_id, initialLikes }) => {
-  const router = useRouter();
+export const CardActionsUi: FC<Props> = ({ parent_id, initialLikes, type }) => {
   const { setOnFocus } = useContext(UIContext);
-  const { createLike, deleteLike, likes, likeByParentAndUserId } =
+  const { createLike, deleteLike, likes, likeByParentAndUserId, getLikesByParentId } =
     useContext(LikeContext);
   const { isLoggedIn, user } = useContext(AuthContext);
 
+  useEffect(() => {
+    getLikesByParentId(parent_id)
+  }, [ parent_id, getLikesByParentId])
+  
+
   const handleLike = (
     parent_id: string,
-    user_id: string,
-    grandparent_id?: string
+    user_id: string
   ) => {
     if (likeByParentAndUserId(likes, parent_id, user_id).length === 1) {
       deleteLike(likeByParentAndUserId(likes, parent_id, user_id)[0]._id || "");
@@ -37,8 +37,8 @@ export const CardActionsUi: FC<Props> = ({ parent_id, initialLikes }) => {
       createLike({
         user_id: user?._id || "",
         user_name: user?.name || "",
-        grandparent_id: "",
         parent_id: parent_id || "",
+        type: type || ""
       });
     }
   };
@@ -70,7 +70,7 @@ export const CardActionsUi: FC<Props> = ({ parent_id, initialLikes }) => {
               disabled={!isLoggedIn}
               onClick={() => handleLike(parent_id, user?._id || "")}
             >
-              {likeByParentAndUserId(likes, parent_id, user?._id || "")
+              {isLoggedIn && likeByParentAndUserId(likes, parent_id, user?._id || "")
                 .length === 1 ? (
                 <CheckCircleIcon sx={{ color: "blue" }} fontSize="medium" />
               ) : (

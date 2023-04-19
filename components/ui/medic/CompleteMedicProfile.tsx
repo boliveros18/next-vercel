@@ -16,12 +16,13 @@ import AddDocumentMedicProfile from "./AddDocumentMedicProfile";
 
 interface Props {
   children?: ReactNode;
+  medic: Medic
 }
 
-export const CompleteMedicProfile: FC<Props> = ({}) => {
-  const { medic, updateMedic } = useContext(MedicContext);
+export const CompleteMedicProfile: FC<Props> = ({ medic }) => {
+  const { updateMedic } = useContext(MedicContext);
   const { country, state, city } = useContext(UIContext);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(medic);
   const [inputs, setInputs] = useState({});
 
   const handleSubmit = async (e: FormEvent) => {
@@ -32,8 +33,7 @@ export const CompleteMedicProfile: FC<Props> = ({}) => {
       state: state,
       province: city,
     } as Medic).then(() => {
-      setInputs("");
-      setValue("");
+      setInputs({});
     });
   };
 
@@ -49,17 +49,15 @@ export const CompleteMedicProfile: FC<Props> = ({}) => {
         <Grid container spacing={0} rowSpacing={2}>
           <Grid item xs={12}>
             <TextField
-              name="instagram"
+              type="text"
+              InputLabelProps={{ shrink: true }} 
               label="Instagram link"
               variant="outlined"
               fullWidth
-              defaultValue={medic?.instagram}
+              autoComplete= "off"
+              defaultValue={value.instagram}
               onChange={handleInput}
-              inputProps={{
-                form: {
-                  autocomplete: "off",
-                },
-              }}
+              name="instagram"
               size="small"
             />
           </Grid>

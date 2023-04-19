@@ -1,9 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import mongoose from "mongoose";
-import { Clinic } from "../../../../models";
 import { db } from "../../../../database";
 import { Like, ILike } from "../../../../models";
-import { Comment } from "../../../../models";
 import { getLikesLengthByParentId } from "../../../../database/dbLikes";
 
 type Data = { message: string } | ILike;
@@ -63,28 +61,15 @@ const deleteModel = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   }
   try {
     const deleteModel = await Like.findByIdAndDelete(id);
-    switch (modelToDelete.grandparent_id) {
-      case "": {
-        //DELETING MAIN.LIKES NUMBER
-        const likes = await getLikesLengthByParentId(modelToDelete.parent_id);
-        await Clinic.findByIdAndUpdate(
+    if (deleteModel) {
+      const likes = await getLikesLengthByParentId(modelToDelete.parent_id);
+      await mongoose
+        .model(modelToDelete.type)
+        .findByIdAndUpdate(
           modelToDelete.parent_id,
           { likes },
           { runValidators: true, new: true }
         );
-        break;
-      }
-      //DELETING MAIN COMMENTS LIKES NUMBER
-      default: {
-        if (deleteModel) {
-          const likes = await getLikesLengthByParentId(modelToDelete.parent_id);
-          await Comment.findByIdAndUpdate(
-            modelToDelete.parent_id,
-            { likes },
-            { runValidators: true, new: true }
-          );
-        }
-      }
     }
     await db.disconnect();
     res.status(200).json(deleteModel!);

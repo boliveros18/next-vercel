@@ -110,6 +110,7 @@ export const HomeCard: FC<Props> = () => {
             <CardActionsUi
               parent_id={principal?._id || ""}
               initialLikes={principal.likes}
+              type={principal.type}
             />
           )}
           {loading && (

@@ -5,6 +5,7 @@ import {
   useState,
   FormEvent,
   ChangeEvent,
+  useEffect
 } from "react";
 import * as React from "react";
 import {
@@ -19,7 +20,6 @@ import {
 } from "@mui/material";
 import { AuthContext } from "../../../context/auth";
 import { CommentContext } from "../../../context/comment";
-import { LikeContext } from "../../../context/like";
 import { UIContext } from "../../../context/ui";
 import { WindowSize } from "../../../utils";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -28,6 +28,7 @@ import { Comment } from "../../../interfaces";
 import { pluralize } from "../../../utils/strings";
 import { CommentDialogUi } from "../utils/CommentDialogUi";
 import { ImageContext } from "../../../context/image";
+import { LikeContext } from "../../../context/like";
 
 interface Props {
   children?: ReactNode;
@@ -45,17 +46,26 @@ export const SeeComments: FC<Props> = ({
   const [value, setValue] = useState("");
   const { image } = useContext(ImageContext);
   const { onFocus, setOnFocus } = useContext(UIContext);
-  const { getLikesByGrandParentId, likes } = useContext(LikeContext);
   const { createComment, getCommentsByParentId, commentsByParentId, comments } =
     useContext(CommentContext);
   const { isLoggedIn, user } = useContext(AuthContext);
   const height = WindowSize().height;
   const [toogle, setToogle] = useState(true);
   const [inputs, setInputs] = useState({});
+  const {
+    getLikesByParentId, likes
+  } = useContext(LikeContext);
 
   const openComments = () => {
     setToogle(!toogle);
   };
+
+  useEffect(() => {
+    comments.map( (comment) => {
+        getLikesByParentId(comment._id)
+    })
+  }, [comments, getLikesByParentId])
+  
 
   const answers: any = (comments: Comment[], parent_id: string) => {
     return commentsByParentId(comments, parent_id).length === 0
@@ -97,7 +107,6 @@ export const SeeComments: FC<Props> = ({
             id="panel1a-header"
             onClick={() => {
               getCommentsByParentId(parent_id);
-              getLikesByGrandParentId(parent_id);
             }}
           >
             <Typography

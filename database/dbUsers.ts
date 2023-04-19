@@ -1,5 +1,4 @@
 import bcrypt from "bcryptjs";
-import { isValidObjectId } from "mongoose";
 import { User, IUser } from "../models";
 import { db } from "./";
 
@@ -56,20 +55,17 @@ export const oAUthToDbUser = async (
   return { _id, name, email, role };
 };
 
-export const getUserNameAndPhotoById = async (
+export const getUsersbyId = async (
   id: string | string[] | undefined
-): Promise<any> => {
-  if (!isValidObjectId(id)) {
-    return null;
-  }
+): Promise<IUser[] | []> => {
   await db.connect();
-  const user = await User.find(
-    { _id: id },
-    { name: 1, photo: 1, role: 1, email: 1 }
-  ).lean();
-  if (user[0] === undefined) {
-    return {} as IUser;
+  if(id){
+    const user = await User.find(
+      { _id: id },
+      { name: 1, role: 1, email: 1 }
+    ).lean();
+    await db.disconnect();
+    return JSON.parse(JSON.stringify(user));
   }
-  await db.disconnect();
-  return JSON.parse(JSON.stringify(user[0]));
+  return []
 };

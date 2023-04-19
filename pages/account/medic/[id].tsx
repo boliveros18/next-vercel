@@ -5,7 +5,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { getSession } from "next-auth/react";
 import { dbMedics, dbProducts, dbClinics } from "../../../database";
 import { Layout } from "../../../components/layouts";
-import { Medic, Product } from "../../../interfaces";
+import { Medic, Product, Clinic } from "../../../interfaces";
 import { AuthContext } from "../../../context/auth";
 import {
   SelectCategoryAndProcedure,
@@ -24,20 +24,21 @@ interface Props {
   id: string;
   medic: Medic;
   products: Product[];
+  clinics: Clinic[];
 }
 
-const AccountMedicPage: NextPage<Props> = ({ id, medic, products }) => {
+const AccountMedicPage: NextPage<Props> = ({ id, medic, products, clinics }) => {
   const { progress } = useContext(UIContext);
   const { setMedic } = useContext(MedicContext);
-  const { clinic, getClinic } = useContext(ClinicContext);
+  const { clinic, getClinic,  } = useContext(ClinicContext);
   const { index } = useContext(ProductContext);
-  const { getImageByParentId } = useContext(ImageContext);
+  const { getImagesByParentId } = useContext(ImageContext);
   const { getUser } = useContext(AuthContext);
 
   useEffect(() => {
     getUser(id);
     setMedic(medic);
-    getImageByParentId(id || "");
+    getImagesByParentId(id || "");
     getClinic(products[index]?.clinic_id || "");
   }, [
     id,
@@ -45,7 +46,7 @@ const AccountMedicPage: NextPage<Props> = ({ id, medic, products }) => {
     setMedic,
     getUser,
     getClinic,
-    getImageByParentId,
+    getImagesByParentId,
     index,
     products,
   ]);
@@ -79,8 +80,8 @@ const AccountMedicPage: NextPage<Props> = ({ id, medic, products }) => {
             <MedicAccountCard clinic={clinic} medic={medic} />
             <CardContent>
               <EditUser medic={medic} />
-              <CompleteMedicProfile />
-              <ManageClinics />
+              <CompleteMedicProfile medic={medic}/>
+              <ManageClinics clinics={clinics} />
             </CardContent>
           </Card>
         </Grid>
@@ -97,6 +98,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const medic = await dbMedics.getMedicById(id);
   const _id = medic?.parent_id;
   const products = await dbProducts.getProductsByMedicId(id);
+  const clinics = await dbClinics.getClinicsByMedicId(id)
   if (!medic || !session) {
     return {
       redirect: {
@@ -110,6 +112,7 @@ export const getServerSideProps: GetServerSideProps = async ({
       id: _id,
       medic: medic,
       products: products,
+      clinics: clinics
     },
   };
 };
