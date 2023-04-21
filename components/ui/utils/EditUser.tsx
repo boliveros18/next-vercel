@@ -15,7 +15,7 @@ import { validations } from "../../../utils";
 import { capitalize } from "../../../utils/strings";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import { Client, Medic, User } from "../../../interfaces";
+import { Client, Medic, IUser } from "../../../interfaces";
 import Router from "next/router";
 
 interface Props {
@@ -55,7 +55,7 @@ export const EditUser: FC<Props> = ({ medic }) => {
     const { hasError, messageLogin } = await loginUser(old_email, old_password);
     if (!hasError) {
       const { hasError, messageUpdate } = await updateUser(user?._id || "", {
-        ...(user as User),
+        ...(user as IUser),
         ["name"]: capitalize(name),
         ["email"]: email,
         ["password"]: toggleChangePassword ? password : old_password,

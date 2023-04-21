@@ -1,8 +1,8 @@
-import { Size, User } from "./";
+import { Size, IUser } from "./";
 
 export interface Order {
   _id?: string;
-  user?: User | string;
+  user?: IUser | string;
   orderItems: OrderItem[];
   shippingAddress: ShippingAddress;
   paymentResult?: string;

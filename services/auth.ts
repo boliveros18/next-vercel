@@ -1,5 +1,5 @@
 import { ApiClient } from "../apis";
-import { User } from "../interfaces";
+import { IUser } from "../interfaces";
 
 export const login = async (email: string, password: string) => {
   const data = await ApiClient.post("/user/login", { email, password });
@@ -11,7 +11,7 @@ export const getUser = async (id: string) => {
   return res.data;
 };
 
-export const updateOne = async (id: string, payload: User) => {
+export const updateOne = async (id: string, payload: IUser) => {
   const res = await ApiClient.put(`/user/${id}`, payload);
   return res.data;
 };

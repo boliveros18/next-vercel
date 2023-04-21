@@ -119,6 +119,7 @@ const ClinicPage: NextPage<Props> = ({
                 <CardActionsUi
                   parent_id={clinic?._id || ""}
                   initialLikes={clinic.likes}
+                  type={clinic.type}
                 />
                 <Accordion elevation={0} disableGutters={true} sx={{ mt: 2 }}>
                   <AccordionSummary

@@ -6,7 +6,7 @@ import { Layout } from "../components/layouts";
 import { HomeCard } from "../components/home";
 import { Grid } from "@mui/material";
 import { BottomBar, SideBar, RightBar } from "../components/ui";
-import { Clinic, Like, User, Medic, Image } from "../interfaces";
+import { Clinic, Like, IUser, Medic, Image } from "../interfaces";
 import { LikeContext } from "../context/like";
 import { ClinicContext } from "../context/clinic";
 import { UIContext } from "../context/ui";
@@ -17,7 +17,7 @@ import { ImageContext } from "../context/image";
 interface Props {
   principal: Clinic;
   like: Like;
-  user: User;
+  user: IUser;
   medic: Medic;
   userAvatar: Image;
 }
@@ -93,13 +93,13 @@ const HomePage: NextPage<Props> = ({
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
   const principal = await dbClinics.getPrincipalClinic();
-  const user = await dbUsers.getUsersbyId(session?.user?._id || "");
-  const userAvatar = await dbImages.getImagesByParentId(user[0]?._id || "");
-  const medic = await dbMedics.getMedicByUserId(user[0]?._id || "");
-  const like = await dbLikes.getLikeByParentIdAndUserId(
-    principal._id || "",
-    session?.user?._id || ""
-  );
+  //const user = await dbUsers.getUsersbyId(session?.user?._id || "");
+  //const userAvatar = await dbImages.getImagesByParentId(user[0]?._id || "");
+  //const medic = await dbMedics.getMedicByUserId(user[0]?._id || "");
+  //const like = await dbLikes.getLikeByParentIdAndUserId(
+   // principal._id || "",
+  //  session?.user?._id || ""
+  //);
 
   if (!principal) {
     return {
@@ -112,11 +112,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
   return {
     props: {
-      user: session ? user[0] : [], 
-      userAvatar: userAvatar[0] === undefined ? [] : userAvatar[0],
-      medic: medic,
+     // user: session ? user[0] : [], 
+    //  userAvatar: userAvatar[0] === undefined ? [] : userAvatar[0],
+     // medic: medic,
       principal: principal,
-      like: like,
+      //like: like,
     },
   };
 };

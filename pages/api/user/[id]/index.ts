@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
 import { db, dbUsers } from "../../../../database";
-import { User, IUser } from "../../../../models";
+import { User, AUser } from "../../../../models";
 import { jwt, validations } from "../../../../utils";
 
 type Data =
@@ -15,8 +15,8 @@ type Data =
         email: string;
       };
     }
-  | IUser
-  | IUser[]
+  | AUser
+  | AUser[]
   | null;
 
 export default function handler(

@@ -19,7 +19,7 @@ export default NextAuth({
         password: {
           label: "Password:",
           type: "password",
-          placeholder: "Contraseña",
+          placeholder: "Password",
         },
       },
       async authorize(credentials) {
@@ -62,8 +62,7 @@ export default NextAuth({
           case "oauth":
             token.user = await dbUsers.oAUthToDbUser(
               user?.email || "",
-              user?.name || "",
-              user?.role || ""
+              user?.name || ""
             );
             break;
 
@@ -77,7 +76,7 @@ export default NextAuth({
     },
 
     async session({ session, token, user }) {
-      session.accessToken = token.accessToken;
+      //session.accessToken = token.accessToken;
       session.user = token.user as any;
       return session;
     },

@@ -1,9 +1,9 @@
-export interface User {
+export interface IUser {
   _id: string;
   name: string;
   email: string;
-  password: string;
+  password?: string;
   role: string;
-  createdAt: number;
-  updatedAt: number;
+  createdAt?: number;
+  updatedAt?: number;
 }

@@ -1,13 +1,15 @@
 import bcrypt from "bcryptjs";
-import { User, IUser } from "../models";
+import { AUser } from "../models";
+import modelUser from "../models/User"
 import { db } from "./";
+import { User } from "next-auth";
 
 export const checkUserEmailPassword = async (
   email: string,
   password: string
 ) => {
   await db.connect();
-  const user = await User.findOne({ email });
+  const user = await modelUser.findOne({ email });
   await db.disconnect();
 
   if (!user) {
@@ -18,49 +20,48 @@ export const checkUserEmailPassword = async (
     return null;
   }
 
-  const { role, name, _id } = user;
+  const { role, name, id } = user;
 
   return {
-    _id,
+    id,
     email: email.toLocaleLowerCase(),
     role,
     name,
-  };
+  } as User;
 };
 
 export const oAUthToDbUser = async (
   oAuthEmail: string,
   oAuthName: string,
-  oAuthRole: string
 ) => {
   await db.connect();
-  const user = await User.findOne({ email: oAuthEmail });
+  const user = await modelUser.findOne({ email: oAuthEmail });
 
   if (user) {
     await db.disconnect();
-    const { _id, name, email, role } = user;
-    return { _id, name, email, role };
+    const { id, name, email, role } = user;
+    return { id, name, email, role } as User;
   }
 
-  const newUser = new User({
+  const newUser = new modelUser({
     email: oAuthEmail,
     name: oAuthName,
     password: "@",
-    role: oAuthRole,
+    role: "",
   });
   await newUser.save();
   await db.disconnect();
 
-  const { _id, name, email, role } = newUser;
-  return { _id, name, email, role };
+  const { id, name, email, role } = newUser;
+  return { id, name, email, role };
 };
 
 export const getUsersbyId = async (
   id: string | string[] | undefined
-): Promise<IUser[] | []> => {
+): Promise<AUser[] | []> => {
   await db.connect();
   if(id){
-    const user = await User.find(
+    const user = await modelUser.find(
       { _id: id },
       { name: 1, role: 1, email: 1 }
     ).lean();

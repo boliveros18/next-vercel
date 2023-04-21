@@ -234,10 +234,10 @@ export const getServerSideProps: GetServerSideProps = async ({
   query,
 }) => {
   const session = await getSession({ req });
-  if (session) {
-    if (session.user?.role === "medic") {
+  if (session?.user) {
+    //if (session.user.role === "medic") {
       const medic = await dbMedics.createMedic({
-        parent_id: session?.user?._id,
+       // parent_id: session?.user?._id,
         certified: false,
         card_id: "",
         to_approve: false,
@@ -260,7 +260,7 @@ export const getServerSideProps: GetServerSideProps = async ({
           permanent: false,
         },
       };
-    } else {
+    //} else {
       const { c = "/" } = query;
       return {
         redirect: {
@@ -268,7 +268,7 @@ export const getServerSideProps: GetServerSideProps = async ({
           permanent: false,
         },
       };
-    }
+   // }
   }
 
   return {

@@ -1,37 +1,46 @@
 [{
   "_id": {
-    "$oid": "6429d02fbb97595abe631904"
+    "$oid": "643d7c576dcc619ed63fff68"
   },
-  "grandparent_id": "63ab77d06d6dc52c56dc662e",
+  "type": "Comment",
   "parent_id": "6429cc14bb97595abe63182e",
-  "user_id": "64259483a587c96f2571262a",
-  "user_name": "Andres Gutierrez",
+  "user_id": "64228786353b199547121dfc",
+  "user_name": "Camilo Medina",
   "__v": 0
 },{
   "_id": {
-    "$oid": "6429d030bb97595abe631908"
+    "$oid": "643d7c7d6dcc619ed63fff6c"
   },
-  "grandparent_id": "6429cc14bb97595abe63182e",
-  "parent_id": "6429cd4bbb97595abe631896",
-  "user_id": "64259483a587c96f2571262a",
-  "user_name": "Andres Gutierrez",
+  "type": "Comment",
+  "parent_id": "6429cc23bb97595abe631837",
+  "user_id": "64228786353b199547121dfc",
+  "user_name": "Camilo Medina",
   "__v": 0
 },{
   "_id": {
-    "$oid": "6429d033bb97595abe63190c"
+    "$oid": "643d7c836dcc619ed63fff74"
   },
-  "grandparent_id": "6429cc23bb97595abe631837",
-  "parent_id": "6429cd75bb97595abe6318ac",
-  "user_id": "64259483a587c96f2571262a",
-  "user_name": "Andres Gutierrez",
+  "type": "Comment",
+  "parent_id": "643d6e5f3c53b51ea74a2904",
+  "user_id": "64228786353b199547121dfc",
+  "user_name": "Camilo Medina",
   "__v": 0
 },{
   "_id": {
-    "$oid": "6429d038bb97595abe631914"
+    "$oid": "643ddb16264396afc8f65fa9"
   },
-  "grandparent_id": "",
+  "type": "Clinic",
   "parent_id": "63ab77d06d6dc52c56dc662e",
-  "user_id": "64259483a587c96f2571262a",
-  "user_name": "Andres Gutierrez",
+  "user_id": "64228786353b199547121dfc",
+  "user_name": "Camilo Medina",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "643de143264396afc8f65fd9"
+  },
+  "type": "Comment",
+  "parent_id": "6429cd4bbb97595abe631896",
+  "user_id": "64228786353b199547121dfc",
+  "user_name": "Camilo Medina",
   "__v": 0
 }]

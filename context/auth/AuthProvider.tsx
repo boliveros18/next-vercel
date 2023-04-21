@@ -6,12 +6,12 @@ import axios from "axios";
 
 import { ApiClient } from "../../apis";
 import { AuthService } from "../../services";
-import { User } from "../../interfaces";
+import { IUser } from "../../interfaces";
 
 export interface State {
   isLoggedIn: boolean;
-  users: User[];
-  user?: User;
+  users: IUser[];
+  user?: IUser;
 }
 
 interface Props {
@@ -34,7 +34,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
     }
   }, [status, data]);
 
-  const setUser = useCallback(async (payload: User) => {
+  const setUser = useCallback(async (payload: IUser) => {
     dispatch({ type: "UPDATE_USER", payload: payload });
   }, []);
 
@@ -113,7 +113,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
 
   const updateUser = async (
     id: string,
-    payload: User
+    payload: IUser
   ): Promise<{ hasError: boolean; message?: string }> => {
     try {
       await AuthService.updateOne(id, payload);

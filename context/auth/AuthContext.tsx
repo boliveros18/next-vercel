@@ -1,10 +1,10 @@
 import { createContext } from "react";
-import { User } from "../../interfaces";
+import { IUser } from "../../interfaces";
 
 interface ContextProps {
   isLoggedIn: boolean;
-  user?: User;
-  setUser: (payload: User) => Promise<void>;
+  user?: IUser;
+  setUser: (payload: IUser) => Promise<void>;
   loginUser: (
     email: string,
     password: string
@@ -20,7 +20,7 @@ interface ContextProps {
   getUser: (id: string) => Promise<void>;
   updateUser: (
     id: string,
-    payload: User
+    payload: IUser
   ) => Promise<{ hasError: boolean; messageUpdate?: string }>;
   deleteUser: (id: string) => Promise<void>;
 }

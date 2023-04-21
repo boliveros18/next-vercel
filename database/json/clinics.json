@@ -33,7 +33,7 @@
   "type": "Clinic",
   "medic_id": "642c78282452ed13a087f5d4",
   "certified": false,
-  "finantial": "8 million US in 2021",
+  "finantial": "12 million US in 2021",
   "speciality": "Plastic and Reconstruction",
   "technology": "Animation Deformity: Evaluating the Role of Morphotopologic Features in Suggesting Preventive Surgical Procedures",
   "phone": "+057 3025654987",
@@ -101,8 +101,8 @@
   "instagram": "https://www.instagram.com/clinicaportoazulauna/?hl=es",
   "address": "Cra 105#45-265",
   "qualification": 4.15,
-  "comments": 2,
-  "likes": 0,
+  "comments": 3,
+  "likes": 1,
   "createdAt": {
     "$numberLong": "1672181711974"
   },

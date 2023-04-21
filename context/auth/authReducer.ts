@@ -1,11 +1,11 @@
 import { State } from "./";
-import { User } from "../../interfaces";
+import { IUser } from "../../interfaces";
 
 type ActionType =
   | { type: "AUTH_LOGIN" }
   | { type: "AUTH_LOGOUT" }
-  | { type: "GET_USER"; payload: User }
-  | { type: "UPDATE_USER"; payload: User }
+  | { type: "GET_USER"; payload: IUser }
+  | { type: "UPDATE_USER"; payload: IUser }
   | { type: "DELETE_USER"; payload: any };
 
 export const authReducer = (state: State, action: ActionType): State => {
